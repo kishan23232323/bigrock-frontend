@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../services/authservices/authapi";
 import { useDispatch } from "react-redux";
@@ -6,11 +6,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setCredentials } from "../../store/authslice";
+import { useLocation } from "react-router-dom";
+
 
 const Register = () => {
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const urlReferral = params.get("referral");
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
     reset,
   } = useForm();
@@ -42,6 +50,11 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    if (urlReferral) setValue("referral", urlReferral);
+  }, [urlReferral, setValue]);
+
+
   return (
     <div className="flex p-6 items-center justify-center min-h-screen">
       <ToastContainer autoClose={3000} position="top-right" />
@@ -70,7 +83,7 @@ const Register = () => {
             <label className="block text-sm font-medium text-gray-400">Email Address</label>
             <input
               type="email"
-              {...register("email", { 
+              {...register("email", {
                 required: "Email is required",
                 //UNCOMMENT THE BELOW LINE TO ENABLE EMAIL FORMAT VALIDATION ON SIGNUP AT FINAL DEPLOYMENT
                 // pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ 

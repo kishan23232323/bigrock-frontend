@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import API from "../../config/axios";
 
-export const loginUser = async ({email, password}) => {
+export const loginUser = async ({ email, password }) => {
   try {
     const response = await API.post("/api/v1/users/login", { email, password });
     return response.data;
@@ -10,13 +10,14 @@ export const loginUser = async ({email, password}) => {
   }
 }
 
-export const registerUser = async ({name, email, password, role}) => {
+export const registerUser = async ({ name, email, password, role, referral }) => {
   try {
-    const response = await API.post("/api/v1/users/register", { 
+    const response = await API.post("/api/v1/users/register", {
       name,
-      email, 
+      email,
       password,
-      role 
+      role,
+      referral
     });
     return response.data;
   } catch (error) {
@@ -27,7 +28,7 @@ export const registerUser = async ({name, email, password, role}) => {
 export const logoutUser = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    if(!token){
+    if (!token) {
       console.log("User not logged in");
       return
     }
@@ -64,17 +65,17 @@ export const getUserProfile = async (token) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    return response.data?.data; 
+    return response.data?.data;
   } catch (error) {
     throw error.response ? error.response.data : error;
   }
 };
 
 
-export const updateUserProfile = async ({name, email}) => {
+export const updateUserProfile = async ({ name, email }) => {
   try {
     const token = localStorage.getItem("accessToken");
-    if(!token){
+    if (!token) {
       console.log("User not logged in");
       return
     }
@@ -91,7 +92,7 @@ export const updateUserProfile = async ({name, email}) => {
 export const resetPassword = async ({ oldPassword, newPassword }) => {
   try {
     const token = localStorage.getItem("accessToken");
-    if(!token){
+    if (!token) {
       console.log("User not logged in");
       return
     }
