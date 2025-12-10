@@ -99,14 +99,22 @@ const Navbar = () => {
           <FaUser />
           <span>Profile</span>
         </NavLink>
-
+        {isAdmin &&  <NavLink className={mobileLinkClass} to="/admin">
+          <FaUser />
+          <span>Admin</span>
+        </NavLink>
+        }
         {/* Show Join Now at the end if not logged in (mobile) */}
-        {!isLoggedIn && (
+        {!isLoggedIn ? (
           <NavLink className={mobileLinkClass} to="/login">
             <FaUserPlus /> {/* changed icon */}
             <span>Join Now</span>
           </NavLink>
-        )}
+        ) : (
+        <NavLink className={styles.logoutWrapper}>
+                <LogoutBtn />
+              </NavLink>
+            )}
       </div>
     </>
   );

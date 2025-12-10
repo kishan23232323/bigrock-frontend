@@ -708,7 +708,7 @@ const BuySection = ({ selectedCountry }) => {
   // ------------------------- Render Create UI -------------------------
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
-      {/* Fiat amount - REMOVED disabled attribute */}
+     
       <div className={styles.inputGroup}>
         <label className={styles.label}>Amount to Pay ({currencyCode})</label>
         <input
@@ -716,6 +716,7 @@ const BuySection = ({ selectedCountry }) => {
           className={styles.input}
           placeholder="Enter amount"
           value={fiatAmount}
+          disabled
           onChange={(e) => onFiatChange(e.target.value)}
         />
       </div>

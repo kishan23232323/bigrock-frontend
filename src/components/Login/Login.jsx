@@ -59,7 +59,8 @@ function Login() {
             type="email"
             {...register("email", {
               required: "Email is required",
-              pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              // UNCOMMENT THE LINE BELOW TO ENABLE EMAIL FORMAT VALIDATION at time of final deployment
+              // pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
             })}
             className="w-full px-4 py-2 border text-slate-300 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
             placeholder="your@email.com"
