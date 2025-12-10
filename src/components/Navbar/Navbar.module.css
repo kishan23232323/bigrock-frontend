@@ -1,98 +1,163 @@
-/* DESKTOP NAV */
 .navContainer {
-  height: 66px;
+  position: fixed;
+  top: 0;
   width: 100%;
-  padding: 0 35px;
+  z-index: 40;
+  backdrop-filter: blur(20px);
+  background: rgba(10, 22, 40, 0.82);
+  border-bottom: 1px solid rgba(6, 238, 245, 0.24);
+}
+
+.navContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(15px);
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: "Orbitron", system-ui, sans-serif;
 }
 
-.logo span {
-  color: #40a9ff;
+.logoIcon {
+  font-size: 1.4rem;
+  color: #06eef5;
+  text-shadow: 0 0 18px rgba(6, 238, 245, 0.6);
+}
+
+.logoTextPrimary {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #06eef5;
+}
+
+.logoTextSecondary {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  opacity: 0.85;
 }
 
 .actions {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
-  width: 387px;
+  align-items: center;
+  gap: 1.5rem; /* adjusted for balanced spacing */
+  font-size: 0.92rem;
+}
+
+.navLink {
+  position: relative;
+  text-decoration: none;
+  color: #cbd5f5;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding-bottom: 0.35rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #06eef5, #8a2be2);
+  transform: translateX(-50%);
+  transition: width 0.2s ease;
+}
+
+.navLink:hover {
+  color: #06eef5;
+  transform: translateY(-1px);
+}
+
+.navLink:hover::after {
+  width: 70%;
 }
 
 .active {
-  color: #40a9ff;
+  color: #06eef5;
 }
 
-/* ---------------------- */
-/* MOBILE NAV (Bottom)    */
-/* ---------------------- */
+.active::after {
+  width: 90%;
+}
+
+.logoutWrapper {
+  display: flex;
+  align-items: center;
+}
 
 .mobileNav {
-  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3.8rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(5, 11, 20, 0.96);
+  border-top: 1px solid rgba(6, 238, 245, 0.2);
+  backdrop-filter: blur(18px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 40;
 }
 
-/* ===== MOBILE STYLES ===== */
+.mobileItem {
+  flex: 1;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  padding-top: 0.1rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
 
-@media (max-width: 700px) {
-  /* Keep logo visible */
-  .navContainer {
-    justify-content: start;
-    height: 60px;
-    padding: 0 20px;
-    backdrop-filter: unset;
-    border: none;
-  }
+.mobileItem svg {
+  font-size: 1.35rem;
+}
 
-  /* Hide only the actions/menu links */
-  .actions {
+.mobileItem span {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.mobileItem:hover {
+  color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.mobileActive {
+  color: #06eef5;
+}
+
+.mobileActive svg {
+  filter: drop-shadow(0 0 10px rgba(6, 238, 245, 0.8));
+}
+
+@media (min-width: 900px) {
+  .mobileNav {
     display: none;
   }
+}
 
-  .logo {
-    font-size: 20px;
-    font-weight: 500;
-  }
-
-  /* Show bottom nav */
-  .mobileNav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(15px);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-
-    justify-content: space-around;
-    align-items: center;
-    color: white;
-    z-index: 9999;
-  }
-
-  .mobileNav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 12px;
-    text-decoration: none;
-    gap: 3px;
-    color: white;
-  }
-
-  .mobileNav a svg {
-    font-size: 22px;
-  }
-
-  .mobileNav a.active {
-    color: #40a9ff;
+@media (max-width: 899px) {
+  .actions {
+    display: none;
   }
 }

@@ -1,0 +1,198 @@
+/* Airdrop.module.css */
+.page {
+  min-height: 100vh;
+  padding: 6rem 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background:
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 60%),
+    radial-gradient(circle at bottom, rgba(129, 140, 248, 0.25), transparent 60%),
+    #020617; */
+  color: #e5e7eb;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 26px;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  padding: 2.4rem 2.1rem 1.9rem;
+  background:
+    radial-gradient(circle at top, rgba(59, 130, 246, 0.18), transparent 65%),
+    radial-gradient(circle at bottom, rgba(129, 140, 248, 0.2), transparent 65%),
+    rgba(15, 23, 42, 0.98);
+  box-shadow:
+    0 24px 80px rgba(15, 23, 42, 0.95),
+    0 0 40px rgba(56, 189, 248, 0.4);
+  text-align: center;
+}
+
+.headerLogo {
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #67e8f9;
+  margin-bottom: 0.7rem;
+}
+
+.mainTitle {
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 2.6rem;
+  letter-spacing: 0.35em;
+  text-indent: 0.35em;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #a855f7, #e0f2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  margin-top: 0.9rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.sectionBox {
+  margin-top: 1.9rem;
+  border-radius: 18px;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  padding: 1.1rem 1.1rem 1rem;
+  background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.7), transparent 85%);
+}
+
+.sectionTitle {
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #67e8f9;
+  text-align: left;
+  margin-bottom: 0.75rem;
+}
+
+.progressBarOuter {
+  width: 100%;
+  height: 0.85rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  overflow: hidden;
+  box-shadow: inset 0 0 6px rgba(15, 23, 42, 0.9);
+}
+
+.progressBarInner {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #38bdf8, #a855f7);
+  box-shadow:
+    0 0 16px rgba(56, 189, 248, 0.8),
+    0 0 26px rgba(168, 85, 247, 0.8);
+  transition: width 0.3s ease;
+}
+
+.progressRow {
+  margin-top: 0.45rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.progressAmount {
+  color: #e5e7eb;
+}
+
+.progressPercent {
+  color: #67e8f9;
+  font-weight: 600;
+}
+
+.tasksList {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.taskRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0.2rem 0.55rem 0;
+}
+
+.taskLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.taskIcon {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #67e8f9;
+  font-size: 1.1rem;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+}
+
+.taskLabel {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.taskStatus {
+  min-width: 90px;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  background: transparent;
+  color: #67e8f9;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.taskStatus:hover {
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+}
+
+.statusCompleted {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.9);
+  color: #bbf7d0;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.7);
+}
+
+.footerBanner {
+  margin-top: 1.4rem;
+  border-radius: 14px;
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  padding: 0.65rem 0.8rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #67e8f9;
+  background: rgba(15, 23, 42, 0.9);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 2rem 1.6rem 1.8rem;
+  }
+
+  .mainTitle {
+    font-size: 2.2rem;
+    letter-spacing: 0.3em;
+  }
+}

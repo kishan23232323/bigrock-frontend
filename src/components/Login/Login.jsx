@@ -25,11 +25,10 @@ function Login() {
           user: response.data.user,
           accessToken: response.data.accessToken,
           refreshToken: response.data.refreshToken,
-          
         })
       );
-    localStorage.setItem("accessToken", response.data.accessToken);
-    localStorage.setItem("userId", response.data.user._id);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("userId", response.data.user._id);
 
       console.log("Login Response:", response.data);
       navigate("/");
@@ -40,11 +39,11 @@ function Login() {
   };
 
   return (
-    <div className="flex p-6 justify-center items-center h-screen ">
-      <ToastContainer autoClose={3000} position="top-right"/>
+    <div className="flex p-6 justify-center items-center h-screen">
+      <ToastContainer autoClose={3000} position="top-right" />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className=" backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96 border bg-transparent border-gray-200"
+        className="backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96 border bg-transparent border-gray-200"
       >
         <h2 className="text-3xl font-extrabold text-center text-slate-200 mb-2">
           Welcome Back
@@ -58,10 +57,11 @@ function Login() {
           <label className="block mb-1 font-semibold text-gray-400">Email</label>
           <input
             type="email"
-            {...register("email", { required: "Email is required", 
+            {...register("email", {
+              required: "Email is required",
               pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-             })}
-            className="w-full px-4 py-2 border  text-slate-300 border-slate-200  rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            })}
+            className="w-full px-4 py-2 border text-slate-300 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
             placeholder="your@email.com"
           />
           {errors.email && (
@@ -71,11 +71,13 @@ function Login() {
 
         {/* Password */}
         <div className="mb-5">
-          <label className="block mb-1 font-semibold text-gray-400">Password</label>
+          <label className="block mb-1 font-semibold text-gray-400">
+            Password
+          </label>
           <input
             type="password"
             {...register("password", { required: "Password is required" })}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none  text-slate-200 border-slate-200  focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none text-slate-200 border-slate-200 focus:ring-2 focus:ring-indigo-500 shadow-sm"
             placeholder="••••••••"
           />
           {errors.password && (
@@ -88,16 +90,30 @@ function Login() {
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-indigo-600  text-white py-2 rounded-lg font-semibold shadow-md hover:from-indigo-700 hover:to-blue-600 transition duration-300 transform hover:scale-[1.02]"
+          style={{
+            background: "linear-gradient(135deg, #06eef5, #00ffa3)",
+            boxShadow: "0 0 20px rgba(6, 238, 245, 0.4)",
+            color: "#000000",
+          }}
+          className="w-full text-black py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition duration-300 transform hover:scale-[1.02]"
+          onMouseEnter={(e) => {
+            e.target.style.boxShadow = "0 0 30px rgba(6, 238, 245, 0.6)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.boxShadow = "0 0 20px rgba(6, 238, 245, 0.4)";
+          }}
         >
           Login
         </button>
 
         {/* Extra Links */}
         <p className="text-center text-sm text-gray-400 mt-4">
-          Don’t have an account?{" "}
-
-          <span className="text-blue-100 font-semibold hover:underline cursor-pointer" onClick={() => navigate("/signup")}>
+          Don't have an account?{" "}
+          <span
+            className="text-blue-100 font-semibold hover:underline cursor-pointer"
+            onClick={() => navigate("/signup")}
+            
+          >
             Sign up
           </span>
         </p>

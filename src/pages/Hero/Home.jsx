@@ -1,61 +1,79 @@
 import React from "react";
 import styles from "./Home.module.css";
-import RubicWidget from "../../components/Widget/widget";
 
 const cardInfo = [
   {
     imageSrc: "/heroCardImages/instantMultiChainSwaps.png",
     title: "Instant Multi-Chain Swaps",
     subtext:
-      "Swap tokens across Ethereum, BNB, Polygon and more — powered by Rubic.",
+      "Execute cross-chain swaps in seconds. No bridges, no waiting. Powered by Rubic routing.",
   },
   {
     imageSrc: "/heroCardImages/Over80Blockchains.png",
-    title: "Over 80+ Blockchains",
+    title: "80+ Blockchains Supported",
     subtext:
-      "Sonic Exchange supports 80+ blockchains and 16,000+ tokens — all in one place.",
+      "From Ethereum to Solana, Polygon to Avalanche. Trade any token on any chain from one interface.",
   },
   {
     imageSrc: "/heroCardImages/earnAirdrops.png",
-    title: "Earn Airdrops",
+    title: "Earn Airdrops for Swaps",
     subtext:
-      "Get rewarded for swapping across multiple chains with automated airdrops.",
+      "Every swap earns you points. Climb tiers to unlock airdrops, boost rewards, and perks.",
   },
   {
     imageSrc: "/heroCardImages/secure.png",
     title: "Secure & Non-Custodial",
     subtext:
-      "Your assets stay in your wallet. Fast, safe cross-chain swaps powered by Rubic.",
+      "Your keys, your crypto. Swaps execute directly from your wallet with battle-tested security.",
   },
 ];
 
 const Home = () => {
   return (
     <div className={styles.homeContainer}>
+      <div className={styles.bgAnimation}>
+        <div className={styles.gridPattern} />
+      </div>
+
       <section className={styles.heroSection}>
-        <div className={styles.content}>
-          <h1>Next-Gen Cross-Chain Swapping. One Platform. Every Chain.</h1>
-          <p className={styles.subtext}>
-            Swap, trade, and earn across 80+ blockchains all from one
-            decentralized platform.
-          </p>
-          <div className={styles.buttons}>
-            <button className={styles.start}>Start&nbsp;Swapping</button>
-          </div>
-        <div className=" flex justify-center items-start pt-10">
-            <RubicWidget />
-        </div>
-        </div>
-        <div className={styles.cardsGrid}>
-          {cardInfo.map((card, index) => (
-            <div key={index} className={styles.card}>
-              <img src={card.imageSrc} alt={card.title} />
-              <div>
-                <h3>{card.title}</h3>
-                <p>{card.subtext}</p>
-              </div>
+        <div className={styles.heroTop}>
+          <div className={styles.content}>
+            <div className={styles.eyebrow}>SONIC EXCHANGE • MULTICHAIN DEFI</div>
+
+            <div className={styles.titleWrap}>
+              <h1 className={styles.title}>Next-Gen Cross-Chain Swapping</h1>
+              <p className={styles.titleSub}>One Platform. Every Chain.</p>
             </div>
-          ))}
+
+            <p className={styles.subtext}>
+              Swap, trade, and earn across 80+ blockchains from a single
+              decentralized interface. Experience true multichain freedom.
+            </p>
+
+            <div className={styles.buttons}>
+              <button className={styles.primaryButton}>Presale</button>
+            </div>
+          </div>
+
+          {/* Removed RubicWidget */}
+          {/* <div className={styles.widgetWrapper}>
+            <RubicWidget />
+          </div> */}
+        </div>
+
+        <div className={styles.cardsSection}>
+          <h2 className={styles.sectionTitle}>Why Sonic Exchange</h2>
+          <div className={styles.cardsGrid}>
+            {cardInfo.map((card, index) => (
+              <div key={index} className={styles.card}>
+                <img src={card.imageSrc} alt={card.title} />
+                <div>
+                  <h3>{card.title}</h3>
+                  <p>{card.subtext}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>
