@@ -1,98 +1,260 @@
-/* DESKTOP NAV */
 .navContainer {
-  height: 66px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(5, 11, 20, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(6, 238, 245, 0.1);
   width: 100%;
-  padding: 0 35px;
+}
+
+.navContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+}
+
+/* Logo */
+.logo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
   color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(15px);
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-right: auto;
 }
 
-.logo {
+.logoIcon {
   font-size: 24px;
-  font-weight: 500;
 }
 
-.logo span {
-  color: #40a9ff;
+.logoTextPrimary {
+  color: #06eef5;
 }
 
-.actions {
+.logoTextSecondary {
+  color: #00d4ff;
+}
+
+/* Desktop Navigation Menu - Moved to Right */
+.navMenu {
   display: flex;
-  justify-content: space-between;
-  width: 387px;
+  list-style: none;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  margin-left: auto;
 }
 
-.active {
-  color: #40a9ff;
+.navLink {
+  color: #aaa;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: block;
+  white-space: nowrap;
 }
 
-/* ---------------------- */
-/* MOBILE NAV (Bottom)    */
-/* ---------------------- */
+.navLink:hover {
+  color: #06eef5;
+}
 
-.mobileNav {
+.navLink.active {
+  color: #06eef5;
+  background: rgba(6, 238, 245, 0.1);
+  border: 1px solid rgba(6, 238, 245, 0.3);
+}
+
+/* Auth Button - Desktop */
+.authButton {
+  list-style: none;
+  margin-left: 16px;
+}
+
+.authButton button,
+.authButton a {
+  background: linear-gradient(135deg, #06eef5, #00d4ff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(6, 238, 245, 0.3);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.authButton button:hover,
+.authButton a:hover {
+  box-shadow: 0 0 25px rgba(6, 238, 245, 0.5);
+  transform: scale(1.02);
+}
+
+/* Mobile Menu Toggle Button */
+.mobileMenuToggle {
   display: none;
+  background: none;
+  border: none;
+  color: #06eef5;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 16px;
 }
 
-/* ===== MOBILE STYLES ===== */
+.mobileMenuToggle:hover {
+  color: #00d4ff;
+}
 
-@media (max-width: 700px) {
-  /* Keep logo visible */
-  .navContainer {
-    justify-content: start;
-    height: 60px;
-    padding: 0 20px;
-    backdrop-filter: unset;
-    border: none;
+/* Mobile Dropdown Menu */
+.mobileDropdown {
+  display: none;
+  background: rgba(5, 11, 20, 0.98);
+  border-top: 1px solid rgba(6, 238, 245, 0.1);
+  padding: 0;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.mobileMenuItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 12px 0;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #aaa;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 14px 20px;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.mobileLink:hover {
+  color: #06eef5;
+  background: rgba(6, 238, 245, 0.05);
+  border-left-color: #06eef5;
+}
+
+.mobileLink.mobileActive {
+  color: #06eef5;
+  background: rgba(6, 238, 245, 0.1);
+  border-left-color: #06eef5;
+}
+
+.mobileLink svg {
+  font-size: 18px;
+}
+
+/* Mobile Auth Section */
+.mobileAuthSection {
+  padding: 12px 20px;
+  border-top: 1px solid rgba(6, 238, 245, 0.1);
+  margin-top: 8px;
+}
+
+.mobileLogoutWrapper button {
+  width: 100%;
+  background: linear-gradient(135deg, #06eef5, #00d4ff);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(6, 238, 245, 0.3);
+  font-size: 14px;
+}
+
+.mobileLogoutWrapper button:hover {
+  box-shadow: 0 0 25px rgba(6, 238, 245, 0.5);
+  transform: scale(1.02);
+}
+
+.mobileAuthSection .mobileLink {
+  padding: 12px 0;
+  border-left: none;
+}
+
+.mobileAuthSection .mobileLink:hover {
+  border-left: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navMenu {
+    display: none !important;
   }
 
-  /* Hide only the actions/menu links */
-  .actions {
-    display: none;
+  .authButton {
+    display: none !important;
+  }
+
+  .mobileMenuToggle {
+    display: block;
+  }
+
+  .mobileDropdown {
+    display: block;
+  }
+
+  .navContent {
+    padding: 12px 16px;
   }
 
   .logo {
+    font-size: 16px;
+    margin-right: auto;
+  }
+
+  .logoIcon {
     font-size: 20px;
-    font-weight: 500;
   }
 
-  /* Show bottom nav */
-  .mobileNav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(15px);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-
-    justify-content: space-around;
-    align-items: center;
-    color: white;
-    z-index: 9999;
+  .navContainer {
+    position: relative;
   }
 
-  .mobileNav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 12px;
-    text-decoration: none;
-    gap: 3px;
-    color: white;
+  .mobileDropdown {
+    position: static;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobileMenuToggle {
+    display: none !important;
   }
 
-  .mobileNav a svg {
-    font-size: 22px;
+  .mobileDropdown {
+    display: none !important;
   }
 
-  .mobileNav a.active {
-    color: #40a9ff;
+  .navContainer {
+    position: sticky;
   }
 }

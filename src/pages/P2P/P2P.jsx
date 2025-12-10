@@ -708,7 +708,7 @@ const BuySection = ({ selectedCountry }) => {
   // ------------------------- Render Create UI -------------------------
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
-      {/* Fiat amount */}
+     
       <div className={styles.inputGroup}>
         <label className={styles.label}>Amount to Pay ({currencyCode})</label>
         <input
@@ -760,61 +760,59 @@ const BuySection = ({ selectedCountry }) => {
             <IoChevronDownOutline size={25} />
           </button>
 
-{isPaymentExpanded && (
-  <div className={styles.paymentDropdown}>
+          {isPaymentExpanded && (
+            <div className={styles.paymentDropdown}>
 
-    {/* UPI → ONLY FOR INDIA */}
-    {isIndia && (
-      <div
-        className={`${styles.paymentOption} ${
-          expandedPayment === "upi" ? styles.activeDropdown : ""
-        }`}
-      >
-        <button
-          className={styles.paymentOptionHeader}
-          onClick={() => selectPaymentMethod("upi", "UPI")}
-        >
-          <span>UPI</span>
-          <IoChevronDownOutline size={20} />
-        </button>
-      </div>
-    )}
+              {/* UPI → ONLY FOR INDIA */}
+              {isIndia && (
+                <div
+                  className={`${styles.paymentOption} ${
+                    expandedPayment === "upi" ? styles.activeDropdown : ""
+                  }`}
+                >
+                  <button
+                    className={styles.paymentOptionHeader}
+                    onClick={() => selectPaymentMethod("upi", "UPI")}
+                  >
+                    <span>UPI</span>
+                    <IoChevronDownOutline size={20} />
+                  </button>
+                </div>
+              )}
 
-    {/* PayPal → HIDE WHEN INDIA */}
-    {!isIndia && (
-      <div
-        className={`${styles.paymentOption} ${
-          expandedPayment === "paypal" ? styles.activeDropdown : ""
-        }`}
-      >
-        <button
-          className={styles.paymentOptionHeader}
-          onClick={() => selectPaymentMethod("paypal", "PayPal")}
-        >
-          <span>PayPal</span>
-          <IoChevronDownOutline size={20} />
-        </button>
-      </div>
-    )}
+              {/* PayPal → HIDE WHEN INDIA */}
+              {!isIndia && (
+                <div
+                  className={`${styles.paymentOption} ${
+                    expandedPayment === "paypal" ? styles.activeDropdown : ""
+                  }`}
+                >
+                  <button
+                    className={styles.paymentOptionHeader}
+                    onClick={() => selectPaymentMethod("paypal", "PayPal")}
+                  >
+                    <span>PayPal</span>
+                    <IoChevronDownOutline size={20} />
+                  </button>
+                </div>
+              )}
 
-    {/* Bank → ALWAYS SHOWN */}
-    <div
-      className={`${styles.paymentOption} ${
-        expandedPayment === "bank" ? styles.activeDropdown : ""
-      }`}
-    >
-      <button
-        className={styles.paymentOptionHeader}
-        onClick={() => selectPaymentMethod("bank", "Bank Transfer")}
-      >
-        <span>Bank Transfer</span>
-        <IoChevronDownOutline size={20} />
-      </button>
-    </div>
-  </div>
-)}
-
-
+              {/* Bank → ALWAYS SHOWN */}
+              <div
+                className={`${styles.paymentOption} ${
+                  expandedPayment === "bank" ? styles.activeDropdown : ""
+                }`}
+              >
+                <button
+                  className={styles.paymentOptionHeader}
+                  onClick={() => selectPaymentMethod("bank", "Bank Transfer")}
+                >
+                  <span>Bank Transfer</span>
+                  <IoChevronDownOutline size={20} />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
