@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavLink, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
-import { FaExchangeAlt, FaGift, FaUser, FaUserPlus } from "react-icons/fa"; // changed icon for Join Now
+import { FaExchangeAlt, FaGift, FaUser, FaUserPlus, FaBars, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { LogoutBtn } from "./LogoutBtn";
 
@@ -11,6 +11,7 @@ const Navbar = () => {
   const { accessToken, user } = useSelector((state) => state.auth || {});
   const isLoggedIn = Boolean(accessToken);
   const isAdmin = user?.role === "admin";
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const getP2PState = () => {
     if (location.pathname !== "/p2p") {
@@ -23,99 +24,106 @@ const Navbar = () => {
     isActive ? `${styles.navLink} ${styles.active}` : styles.navLink;
 
   const mobileLinkClass = ({ isActive }) =>
-    isActive
-      ? `${styles.mobileItem} ${styles.mobileActive}`
-      : styles.mobileItem;
+    isActive ? `${styles.mobileLink} ${styles.mobileActive}` : styles.mobileLink;
+
+  const handleNavClick = () => {
+    setMobileMenuOpen(false);
+  };
+
+  const navItems = [
+    { to: "/", label: "Home", icon: <AiFillHome /> },
+    { to: "/p2p", label: "P2P", icon: <FaExchangeAlt />, state: getP2PState() },
+    { to: "/airdrop", label: "Airdrop", icon: <FaGift /> },
+    { to: "/profile", label: "Profile", icon: <FaUser /> },
+    ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
+  ];
 
   return (
     <>
-      {/* Desktop Navbar */}
       <nav className={styles.navContainer}>
         <div className={styles.navContent}>
+          {/* Logo */}
           <div className={styles.logo}>
             <span className={styles.logoIcon}>⚡</span>
             <span className={styles.logoTextPrimary}>Sonic</span>
             <span className={styles.logoTextSecondary}>Exchange</span>
           </div>
 
-          <ul className={styles.actions}>
-            <li>
-              <NavLink className={linkClass} to="/">
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={linkClass} to="/p2p" state={getP2PState()}>
-                P2P
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={linkClass} to="/airdrop">
-                Airdrop
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={linkClass} to="/profile">
-                Profile
-              </NavLink>
-            </li>
-            {isAdmin && (
-              <li>
-                <NavLink className={linkClass} to="/admin">
-                  Admin
+          {/* Desktop Menu */}
+          <ul className={styles.navMenu}>
+            {navItems.map((item) => (
+              <li key={item.to}>
+                <NavLink
+                  className={linkClass}
+                  to={item.to}
+                  state={item.state}
+                  onClick={handleNavClick}
+                >
+                  {item.label}
                 </NavLink>
               </li>
-            )}
-            {isLoggedIn ? (
-              <li className={styles.logoutWrapper}>
+            ))}
+
+            {/* Desktop Auth Button */}
+            <li className={styles.authButton}>
+              {isLoggedIn ? (
                 <LogoutBtn />
-              </li>
-            ) : (
-              <li>
+              ) : (
                 <NavLink className={linkClass} to="/login">
                   Join Now
                 </NavLink>
-              </li>
-            )}
+              )}
+            </li>
           </ul>
-        </div>
-      </nav>
 
-      {/* Mobile Navbar */}
-      <div className={styles.mobileNav}>
-        <NavLink className={mobileLinkClass} to="/">
-          <AiFillHome />
-          <span>Home</span>
-        </NavLink>
-        <NavLink className={mobileLinkClass} to="/p2p" state={getP2PState()}>
-          <FaExchangeAlt />
-          <span>P2P</span>
-        </NavLink>
-        <NavLink className={mobileLinkClass} to="/airdrop">
-          <FaGift />
-          <span>Airdrop</span>
-        </NavLink>
-        <NavLink className={mobileLinkClass} to="/profile">
-          <FaUser />
-          <span>Profile</span>
-        </NavLink>
-        {isAdmin &&  <NavLink className={mobileLinkClass} to="/admin">
-          <FaUser />
-          <span>Admin</span>
-        </NavLink>
-        }
-        {/* Show Join Now at the end if not logged in (mobile) */}
-        {!isLoggedIn ? (
-          <NavLink className={mobileLinkClass} to="/login">
-            <FaUserPlus /> {/* changed icon */}
-            <span>Join Now</span>
-          </NavLink>
-        ) : (
-        <NavLink className={styles.logoutWrapper}>
-                <LogoutBtn />
-              </NavLink>
-            )}
-      </div>
+          {/* Mobile Menu Toggle */}
+          <button
+            className={styles.mobileMenuToggle}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className={styles.mobileDropdown}>
+            <div className={styles.mobileMenuItems}>
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  className={mobileLinkClass}
+                  to={item.to}
+                  state={item.state}
+                  onClick={handleNavClick}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </NavLink>
+              ))}
+
+              {/* Mobile Auth Button */}
+              <div className={styles.mobileAuthSection}>
+                {isLoggedIn ? (
+                  <div className={styles.mobileLogoutWrapper}>
+                    <LogoutBtn />
+                  </div>
+                ) : (
+                  <NavLink
+                    className={mobileLinkClass}
+                    to="/login"
+                    onClick={handleNavClick}
+                  >
+                    <FaUserPlus />
+                    <span>Join Now</span>
+                  </NavLink>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
     </>
   );
 };
