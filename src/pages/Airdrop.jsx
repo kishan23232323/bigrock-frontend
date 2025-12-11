@@ -28,12 +28,26 @@ export default function AirdropPage({ onNavigate }) {
 
   const referralLink = "https://sonic.exchange/ref/pavan123";
 
-  const airdropData = [
+  const initialAirdropData = [
     { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: "CLAIMABLE", icon: "✓" },
     { id: 2, name: "Early Bird Bonus", amount: "250 SONIC", status: "CLAIMED", icon: "✓" },
     { id: 3, name: "Referral Rewards", amount: "1250 SONIC", status: "PENDING", icon: "!" },
     { id: 4, name: "Trading Volume", amount: "750 SONIC", status: "LOCKED", icon: "🔒" },
   ];
+
+  const [airdropData, setAirdropData] = useState(initialAirdropData);
+
+  const handleClaim = (id) => {
+    setAirdropData(
+      airdropData.map((airdrop) => {
+        if (airdrop.id === id && airdrop.status === "CLAIMABLE") {
+          // Change status to CLAIMED
+          return { ...airdrop, status: "CLAIMED" };
+        }
+        return airdrop;
+      })
+    );
+  };
 
   const Navigation = () => (
     <div className={styles.bottomNav}>
@@ -99,7 +113,10 @@ export default function AirdropPage({ onNavigate }) {
               </div>
               <h3 className={styles.airdropName}>{airdrop.name}</h3>
               <p className={styles.airdropAmount}>{airdrop.amount}</p>
-              <button className={`${styles.claimBtn} ${airdrop.status !== "CLAIMABLE" ? styles.disabled : ""}`}>
+              <button
+                onClick={() => handleClaim(airdrop.id)}
+                className={`${styles.claimBtn} ${airdrop.status !== "CLAIMABLE" ? styles.disabled : ""}`}
+              >
                 {airdrop.status === "CLAIMABLE" ? "Claim Now" : airdrop.status}
               </button>
             </div>
