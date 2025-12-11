@@ -4,7 +4,7 @@
   min-height: 100vh;
   overflow: hidden;
   padding-bottom: 120px;
-  background: transparent;
+  background: linear-gradient(135deg, #050b14 0%, #0a1520 100%);
 }
 
 
@@ -38,6 +38,7 @@
 .headerContent {
   flex: 1;
   min-width: 200px;
+  background: transparent;
 }
 
 .title {
@@ -45,22 +46,26 @@
   font-size: 24px;
   font-weight: 700;
   color: #fff;
+  background: transparent;
 }
 
 .subtitle {
   margin: 0;
   font-size: 12px;
   color: #9aa6ad;
+  background: transparent;
 }
 
 .totalRewards {
   text-align: right;
+  background: transparent;
 }
 
 .rewardsLabel {
   margin: 0 0 4px 0;
   font-size: 11px;
   color: #9aa6ad;
+  background: transparent;
 }
 
 .rewardsAmount {
@@ -69,6 +74,7 @@
   font-weight: 700;
   color: #06eef5;
   text-shadow: 0 0 10px rgba(6, 238, 245, 0.5);
+  background: transparent;
 }
 
 /* Cards Grid */
@@ -77,6 +83,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-bottom: 24px;
+  background: transparent;
 }
 
 .airdropCard {
@@ -99,6 +106,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  background: transparent;
 }
 
 .statusIcon {
@@ -109,6 +117,7 @@
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  background: transparent;
 }
 
 .statusCLAIMABLE {
@@ -136,6 +145,7 @@
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 6px;
+  background: transparent;
 }
 
 .badgeCLAIMABLE {
@@ -163,6 +173,7 @@
   font-size: 14px;
   font-weight: 600;
   color: #dff8fb;
+  background: transparent;
 }
 
 .airdropAmount {
@@ -170,6 +181,7 @@
   font-size: 16px;
   font-weight: 700;
   color: #06eef5;
+  background: transparent;
 }
 
 .claimBtn {
@@ -211,18 +223,21 @@
   font-size: 16px;
   font-weight: 600;
   color: #dff8fb;
+  background: transparent;
 }
 
 .referralDesc {
   margin: 0 0 16px 0;
   font-size: 12px;
   color: #9aa6ad;
+  background: transparent;
 }
 
 .referralLinkBox {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
+  background: transparent;
 }
 
 .referralInput {
@@ -259,6 +274,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+  background: transparent;
 }
 
 .statItem {
@@ -266,6 +282,7 @@
   padding: 12px;
   background: rgba(3, 6, 10, 0.4);
   border-radius: 8px;
+  background: transparent;
 }
 
 .statLabel {
@@ -279,6 +296,7 @@
   font-size: 14px;
   font-weight: 700;
   color: #06eef5;
+  background: transparent;
 }
 
 /* Info Cards Grid */
@@ -287,6 +305,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-bottom: 100px;
+  background: transparent;
 }
 
 .infoCard {
@@ -303,6 +322,7 @@
   font-size: 13px;
   font-weight: 600;
   color: #dff8fb;
+  background: transparent;
 }
 
 .infoList {
@@ -335,6 +355,7 @@
   justify-content: space-around;
   align-items: center;
   padding: 12px 20px;
+  background: transparent;
 }
 
 .navButton {
@@ -364,6 +385,7 @@
     padding: 40px 24px;
   }
 
+
   .headerCard {
     padding: 28px;
     flex-wrap: nowrap;
@@ -372,19 +394,23 @@
   .title {
     font-size: 28px;
   }
+  
 
   .cardsGrid {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
   }
 
+
   .airdropCard {
     padding: 20px;
   }
 
+
   .airdropName {
     font-size: 15px;
   }
+  
 
   .infoCardsGrid {
     grid-template-columns: repeat(2, 1fr);
@@ -401,6 +427,7 @@
     padding: 24px 12px;
   }
 
+
   .headerCard {
     padding: 16px;
     flex-direction: column;
@@ -411,9 +438,11 @@
     text-align: center;
   }
 
+
   .title {
     font-size: 20px;
   }
+  
 
   .cardsGrid {
     grid-template-columns: 1fr;
@@ -424,13 +453,16 @@
     padding: 14px;
   }
 
+
   .referralLinkBox {
     flex-direction: column;
   }
 
+
   .referralStats {
     grid-template-columns: 1fr;
   }
+ 
 
   .infoCardsGrid {
     grid-template-columns: 1fr;
@@ -440,12 +472,15 @@
   .infoCard {
     padding: 12px;
   }
+ 
 
   .infoTitle {
     font-size: 12px;
   }
+ 
 
   .infoList li {
     font-size: 11px;
   }
+ 
 }
