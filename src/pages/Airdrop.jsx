@@ -1,5 +1,6 @@
 // Airdrop.jsx
-import React from "react";
+import React, { useState } from "react";
+import { Home, ArrowLeftRight, Star, User, Copy, Check } from "lucide-react";
 import styles from "./Airdrop.module.css";
 
 // ICON IMPORTS
@@ -16,69 +17,154 @@ const tasks = [
   { id: 5, label: "Follow us on X", icon: <FaXTwitter />, status: "Follow" },
 ];
 
-const Airdrop = () => {
+export default function AirdropPage({ onNavigate }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("0x1234567890abcdef");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const referralLink = "https://sonic.exchange/ref/pavan123";
+
+  const airdropData = [
+    { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: "CLAIMABLE", icon: "✓" },
+    { id: 2, name: "Early Bird Bonus", amount: "250 SONIC", status: "CLAIMED", icon: "✓" },
+    { id: 3, name: "Referral Rewards", amount: "1250 SONIC", status: "PENDING", icon: "!" },
+    { id: 4, name: "Trading Volume", amount: "750 SONIC", status: "LOCKED", icon: "🔒" },
+  ];
+
+  const Navigation = () => (
+    <div className={styles.bottomNav}>
+      <div className={styles.navContainer}>
+        <button onClick={() => onNavigate("home")} className={styles.navButton}>
+          <Home size={22} />
+        </button>
+        <button onClick={() => onNavigate("p2p")} className={styles.navButton}>
+          <ArrowLeftRight size={22} />
+        </button>
+        <button onClick={() => onNavigate("airdrop")} className={`${styles.navButton} ${styles.active}`}>
+          <Star size={22} />
+        </button>
+        <button onClick={() => onNavigate("profile")} className={styles.navButton}>
+          <User size={22} />
+        </button>
+      </div>
+    </div>
+  );
+
   const total = 100;
   const current = 50;
   const progress = (current / total) * 100;
 
   return (
-    <div className={styles.page}>
-      <div className={styles.card}>
-        <div className={styles.headerLogo}>@ SONIC</div>
-        <h1 className={styles.mainTitle}>AIRDROP</h1>
-        <p className={styles.subtitle}>
-          COMPLETE THE TASKS BELOW
-          <br />
-          TO EARN 100 SONIC!
-        </p>
-
-        <div className={styles.sectionBox}>
-          <div className={styles.sectionTitle}>AIRDROP PROGRESS</div>
-
-          <div className={styles.progressBarOuter}>
-            <div
-              className={styles.progressBarInner}
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-
-          <div className={styles.progressRow}>
-            <span className={styles.progressAmount}>
-              {current} / {total} SONIC
-            </span>
-            <span className={styles.progressPercent}>{Math.round(progress)}%</span>
-          </div>
-        </div>
-
-        <div className={styles.sectionBox}>
-          <div className={styles.sectionTitle}>TASKS</div>
-
-          <div className={styles.tasksList}>
-            {tasks.map((task) => (
-              <div key={task.id} className={styles.taskRow}>
-                <div className={styles.taskLeft}>
-                  <div className={styles.taskIcon}>{task.icon}</div>
-                  <span className={styles.taskLabel}>{task.label}</span>
-                </div>
-
-                <button
-                  className={`${styles.taskStatus} ${
-                    task.status === "Completed" ? styles.statusCompleted : ""
-                  }`}
-                >
-                  {task.status}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.footerBanner}>
-          EARN 5 SONIC PER SWAP • LIMITED TO 5,000 USERS
-        </div>
+    <div className={styles.pageWrapper}>
+      {/* Background */}
+      <div className={styles.gridBackground}>
+        <div className={styles.gridOverlay} />
       </div>
+
+      {/* Orbs */}
+      <div className={styles.orbTopLeft} />
+      <div className={styles.orbBottomRight} />
+      <div className={styles.orbCenter} />
+
+      {/* Content */}
+      <div className={styles.contentWrapper}>
+        
+        {/* Header Card */}
+        <div className={styles.headerCard}>
+          <div className={styles.headerContent}>
+            <h1 className={styles.title}>Airdrop Hub</h1>
+            <p className={styles.subtitle}>Claim your rewards and earn through referrals</p>
+          </div>
+          <div className={styles.totalRewards}>
+            <p className={styles.rewardsLabel}>Total Claimable</p>
+            <p className={styles.rewardsAmount}>2,750 SONIC</p>
+          </div>
+        </div>
+
+        {/* Airdrop Cards Grid */}
+        <div className={styles.cardsGrid}>
+          {airdropData.map((airdrop) => (
+            <div key={airdrop.id} className={styles.airdropCard}>
+              <div className={styles.cardHeader}>
+                <div className={`${styles.statusIcon} ${styles[`status${airdrop.status.replace(" ", "")}`]}`}>
+                  {airdrop.icon}
+                </div>
+                <span className={`${styles.statusBadge} ${styles[`badge${airdrop.status.replace(" ", "")}`]}`}>
+                  {airdrop.status}
+                </span>
+              </div>
+              <h3 className={styles.airdropName}>{airdrop.name}</h3>
+              <p className={styles.airdropAmount}>{airdrop.amount}</p>
+              <button className={`${styles.claimBtn} ${airdrop.status !== "CLAIMABLE" ? styles.disabled : ""}`}>
+                {airdrop.status === "CLAIMABLE" ? "Claim Now" : airdrop.status}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Referral Section */}
+        <div className={styles.referralCard}>
+          <h2 className={styles.sectionTitle}>Referral Program</h2>
+          <p className={styles.referralDesc}>Earn SONIC for every friend you invite</p>
+          
+          <div className={styles.referralLinkBox}>
+            <input
+              type="text"
+              value={referralLink}
+              readOnly
+              className={styles.referralInput}
+            />
+            <button onClick={handleCopy} className={styles.copyBtn}>
+              {copied ? <Check size={18} /> : <Copy size={18} />}
+            </button>
+          </div>
+          
+          <div className={styles.referralStats}>
+            <div className={styles.statItem}>
+              <p className={styles.statLabel}>Referrals</p>
+              <p className={styles.statValue}>15</p>
+            </div>
+            <div className={styles.statItem}>
+              <p className={styles.statLabel}>Earnings</p>
+              <p className={styles.statValue}>1,250 SONIC</p>
+            </div>
+            <div className={styles.statItem}>
+              <p className={styles.statLabel}>Commission</p>
+              <p className={styles.statValue}>10%</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Info Cards */}
+        <div className={styles.infoCardsGrid}>
+          <div className={styles.infoCard}>
+            <h3 className={styles.infoTitle}>How it Works</h3>
+            <ul className={styles.infoList}>
+              <li>Complete tasks to unlock airdrops</li>
+              <li>Claim rewards directly to wallet</li>
+              <li>Refer friends for bonus rewards</li>
+              <li>No limits on earning potential</li>
+            </ul>
+          </div>
+
+          <div className={styles.infoCard}>
+            <h3 className={styles.infoTitle}>Requirements</h3>
+            <ul className={styles.infoList}>
+              <li>Complete KYC verification</li>
+              <li>Minimum wallet balance: 100 SONIC</li>
+              <li>Active trading account</li>
+              <li>7+ days account age</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <Navigation />
     </div>
   );
-};
-
-export default Airdrop;
+}

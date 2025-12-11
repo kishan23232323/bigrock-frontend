@@ -16,9 +16,8 @@ import { logout, setCredentials } from "./store/authslice";
 
 function App() {
   const [loading, setLoading] = React.useState(true);
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken);
-
 
   useEffect(() => {
     const token = accessToken || localStorage.getItem("accessToken");
@@ -34,7 +33,7 @@ function App() {
         if (userData) {
           dispatch(
             setCredentials({
-              user: userData, 
+              user: userData,
               accessToken: token,
             })
           );
@@ -54,30 +53,60 @@ function App() {
       <NavBar />
 
       <div className="contentWrapper">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={
-         <Protected authenication={false}>
-          <Login/>
-          </Protected>
-          } />
-          <Route path="/signup" element={
-          <Protected authenication={false}>
-            <Register/>
-          </Protected>
+        {loading ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: "60vh",
+              flexDirection: "column",
+              gap: 12,
+            }}
+          >
+            <div
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                border: "5px solid rgba(6,238,245,0.15)",
+                borderTopColor: "#06eef5",
+                animation: "spin 1s linear infinite",
+              }}
+            />
+            <div style={{ color: "#aaa" }}>Loading...</div>
 
-          } />
-          <Route path="/airdrop" element={<Airdrop />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/p2p" element={<P2P />} />
-          {/* P2P Sell route */}
-          <Route path="/p2p/sell" element={<P2P mode="sell" />} />
-
-          {/* P2P Buy route */}
-          <Route path="/p2p/buy" element={<P2P mode="buy" />} />
-
-          <Route path="/admin" element= {<AdminOrders/>} />
-        </Routes>
+            <style>
+              {`@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}`}
+            </style>
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/login"
+              element={
+                <Protected authenication={false}>
+                  <Login />
+                </Protected>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <Protected authenication={false}>
+                  <Register />
+                </Protected>
+              }
+            />
+            <Route path="/airdrop" element={<Airdrop />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/p2p" element={<P2P />} />
+            <Route path="/p2p/sell" element={<P2P mode="sell" />} />
+            <Route path="/p2p/buy" element={<P2P mode="buy" />} />
+            <Route path="/admin" element={<AdminOrders />} />
+          </Routes>
+        )}
       </div>
 
       <Footer />

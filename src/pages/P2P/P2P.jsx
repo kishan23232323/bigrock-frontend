@@ -95,12 +95,13 @@ const CountrySelector = ({ onSelectCountry }) => {
     <div className={styles.countrySelector}>
       <button className={styles.countryInput} onClick={() => setOpen(!open)}>
         {selected}
-      </button>
-
-      <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
+         <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
         <IoChevronDownOutline size={28} />
       </button>
 
+      </button>
+
+     
       {open && (
         <div className={styles.countryDropdown}>
           {countries.length === 0 && <p className={styles.loadingText}>Loading...</p>}

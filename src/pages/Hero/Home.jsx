@@ -50,10 +50,11 @@ const Home = () => {
               decentralized interface. Experience true multichain freedom.
             </p>
 
+          
+          </div>
             <div className={styles.buttons}>
               <button className={styles.primaryButton}>Presale</button>
             </div>
-          </div>
 
           {/* Removed RubicWidget */}
           {/* <div className={styles.widgetWrapper}>

@@ -33,7 +33,7 @@ const Navbar = () => {
   const navItems = [
     { to: "/", label: "Home", icon: <AiFillHome /> },
     { to: "/p2p", label: "P2P", icon: <FaExchangeAlt />, state: getP2PState() },
-    { to: "/airdrop", label: "Airdrop", icon: <FaGift /> },
+    { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/profile", label: "Profile", icon: <FaUser /> },
     ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
   ];

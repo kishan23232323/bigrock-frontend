@@ -1,0 +1,370 @@
+/* Main Page Wrapper */
+.pageWrapper {
+  min-height: 100vh;
+  relative: true;
+  overflow: hidden;
+  padding-bottom: 120px;
+  background: linear-gradient(135deg, #050b14 0%, #0a1520 100%);
+}
+
+/* Grid Background */
+.gridBackground {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image:
+    linear-gradient(90deg, rgba(6, 238, 245, 0.06) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(6, 238, 245, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 22s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+/* Orbs */
+.orbTopLeft {
+  position: absolute;
+  top: 0;
+  left: 25%;
+  width: 384px;
+  height: 384px;
+  background: radial-gradient(circle, rgba(6, 238, 245, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.orbBottomRight {
+  position: absolute;
+  bottom: 0;
+  right: 25%;
+  width: 384px;
+  height: 384px;
+  background: radial-gradient(circle, rgba(102, 51, 153, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.orbCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(6, 238, 245, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+}
+
+/* Content Wrapper */
+.contentWrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 40px 16px;
+}
+
+/* Profile Card */
+.profileCard {
+  background: rgba(6, 12, 18, 0.75);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(6, 238, 245, 0.15);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(6, 238, 245, 0.3), rgba(0, 212, 255, 0.2));
+  border: 2px solid rgba(6, 238, 245, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(6, 238, 245, 0.2);
+}
+
+.userName {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.userUID {
+  margin: 4px 0;
+  font-size: 12px;
+  color: #9aa6ad;
+}
+
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #06eef5, #00d4ff);
+  color: #041018;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(6, 238, 245, 0.3);
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: #06eef5;
+  margin: 0;
+}
+
+.statLabel {
+  margin: 6px 0 0 0;
+  font-size: 11px;
+  color: #9aa6ad;
+}
+
+/* Trade Card */
+.tradeCard {
+  background: rgba(6, 12, 18, 0.75);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(6, 238, 245, 0.15);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.cardTitle {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #dff8fb;
+}
+
+.tradeList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tradeItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(3, 6, 10, 0.5);
+  border-radius: 10px;
+}
+
+.tradeIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.iconSuccess {
+  background: rgba(6, 238, 245, 0.2);
+  border: 1px solid rgba(6, 238, 245, 0.5);
+}
+
+.iconPending {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+}
+
+.iconDefault {
+  background: rgba(100, 116, 139, 0.3);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.tradeDetails {
+  flex: 1;
+}
+
+.tradeAmount {
+  font-size: 12px;
+  color: #e6eef3;
+  font-weight: 500;
+}
+
+.tradeStatus {
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.statusCOMPLETED {
+  color: #06eef5;
+}
+
+.statusPENDING {
+  color: #fbbf24;
+}
+
+/* Agent Card */
+.agentCard {
+  background: linear-gradient(135deg, rgba(6, 238, 245, 0.15), rgba(0, 212, 255, 0.08));
+  border: 1px solid rgba(6, 238, 245, 0.15);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 100px;
+}
+
+.agentDescription {
+  margin: 0 0 16px 0;
+  font-size: 12px;
+  color: #d1d5db;
+}
+
+.agentButton {
+  width: 100%;
+  background: linear-gradient(135deg, #06eef5, #00d4ff);
+  color: #041018;
+  border: none;
+  padding: 11px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(6, 238, 245, 0.3);
+}
+
+.agentButton:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 25px rgba(6, 238, 245, 0.5);
+}
+
+/* Bottom Navigation */
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(5, 11, 20, 0.95);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(6, 238, 245, 0.15);
+  z-index: 50;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 20px;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  color: #9aa6ad;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+  padding: 8px;
+}
+
+.navButton:hover {
+  color: #06eef5;
+}
+
+.navButton.active {
+  color: #06eef5;
+}
+
+/* Tablet/Desktop */
+@media (min-width: 768px) {
+  .contentWrapper {
+    max-width: 900px;
+    padding: 40px 24px;
+  }
+
+  .profileCard {
+    padding: 28px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .userName {
+    font-size: 20px;
+  }
+
+  .bottomNav {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .contentWrapper {
+    padding: 24px 12px;
+  }
+
+  .profileCard {
+    padding: 16px;
+  }
+
+  .userName {
+    font-size: 16px;
+  }
+
+  .statsGrid {
+    gap: 12px;
+  }
+
+  .statValue {
+    font-size: 18px;
+  }
+
+  .statLabel {
+    font-size: 10px;
+  }
+}

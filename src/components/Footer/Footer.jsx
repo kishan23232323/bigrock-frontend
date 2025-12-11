@@ -21,13 +21,16 @@ const Footer = () => {
         <div className={styles.brandSection}>
           <h2 className={styles.logo}>
             <Link
+             className={styles.link}
               to="/"
               onClick={() =>
                 window.scrollTo({ top: 0, behavior: "smooth" })
               }
             >
-              <span className={styles.logoAccent}>Sonic</span>{" "}
+             <div  className={styles.link}>
+               <span className={styles.logoAccent }>Sonic</span>{" "}
               <span className={styles.logoSub}>Exchange</span>
+             </div>
             </Link>
           </h2>
           <p className={styles.tagline}>
@@ -78,27 +81,29 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className={styles.linkColumns}>
+        <div className={styles.link}>
+          <div className={styles.linkColumns}>
           <div className={styles.linksSection}>
             <h3>Helpful Links</h3>
-            <ul>
-              <li>
+            <ul className={styles.link}>
+              <li className={styles.link} >
                 <Link to="/about">About</Link>
               </li>
-              <li>
+              <li className={styles.link}>
                 <Link to="/career">Career</Link>
               </li>
-              <li>
+              <li className={styles.link}>
                 <Link to="/sonic-insentive">Sonic Incentive</Link>
               </li>
-              <li>
+              <li className={styles.link}>
                 <Link to="/airdrop">Airdrop</Link>
               </li>
             </ul>
           </div>
-
-          <div className={styles.newsletterSection}>
-            <h3>Stay in the loop</h3>
+  </div>
+        </div>
+          <div  className={styles.newsletterSection}>
+            <h3  className={styles.link} >Stay in the loop</h3>
             <p className={styles.newsletterText}>
               Get early access to new chains, features, and airdrop campaigns.
             </p>
@@ -118,11 +123,11 @@ const Footer = () => {
               </button>
             </form>
           </div>
-        </div>
+      
       </div>
 
       <div className={styles.footerBottom}>
-        <p>© 2025 Sonic Exchange. All rights reserved.</p>
+        <p className={styles.powered}>© 2025 Sonic Exchange. All rights reserved.</p>
         <p className={styles.powered}>Powered by Web3 • Built for Multichain</p>
       </div>
     </footer>
