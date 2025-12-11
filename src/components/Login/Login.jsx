@@ -39,7 +39,7 @@ function Login() {
   };
 
   return (
-    <div className="flex p-6 justify-center items-center h-screen">
+    <div className="flex p-6 justify-centeritems-center  h-screen">
       <ToastContainer autoClose={3000} position="top-right" />
       <form
         onSubmit={handleSubmit(onSubmit)}

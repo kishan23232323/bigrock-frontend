@@ -19,6 +19,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
+  background: transparent;
  
 }
 
@@ -34,18 +35,22 @@
   cursor: pointer;
   flex-shrink: 0;
   margin-right: auto;
+  background: transparent;
 }
 
 .logoIcon {
   font-size: 24px;
+  background: transparent;
 }
 
 .logoTextPrimary {
   color: #06eef5;
+  background: transparent;
 }
 
 .logoTextSecondary {
   color: #00d4ff;
+  background: transparent;
 }
 
 /* Desktop Navigation Menu - Moved to Right */
@@ -161,6 +166,7 @@
   gap: 12px;
   color: #aaa;
   text-decoration: none;
+  background: transparent;
   font-weight: 500;
   font-size: 14px;
   padding: 14px 20px;
@@ -182,6 +188,7 @@
 
 .mobileLink svg {
   font-size: 18px;
+  background: transparent;
 }
 
 /* Mobile Auth Section */
@@ -189,6 +196,7 @@
   padding: 12px 20px;
   border-top: 1px solid rgba(6, 238, 245, 0.1);
   margin-top: 8px;
+  background: transparent;
 }
 
 .mobileLogoutWrapper button {
@@ -233,6 +241,7 @@
     display: block;
   }
 
+
   .mobileDropdown {
     display: block;
   }
@@ -241,18 +250,22 @@
     padding: 12px 16px;
   }
 
+
   .logo {
     font-size: 16px;
     margin-right: auto;
   }
 
+
   .logoIcon {
     font-size: 20px;
   }
 
+
   .navContainer {
     position: relative;
   }
+ 
 
   .mobileDropdown {
     position: static;
@@ -264,11 +277,14 @@
     display: none !important;
   }
 
+
   .mobileDropdown {
     display: none !important;
   }
+ 
 
   .navContainer {
     position: sticky;
   }
+  
 }
