@@ -1,5 +1,6 @@
 import { Home, ArrowLeftRight, Star, User } from "lucide-react";
 import styles from "./Profile.module.css";
+import { Link } from "react-router-dom";
 
 export default function ProfilePage({ onNavigate }) {
   const trades = [
@@ -98,12 +99,17 @@ export default function ProfilePage({ onNavigate }) {
         <div className={styles.agentCard}>
           <h2 className={styles.cardTitle}>Become a P2P Agent</h2>
           <p className={styles.agentDescription}>Earn more by facilitating trades</p>
-          <button 
-            onClick={() => onNavigate("register-agent")}
+          <Link to="/agent" >
+          <button
+            type="button" 
+            
             className={styles.agentButton}
           >
             Register as Agent
+              
+            
           </button>
+ </Link>
         </div>
 
       </div>

@@ -1,13 +1,18 @@
 *{
-  background: linear-gradient(135deg, #050b14 0%, #0a1520 100%);
-}
 
+  background: transparent;
+}
+.containers{
+  
+  background: #08111B;
+}
 .container {
   min-height: 100vh;
   max-width: 960px;
   margin: 0 auto;
   padding: 6.5rem 1.5rem 4.5rem;
-  color: #e5e7eb;
+
+  
 }
 
 .header {
@@ -15,12 +20,14 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 1.75rem;
+  background: transparent;
 }
 
 .headerText {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  background: transparent;
 }
 
 .headerTag {
@@ -29,6 +36,7 @@
   text-transform: uppercase;
   color: #06eef5;
   opacity: 0.85;
+  background: transparent;
 }
 
 .title {
@@ -62,12 +70,14 @@
   display: flex;
   gap: 0.75rem;
   margin-bottom: 1.75rem;
+  background: transparent;
 }
 
 .linkBtn {
   flex: 1;
   max-width: 220px;
   text-decoration: none;
+  background: transparent;
 }
 
 .toggleButton {
@@ -106,6 +116,7 @@
 .countrySelector {
   position: relative;
   margin-bottom: 1.75rem;
+  background: transparent;
 }
 
 .countryInput {
@@ -157,6 +168,7 @@
   align-items: center;
   padding: 1.2rem 1.6rem 1rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  background: transparent;
 }
 
 .sectionTitle {
@@ -166,12 +178,14 @@
   text-transform: uppercase;
   color: #e5e7eb;
 }
+  
 
 .sectionSubtitle {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 1.2rem;
 }
+
 
 .closeButton {
   background: transparent;
@@ -193,6 +207,7 @@
   padding: 1.5rem 1.6rem 1.6rem;
 }
 
+
 .inputGroup {
   margin-bottom: 1.1rem;
 }
@@ -205,6 +220,7 @@
   letter-spacing: 0.14em;
   color: #9ca3af;
   margin-bottom: 0.4rem;
+  background: transparent;
 }
 
 .input {
@@ -230,6 +246,7 @@
   margin-top: 0.35rem;
   font-size: 0.72rem;
   color: #9ca3af;
+  background: transparent;
 }
 
 .walletSection {
@@ -238,12 +255,14 @@
   border: 1px solid rgba(148, 163, 184, 0.6);
   padding: 1.2rem 1.15rem 1.1rem;
   margin-bottom: 1.3rem;
+  background: transparent;
 }
 
 .walletTitle {
   font-size: 0.98rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
+  background: transparent;
 }
 
 .addressContainer {
@@ -253,6 +272,7 @@
   background: rgba(15, 23, 42, 0.96);
   padding: 0.75rem 0.85rem;
   border-radius: 10px;
+  background: transparent;
 }
 
 .address {
@@ -262,6 +282,7 @@
     Consolas, "Liberation Mono", "Courier New", monospace;
   color: #e5e7eb;
   word-break: break-all;
+  background: transparent;
 }
 
 .copyButton {
@@ -288,6 +309,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+  background: transparent;
 }
 
 .uploadSection {
@@ -322,18 +344,21 @@
   flex-direction: column;
   gap: 0.05rem;
   align-items: center;
+  background: transparent;
 }
 
 .uploadTitle {
   font-size: 0.78rem;
   font-weight: 500;
   color: #e5e7eb;
+  background: transparent;
 }
 
 .uploadSubtitle {
   font-size: 0.72rem;
   color: #9ca3af;
 }
+ 
 
 .buttonGroup {
   display: flex;
@@ -382,6 +407,7 @@
 
 .paymentMethodContainer {
   position: relative;
+  background: transparent;
 }
 
 .paymentMethodButton {
@@ -411,14 +437,17 @@
   border-radius: 14px;
   border: 1px solid rgba(148, 163, 184, 0.8);
   padding: 0.8rem 0.8rem 0.6rem;
+  background: transparent;
 }
 
 .paymentOption {
   border-radius: 9px;
+  background: transparent;
 }
 
 .paymentOption + .paymentOption {
   margin-top: 0.25rem;
+  background: transparent;
 }
 
 .paymentOptionHeader {
@@ -451,6 +480,7 @@
 
 .paymentOptionContent {
   padding: 0 0.8rem 0.8rem;
+  background: transparent;
 }
 
 .paymentLabel {
@@ -459,6 +489,7 @@
   font-weight: 500;
   color: #e5e7eb;
   margin-top: 0.55rem;
+  background: transparent;
 }
 
 .paymentInput {
@@ -488,6 +519,7 @@
   overflow-y: auto;
   padding: 0.25rem;
   border: 1px solid rgba(148, 163, 184, 0.8);
+  background: transparent;
   scrollbar-width: none;
 }
 
@@ -502,6 +534,7 @@
   justify-content: space-between;
   font-size: 0.88rem;
   border-radius: 10px;
+  background: transparent;
 }
 
 .countryItem:hover {
@@ -513,15 +546,18 @@
   font-size: 0.8rem;
 }
 
+
 .loadingText {
   padding: 0.6rem;
   font-size: 0.85rem;
   opacity: 0.7;
 }
+  
 
 .previewContainer {
   margin-top: 0.6rem;
   text-align: center;
+  background: transparent;
 }
 
 .previewImage {
@@ -530,12 +566,14 @@
   object-fit: cover;
   border-radius: 10px;
   border: 1px solid rgba(148, 163, 184, 0.7);
+  background: transparent;
 }
 
 .previewFileName {
   margin-top: 0.4rem;
   font-size: 0.8rem;
   color: #cbd5f5;
+  background: transparent;
 }
 
 @media (max-width: 640px) {

@@ -18,7 +18,8 @@ const P2P = ({ mode = "sell" }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containers} >
+      <div className={styles.container}>
       <P2PHeader />
       <P2PToggle activeMode={mode} />
 
@@ -30,6 +31,7 @@ const P2P = ({ mode = "sell" }) => {
       ) : (
         <BuySection selectedCountry={selectedCountry} />
       )}
+    </div>
     </div>
   );
 };
