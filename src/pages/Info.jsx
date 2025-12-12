@@ -1,5 +1,7 @@
  import React, { useState, useEffect, useRef } from 'react';
 import styles from './Info.module.css';
+import { GrFormPrevious  } from "react-icons/gr";
+import { Link } from 'react-router-dom';
  function Info() {
   const buySteps = [
     { title: 'Create an Account', description: 'Sign up and complete the verification process.' },
@@ -74,7 +76,8 @@ import styles from './Info.module.css';
 
   return (
     <div className={styles['info-page-container']}>
-      <h1 className={styles['info-header']}>Information</h1>
+     <Link to="/p2p"> <GrFormPrevious size={50} style={{marginLeft:"30px",marginTop:"30px" }} /></Link>
+      <h1 className={styles['info-header']} style={{marginTop:"-55px"}}>Information</h1>
       
       <div>
         {/* --- How to Buy Timeline --- */}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Zap, Award, Trophy, Rocket, ChevronDown } from 'lucide-react';
+import { Zap, Award, Trophy, Rocket, ChevronDown, Star } from 'lucide-react';
 import styles from './Presale.module.css';
  
  function Presale() {
@@ -77,7 +77,7 @@ import styles from './Presale.module.css';
     },
   ];
 
-  const pieChartColors = ['#06eef5', '#00ffa3', '#22d3ee', '#67e8f9', '#a7f3d0'];
+  const pieChartColors = ['#4f46e5', '#7c3aed', '#db2777', '#f59e0b', '#10b981'];
 
   let cumulativePercentage = 0;
   const gradientParts = tokenomicsData.map((item, index) => {
@@ -218,7 +218,10 @@ const roadmapData = [
       <div className={styles.container}>
         <header className={styles.header}>
           <h1 className={styles.title}>Sonic Token Presale</h1>
-          <h1 className={styles.premium}>(Premium only for First 200 member)</h1>
+          <div className={styles.premium}>
+            <Star size={18} className={styles.premiumIcon} />
+            <span>Early Access: Limited to First <b>2,000</b> Members</span>
+          </div>
           <p className={styles.subtitle}>Join the future of decentralized exchange.</p>
         </header>
 
@@ -305,7 +308,9 @@ const roadmapData = [
           <div className={styles.card}>
             <h2 className={styles.sectionTitle}>Tokenomics</h2>
             <div className={styles.pieChartContainer}>
-              <div className={styles.pieChart} style={{ background: conicGradient }}></div>
+              <div className={styles.pieChart} style={{ background: conicGradient }}>
+                <div className={styles.pieChartCenter}></div>
+              </div>
               <div className={styles.legend}>
                 {tokenomicsData.map((item, index) => (
                   <div key={item.name} className={styles.legendItem}>

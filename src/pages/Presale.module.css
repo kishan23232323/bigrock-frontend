@@ -406,7 +406,7 @@
 .roadmapSection {
     margin-top: 4rem;
     text-align: center;
-    z-index: 1000;
+    
 }
 
 .roadmapTitle {
@@ -625,12 +625,43 @@
     color: #9ca3af;
     line-height: 1.6;
 }
-.premium{
-  
-  display: flex;
-  justify-content: center;
-  font-size: 25px;
-  color: #06EEF5;
-  
+.premium {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #0e2a3a, #103442);
+  border: 1px solid rgba(6, 238, 245, 0.4);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  text-shadow: 0 0 8px rgba(6, 238, 245, 0.3);
+  overflow: hidden; /* Important for the shimmer effect */
+}
 
+.premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(6, 238, 245, 0.3), transparent);
+  transform: skewX(-30deg);
+  animation: shimmer 1s infinite;
+}
+
+.premiumIcon {
+  color: #f5d706; /* Gold color for the star */
+  filter: drop-shadow(0 0 5px rgba(245, 215, 6, 0.7));
+  flex-shrink: 0;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  25% { left: 120%; }
+  100% { left: 120%; }
 }
