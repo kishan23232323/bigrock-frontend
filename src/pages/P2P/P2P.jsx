@@ -43,6 +43,7 @@ const P2P = ({ mode = "sell" }) => {
 
   return (
     <div className={styles.containers} >
+    
       <div className={styles.container}>
       <P2PHeader />
       <P2PToggle activeMode={mode} />
