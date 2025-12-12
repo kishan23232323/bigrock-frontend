@@ -1,0 +1,127 @@
+/* General container styling */
+.info-page-container {
+  padding: 40px 20px;
+  width: 100%;
+  background: #08111B;
+  min-height: 50vh;
+  color: white;
+  overflow-x: hidden; /* Prevents horizontal scrollbar from animation */
+}
+
+.info-header {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.5rem;
+}
+
+/* --- Timeline Styles --- */
+.timeline {
+  position: relative;
+  max-width: 700px; /* Adjusted for a more centered look */
+  margin: 0 auto; /* Let timeline-item handle spacing */
+}
+
+/* The vertical line */
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  background-color: #2a3b4f;
+  top: 10px; /* Start line slightly lower */
+  bottom: 10px;
+  left: 20px; /* Position line on the left */
+  margin-left: 0;
+  z-index: 1;
+  animation: drawLine 1s ease-out forwards;
+}
+
+@keyframes drawLine {
+  from { height: 0; }
+  to { height: 100%; }
+}
+
+.timeline-item {
+  padding: 10px 0 30px 60px; /* Adjust padding for left alignment */
+  position: relative; /* Needed for dot positioning */
+  width: 100%; /* Each item takes full width */
+  display: block; /* Revert to block for single column */
+  justify-content: initial;
+}
+
+/* The dot on the timeline */
+.timeline-dot {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #4a90e2;
+  border: 4px solid #08111B;
+  top: 35px;
+  border-radius: 50%;
+  z-index: 2;
+  left: 12px; /* Position dot on the left line */
+  transform: none;
+}
+
+/* Section styling with dynamic effects */
+.info-section {
+  background: #121f2e; /* A slightly lighter shade for the card */
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 0; /* Removed to fix timeline line height */
+  border: 1px solid #2a3b4f;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  /* Animation properties */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInSlideUp 0.6s ease-out forwards;
+  position: relative;
+  width: 100%; /* Use full available width */
+}
+
+/* Stagger the animation for each section */
+/* We need to target the timeline-item now for staggering */
+.timeline-item:nth-child(2) .info-section {
+  animation-delay: 0.2s;
+}
+.timeline-item:nth-child(3) .info-section {
+  animation-delay: 0.4s;
+}
+.timeline-item:nth-child(4) .info-section {
+  animation-delay: 0.6s;
+}
+
+
+/* Dynamic hover effect */
+.info-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+}
+
+.info-section h2 {
+  color: #4a90e2; /* A highlight color for headings */
+  margin-bottom: 15px;
+}
+
+.info-section p, .info-section li {
+  line-height: 1.6;
+  color: #c5c5c5; /* Softer white for text */
+}
+
+.info-section ol {
+  padding-left: 20px;
+}
+
+.info-section li {
+  margin-bottom: 10px;
+}
+
+/* Keyframe animation for the dynamic effect */
+@keyframes fadeInSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

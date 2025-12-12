@@ -46,7 +46,8 @@ const PaymentDetails = ({ order }) => {
 
 const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
   return (
-    <div className={styles.detailsBox}>
+    <div >
+      <div className={styles.detailsBox}>
       <div className={styles.detailRow}>
         <span className={styles.detailLabel}>Payment Method</span>
         <span className={styles.detailValue}>{order.paymentMethod}</span>
@@ -94,6 +95,7 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
           </button>
         </div>
       )}
+    </div>
     </div>
   );
 };

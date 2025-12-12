@@ -21,6 +21,7 @@ import Sonic_Incentive from "./pages/Sonic_Incentive";
 import Agent from "./pages/agent";
 import Presale from "./pages/Presale";
 import Info from "./pages/Info";
+import Earn_info from "./pages/Earn_info";
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -119,6 +120,7 @@ function App() {
             <Route path="/agent" element={<Agent />} />
             <Route path="/presale" element={<Presale />} />
             <Route path="/info" element={<Info />} />
+            <Route path="/earninfo" element={<Earn_info />} />
 
             
           </Routes>

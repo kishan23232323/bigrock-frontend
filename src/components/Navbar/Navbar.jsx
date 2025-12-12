@@ -39,7 +39,7 @@ const Navbar = () => {
   ];
 
   return (
-    <>
+    < >
       <nav className={styles.navContainer}>
         <div className={styles.navContent}>
           {/* Logo */}

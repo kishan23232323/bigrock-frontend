@@ -124,7 +124,7 @@ export default function AirdropPage({ onNavigate }) {
             <p className={styles.rewardsLabel}>Total Claimable</p>
             <p className={styles.rewardsAmount}>2,750 SONIC</p>
           </div>
-              <Link  to="/info"  >
+              <Link  to="/earninfo"  >
     <button className={styles.infoButton}>
       <GrCircleInformation size={20} />
     </button></Link>

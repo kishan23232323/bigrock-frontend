@@ -28,10 +28,11 @@ export function LogoutBtn({ onClick }) {
   return (
     <button
       onClick={logoutHandler}
-      className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/60 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 hover:border-cyan-300 transition"
     >
-      <LogOut className="w-4 h-4" />
+     <div className="flex items-center gap-2">
+       <LogOut className=" flex " />
       Logout
+     </div>
     </button>
   );
 }
