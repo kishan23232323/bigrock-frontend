@@ -98,6 +98,7 @@
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .avatar {
@@ -114,6 +115,7 @@
 }
 
 .userName {
+  flex-basis: 100%;
   margin: 0;
   font-size: 18px;
   font-weight: 700;
@@ -352,6 +354,10 @@
     padding: 16px;
   }
 
+  .profileHeader {
+    justify-content: center;
+  }
+
   .userName {
     font-size: 16px;
   }
@@ -366,5 +372,13 @@
 
   .statLabel {
     font-size: 10px;
+  }
+
+  .tradeCard, .agentCard {
+    padding: 16px;
+  }
+
+  .tradeItem {
+    padding: 10px;
   }
 }
