@@ -1,24 +1,79 @@
- import React from 'react';
+import React from 'react';
+import { Briefcase, HeartHandshake, Sparkles } from 'lucide-react';
+import styles from './Career.module.css';
  
  function Career() {
-  return (
-    <div className="about-page-container " style={{ padding: '20px', width:'100%' ,  background: '#08111B', paddingBottom: '40px', minHeight: '50vh' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '30px', color: '#06eef5' }}>Career Sonic Frontend</h1>
+  const jobOpenings = [
+    {
+      title: 'Senior Blockchain Engineer',
+      department: 'Engineering',
+      location: 'Remote',
+    },
+    {
+      title: 'Frontend Developer (React)',
+      department: 'Engineering',
+      location: 'Remote',
+    },
+    {
+      title: 'Head of Community',
+      department: 'Marketing',
+      location: 'Global / Remote',
+    },
+    {
+      title: 'Product Manager - DeFi',
+      department: 'Product',
+      location: 'Remote',
+    },
+  ];
 
-      <p style={{ lineHeight: '1.6', marginBottom: '15px' }}>
-        Welcome to Sonic Frontend, your gateway to a seamless and efficient digital experience.
-        We are dedicated to providing cutting-edge solutions and a user-friendly interface
-        for all your needs. Our platform is built with a focus on performance, security, and
-        scalability, ensuring that you have the best possible interaction every time.
-      </p>
-      <p style={{ lineHeight: '1.6', marginBottom: '15px' }}>
-        Our mission is to empower users with robust tools and services, fostering a community
-        where innovation and accessibility go hand in hand. We continuously strive to improve
-        and expand our offerings based on user feedback and technological advancements.
-      </p>
-      <p style={{ lineHeight: '1.6' }}>
-        Thank you for being a part of the Sonic journey. We are excited to grow with you!
-      </p>
+  return (
+    <div className={styles.pageWrapper}>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Work With Us</h1>
+          <p className={styles.subtitle}>
+            Join our mission to build the future of decentralized finance. We're a passionate, global team pushing the boundaries of what's possible.
+          </p>
+        </header>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Why Join Sonic?</h2>
+          <div className={styles.benefitsGrid}>
+            <div className={styles.benefitCard}>
+              <div className={styles.iconWrapper}><Sparkles size={28} className={styles.icon} /></div>
+              <h3 className={styles.benefitTitle}>Innovate & Create</h3>
+              <p className={styles.benefitText}>Work on challenging problems at the forefront of Web3 and DeFi innovation.</p>
+            </div>
+            <div className={styles.benefitCard}>
+              <div className={styles.iconWrapper}><HeartHandshake size={28} className={styles.icon} /></div>
+              <h3 className={styles.benefitTitle}>Great Culture</h3>
+              <p className={styles.benefitText}>Join a collaborative, transparent, and fully remote team that values every voice.</p>
+            </div>
+            <div className={styles.benefitCard}>
+              <div className={styles.iconWrapper}><Briefcase size={28} className={styles.icon} /></div>
+              <h3 className={styles.benefitTitle}>Awesome Perks</h3>
+              <p className={styles.benefitText}>Enjoy competitive compensation, flexible hours, and a professional growth stipend.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Open Positions</h2>
+          <div className={styles.jobList}>
+            {jobOpenings.map((job, index) => (
+              <div key={index} className={styles.jobCard}>
+                <div className={styles.jobInfo}>
+                  <h3 className={styles.jobTitle}>{job.title}</h3>
+                  <p className={styles.jobDetails}>{job.department} &middot; {job.location}</p>
+                </div>
+                <button className={styles.applyButton}>
+                  Apply Now
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
  }

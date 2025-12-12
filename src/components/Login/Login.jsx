@@ -4,8 +4,7 @@ import { loginUser } from "../../services/authservices/authapi";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/authslice";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 function Login() {
   const {
@@ -39,8 +38,7 @@ function Login() {
   };
 
   return (
-    <div className="flex p-6 justify-centeritems-center  h-screen">
-      <ToastContainer autoClose={3000} position="top-right" />
+    <div className="flex p-6 justify-center items-center    h-screen" style={{ background: "#08111B" }}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96 border bg-transparent border-gray-200"
@@ -116,6 +114,16 @@ function Login() {
             
           >
             Sign up
+          </span>
+        </p>
+        <p className="text-center text-sm text-gray-400 mt-4">
+          {" "}
+          <span
+            className="text-blue-100 font-semibold hover:underline cursor-pointer"
+            onClick={() => navigate("/signup")}
+            
+          >
+            Forget Password?
           </span>
         </p>
       </form>

@@ -96,7 +96,7 @@ const Footer = () => {
                 <Link to="/sonic-insentive">Sonic Incentive</Link>
               </li>
               <li className={styles.link}>
-                <Link to="/airdrop">Airdrop</Link>
+                <Link to="/airdrop">Earn</Link>
               </li>
             </ul>
           </div>

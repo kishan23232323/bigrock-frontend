@@ -3,8 +3,7 @@ import { useForm } from "react-hook-form";
 import { registerUser } from "../../services/authservices/authapi";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { setCredentials } from "../../store/authslice";
 import { useLocation } from "react-router-dom";
 
@@ -53,8 +52,7 @@ const Register = () => {
   }, [urlReferral, setValue]);
 
   return (
-    <div className="flex p-6 items-center justify-center min-h-screen">
-      <ToastContainer autoClose={3000} position="top-right" />
+    <div className="flex p-6 items-center justify-center min-h-screen" style={{ background: "#08111B" }}>
       <div className="w-full max-w-md bg-transparent backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-gray-200">
         <h2 className="text-2xl font-bold text-center text-slate-300 mb-6">
           Create Your Account

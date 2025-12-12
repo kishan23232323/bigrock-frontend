@@ -96,7 +96,7 @@
 .authButton {
   list-style: none;
   margin-left: 16px;
-  background: transparent;
+  
 
 }
 
@@ -119,6 +119,7 @@
 .authButton a:hover {
   box-shadow: 0 0 25px rgba(6, 238, 245, 0.5);
   transform: scale(1.02);
+  color: #08111B;
 }
 
 /* Mobile Menu Toggle Button */

@@ -14,9 +14,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile } from "./services/authservices/authapi";
 import { logout, setCredentials } from "./store/authslice";
 import About from "./pages/about";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Career from "./pages/Career";
 import Sonic_Incentive from "./pages/Sonic_Incentive";
 import Agent from "./pages/agent";
+import Presale from "./pages/Presale";
+import Info from "./pages/Info";
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -113,11 +117,16 @@ function App() {
             <Route path="/career" element={<Career />} />
             <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
             <Route path="/agent" element={<Agent />} />
+            <Route path="/presale" element={<Presale />} />
+            <Route path="/info" element={<Info />} />
+
+            
           </Routes>
         )}
       </div>
 
       <Footer />
+      <ToastContainer autoClose={3000} position="top-right" />
     </div>
   );
 }

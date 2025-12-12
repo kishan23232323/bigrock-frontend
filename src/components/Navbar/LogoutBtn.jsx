@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { logout } from "../../store/authslice";
+import { toast } from 'react-toastify';
 import { logoutUser } from "../../services/authservices/authapi";
 
 export function LogoutBtn({ onClick }) {
@@ -16,7 +17,7 @@ export function LogoutBtn({ onClick }) {
       if (onClick) onClick();
     } catch (error) {
       console.error("Logout Error:", error);
-      alert(error.message || "Something went wrong!");
+      toast.error(error.message || "Something went wrong!");
     } finally {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userId");

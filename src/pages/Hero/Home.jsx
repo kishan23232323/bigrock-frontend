@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Home.module.css";
+import { Link } from "react-router-dom";
 
 const cardInfo = [
   {
@@ -52,15 +53,17 @@ const Home = () => {
 
           
           </div>
-            <div className={styles.buttons}>
-              <button className={styles.primaryButton}>Presale</button>
-            </div>
+           
 
           {/* Removed RubicWidget */}
           {/* <div className={styles.widgetWrapper}>
             <RubicWidget />
           </div> */}
         </div>
+         <div className={styles.buttons}>
+              <Link to="/presale"  className={styles.primaryButton}>Presale</Link>
+
+            </div>
 
         <div className={styles.cardsSection}>
           <h2 className={styles.sectionTitle}>Why Sonic Exchange</h2>
@@ -76,7 +79,12 @@ const Home = () => {
             ))}
           </div>
         </div>
+        <div className={styles.buttons}>
+              <Link to=""  className={styles.primaryButton}>whitepaper</Link>
+
+            </div>
       </section>
+       
     </div>
   );
 };

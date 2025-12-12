@@ -299,6 +299,18 @@
   background: transparent;
 }
 
+/* Loading */
+.loadingRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.loadingText {
+  color: #9aa6ad;
+  font-size: 14px;
+}
+
 /* Info Cards Grid */
 .infoCardsGrid {
   display: grid;
@@ -483,4 +495,24 @@
     font-size: 11px;
   }
  
+}
+
+
+
+.infoButton {
+  background: rgba(10, 22, 40, 0.85);
+  border-radius: 999px;
+  border: 1px solid rgba(6, 238, 245, 0.35);
+  padding: 0.45rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.infoButton:hover {
+  color: #e5e7eb;
+  box-shadow: 0 0 18px rgba(6, 238, 245, 0.6);
 }

@@ -1,4 +1,5 @@
  import React, { useState } from 'react';
+import { toast } from 'react-toastify';
  
  function Agent() {
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@
       addressProof,
       identityProof,
     });
-    alert('Agent application submitted!');
+    toast.success('Agent application submitted!');
   };
 
   return (
@@ -79,14 +80,14 @@
 
           {/* Proof of Address */}
           <div>
-            <label className="block text-sm font-medium text-gray-400">Proof of Address (Driving License/Passport)</label>
+            <label className="block text-sm font-medium text-gray-400">Proof of Address (Bank Account Statement)</label>
             <input type="file" name="addressProof" onChange={handleFileChange} required accept="image/*,.pdf" className="mt-1 block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100" />
              {addressProof && <p className="text-xs text-gray-400 mt-1">File: {addressProof.name}</p>}
           </div>
 
           {/* Proof of Identity */}
           <div>
-            <label className="block text-sm font-medium text-gray-400">Proof of Identity (Bank Account Statement)</label>
+            <label className="block text-sm font-medium text-gray-400">Proof of Identity (Driving License/Passport)</label>
             <input type="file" name="identityProof" onChange={handleFileChange} required accept="image/*,.pdf" className="mt-1 block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100" />
             {identityProof && <p className="text-xs text-gray-400 mt-1">File: {identityProof.name}</p>}
           </div>

@@ -1,13 +1,16 @@
 // Airdrop.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Home, ArrowLeftRight, Star, User, Copy, Check } from "lucide-react";
 import styles from "./Airdrop.module.css";
+import { toast } from 'react-toastify';
+import { getAirdrops, claimAirdrop } from '../services/Airdrops/airdropsapi';
 
 // ICON IMPORTS
 import { FiCreditCard, FiRepeat, FiUserPlus } from "react-icons/fi";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-
+import { Link } from "react-router-dom";
+import { GrCircleInformation } from "react-icons/gr";
 // TASKS DATA
 const tasks = [
   { id: 1, label: "Connect your wallet", icon: <FiCreditCard />, status: "Completed" },
@@ -36,17 +39,39 @@ export default function AirdropPage({ onNavigate }) {
   ];
 
   const [airdropData, setAirdropData] = useState(initialAirdropData);
+  const [loading, setLoading] = useState(false);
 
-  const handleClaim = (id) => {
-    setAirdropData(
-      airdropData.map((airdrop) => {
-        if (airdrop.id === id && airdrop.status === "CLAIMABLE") {
-          // Change status to CLAIMED
-          return { ...airdrop, status: "CLAIMED" };
+  useEffect(() => {
+    let mounted = true;
+    setLoading(true);
+    getAirdrops()
+      .then((data) => {
+        if (mounted && data && Array.isArray(data)) {
+          setAirdropData(data);
         }
-        return airdrop;
       })
+      .catch((err) => {
+        console.warn('Failed to fetch airdrop data, using local version.', err);
+      })
+      .finally(() => setLoading(false));
+    return () => { mounted = false; };
+  }, []);
+
+  const handleClaim = async (id) => {
+    // optimistic UI update
+    const original = airdropData;
+    setAirdropData(
+      airdropData.map((airdrop) => (airdrop.id === id && airdrop.status === 'CLAIMABLE' ? { ...airdrop, status: 'CLAIMED' } : airdrop))
     );
+
+    try {
+      const res = await claimAirdrop(id);
+      toast.success(res?.message || 'Airdrop claimed successfully');
+    } catch (err) {
+      // revert
+      setAirdropData(original);
+      toast.error(err?.message || 'Failed to claim airdrop');
+    }
   };
 
   const Navigation = () => (
@@ -74,6 +99,7 @@ export default function AirdropPage({ onNavigate }) {
 
   return (
     <div className={styles.pageWrapper}>
+
       {/* Background */}
       <div className={styles.gridBackground}>
         <div className={styles.gridOverlay} />
@@ -91,15 +117,22 @@ export default function AirdropPage({ onNavigate }) {
         <div className={styles.headerCard}>
           <div className={styles.headerContent}>
             <h1 className={styles.title}>Airdrop Hub</h1>
+            
             <p className={styles.subtitle}>Claim your rewards and earn through referrals</p>
           </div>
           <div className={styles.totalRewards}>
             <p className={styles.rewardsLabel}>Total Claimable</p>
             <p className={styles.rewardsAmount}>2,750 SONIC</p>
           </div>
+              <Link  to="/info"  >
+    <button className={styles.infoButton}>
+      <GrCircleInformation size={20} />
+    </button></Link>
         </div>
+       
 
         {/* Airdrop Cards Grid */}
+        {loading && <div className={styles.loadingRow}><p className={styles.loadingText}>Loading airdrops...</p></div>}
         <div className={styles.cardsGrid}>
           {airdropData.map((airdrop) => (
             <div key={airdrop.id} className={styles.airdropCard}>
@@ -122,7 +155,7 @@ export default function AirdropPage({ onNavigate }) {
             </div>
           ))}
         </div>
-
+              
         {/* Referral Section */}
         <div className={styles.referralCard}>
           <h2 className={styles.sectionTitle}>Referral Program</h2>
@@ -178,10 +211,10 @@ export default function AirdropPage({ onNavigate }) {
             </ul>
           </div>
         </div>
-
+ 
       </div>
 
-      <Navigation />
+
     </div>
   );
 }

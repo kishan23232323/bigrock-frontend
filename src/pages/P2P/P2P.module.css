@@ -20,7 +20,7 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 1.75rem;
-  background: transparent;
+  
 }
 
 .headerText {
@@ -43,9 +43,9 @@
   font-family: "Orbitron", system-ui, sans-serif;
   font-size: 1.9rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #06eef5, #8a2be2, #00ffa3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #e5e7eb;
+
+
 }
 
 .infoButton {
