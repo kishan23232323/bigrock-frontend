@@ -15,6 +15,8 @@
   
 }
 
+
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -603,4 +605,13 @@
     flex-direction: column;
     align-items: center;
   }
+}
+
+.flag{
+  height: 1em;
+  width: auto;
+  margin-right: 8px;
+  border-radius: 3px;
+  object-fit: contain;
+  vertical-align: middle;
 }
