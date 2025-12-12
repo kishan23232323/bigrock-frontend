@@ -67,7 +67,7 @@ const Navbar = () => {
             {/* Desktop Auth Button */}
             <li className={styles.authButton}>
               {isLoggedIn ? (
-                <LogoutBtn />
+                <LogoutBtn/>
               ) : (
                 <NavLink className={linkClass} to="/login">
                   Join Now

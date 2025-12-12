@@ -1,193 +1,159 @@
 import { Home, ArrowLeftRight, Star, User } from "lucide-react";
+import styles from "./Profile.module.css";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import React from "react";
+
+// It's good practice to define components that don't depend on the parent's state or props outside the parent component.
+// This prevents them from being recreated on every render, which is better for performance.
+const Navigation = React.memo(({ onNavigate, activeTab }) => (
+  <div className={styles.bottomNav}>
+    <div className={styles.navContainer}>
+      <button onClick={() => onNavigate("home")} className={`${styles.navButton} ${activeTab === 'home' ? styles.active : ''}`}>
+        <Home size={22} />
+      </button>
+      <button onClick={() => onNavigate("p2p")} className={`${styles.navButton} ${activeTab === 'p2p' ? styles.active : ''}`}>
+        <ArrowLeftRight size={22} />
+      </button>
+      <button onClick={() => onNavigate("airdrop")} className={`${styles.navButton} ${activeTab === 'airdrop' ? styles.active : ''}`}>
+        <Star size={22} />
+      </button>
+      <button onClick={() => onNavigate("profile")} className={`${styles.navButton} ${activeTab === 'profile' ? styles.active : ''}`}>
+        <User size={22} />
+      </button>
+    </div>
+  </div>
+));
+
+// Mock data is moved outside the component. In a real app, this would likely come from props, context, or an API call.
+const tradesData = [
+  { id: 1, type: "BUY", amount: "31 BTC", status: "COMPLETED", icon: "✓", color: "text-cyan-400" },
+  { id: 2, type: "BUY", amount: "0 BTC", status: "COMPLETED", icon: "✓", color: "text-cyan-400" },
+  { id: 3, type: "SELL", amount: "0.5 ETH", status: "PENDING", icon: "!", color: "text-cyan-400" },
+  { id: 4, type: "SELL", amount: "0.5 ETH", status: "", icon: "○", color: "text-gray-500" },
+  { id: 5, type: "", amount: "2.0 Z Of 91x (100 Trades)", status: "", icon: "○", color: "text-gray-500" }
+];
+
+const statsData = [
+  { label: "Completed", value: "43", color: "cyan" },
+  { label: "Pending", value: "2", color: "yellow" },
+  { label: "Success Rate", value: "98%", color: "cyan" }
+];
 
 export default function ProfilePage({ onNavigate }) {
-  const trades = [
-    { id: 1, type: "BUY", amount: "31 BTC", status: "COMPLETED", icon: "✓", color: "text-cyan-400" },
-    { id: 2, type: "BUY", amount: "0 BTC", status: "COMPLETED", icon: "✓", color: "text-cyan-400" },
-    { id: 3, type: "SELL", amount: "0.5 ETH", status: "PENDING", icon: "!", color: "text-cyan-400" },
-    { id: 4, type: "SELL", amount: "0.5 ETH", status: "", icon: "○", color: "text-gray-500" },
-    { id: 5, type: "", amount: "2.0 Z Of 91x (100 Trades)", status: "", icon: "○", color: "text-gray-500" }
-  ];
+  // Using the mock data.
+  const trades = tradesData;
+  const stats = statsData;
 
-  // -------------------------
-  // BOTTOM NAVIGATION (MOBILE)
-  // -------------------------
-  const Navigation = () => (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-lg border-t border-gray-800 md:hidden z-50">
-      <div className="flex justify-around items-center py-3 max-w-xl mx-auto">
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
 
-        <button onClick={() => onNavigate("home")} className="flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-400">
-          <Home size={22} />
-        </button>
-
-        <button onClick={() => onNavigate("home")} className="flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-400">
-          <ArrowLeftRight size={22} />
-        </button>
-
-        <button onClick={() => onNavigate("airdrop")} className="flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-400">
-          <Star size={22} />
-        </button>
-
-        <button onClick={() => onNavigate("profile")} className="flex flex-col items-center gap-1 text-cyan-400">
-          <User size={22} />
-        </button>
-
-      </div>
-    </div>
-  );
-
+  const listContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
   return (
-    <div className="min-h-screen relative overflow-hidden pb-32 mt-10">
-
-      {/* Animated Background Grid - Same as Home Page */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `
-              linear-gradient(90deg, rgba(6, 238, 245, 0.06) 1px, transparent 1px),
-              linear-gradient(0deg, rgba(6, 238, 245, 0.06) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-            animation: "gridMove 22s linear infinite",
-          }}
-        />
+    <div className={styles.pageWrapper}>
+      <div className={styles.gridBackground}>
+        <div className={styles.gridOverlay} />
       </div>
 
-      {/* Glowing Orbs - Cyan & Purple (Subtle) */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-cyan-400/5 rounded-full blur-3xl pointer-events-none transform -translate-x-1/2 -translate-y-1/2"></div>
+      <div className={styles.orbTopLeft} />
+      <div className={styles.orbBottomRight} />
+      <div className={styles.orbCenter} />
 
-      {/* Page Content */}
-      <div className="relative z-10 max-w-md mx-auto p-6 pt-12">
-
-        {/* ----------------------- */}
-        {/* Modern Profile Card     */}
-        {/* ----------------------- */}
-
-        <div className="bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-xl border border-cyan-400/40 p-6 rounded-2xl mb-6 shadow-2xl">
-          <div className="flex items-center gap-4">
-
-            {/* Avatar */}
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500/30 to-cyan-400/20 flex items-center justify-center border border-cyan-400/60 shadow-lg">
-              <User size={30} className="text-cyan-300" />
+      <motion.div
+        className={styles.contentWrapper}
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
+      >
+        
+        <motion.div className={styles.profileCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
+          <div className={styles.profileHeader}>
+            <div className={styles.avatar}>
+              <User size={32} className={styles.avatarIcon} />
             </div>
-
-            {/* User Details */}
-            <div>
-              <h2 className="text-xl font-bold text-white">Pavan Kumar</h2>
-              <p className="text-gray-400 text-sm">UID: 927261</p>
-
-              <span className="mt-1 inline-block bg-gradient-to-r from-cyan-500 to-cyan-400 text-slate-900 px-3 py-0.5 rounded-full text-xs font-semibold shadow-lg">
-                Level 3 Trader
-              </span>
+            <div className={styles.profileInfo}>
+              <h1 className={styles.userName}>Pavan Kumar</h1>
+              <p className={styles.userUID}>UID: 927261</p>
+              <span className={styles.badge}>Level 3 Trader</span>
             </div>
           </div>
 
-          {/* Stats Row */}
-          <div className="flex justify-between mt-5 text-center">
-            <div>
-              <p className="text-lg font-bold text-cyan-300">43</p>
-              <p className="text-gray-400 text-xs">Completed</p>
-            </div>
-            <div>
-              <p className="text-lg font-bold text-yellow-300">2</p>
-              <p className="text-gray-400 text-xs">Pending</p>
-            </div>
-            <div>
-              <p className="text-lg font-bold text-cyan-300">98%</p>
-              <p className="text-gray-400 text-xs">Success Rate</p>
-            </div>
-          </div>
-        </div>
-
-        {/* ----------------------- */}
-        {/* Trade History Section   */}
-        {/* ----------------------- */}
-
-        <div className="rounded-2xl p-5 bg-slate-900/60 backdrop-blur-xl border border-cyan-400/30 mb-6 shadow-2xl">
-          <h3 className="text-lg font-semibold mb-4 text-white">Trade History</h3>
-
-          <div className="space-y-3">
-            {trades.map((trade) => (
-              <div key={trade.id} className="flex items-center gap-3 text-xs">
-                
-                <div
-                  className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                    trade.icon === "✓"
-                      ? "bg-cyan-500/30 border border-cyan-400/50"
-                      : trade.icon === "!"
-                      ? "bg-yellow-500/20 border border-yellow-400/50"
-                      : "bg-slate-700/50 border border-slate-600"
-                  }`}
-                >
-                  <span className={trade.color}>{trade.icon}</span>
-                </div>
-
-                <div className="flex-1">
-                  <div className="text-gray-200">
-                    {trade.type && `${trade.type} `}
-                    {trade.amount}
-                  </div>
-
-                  {trade.status && (
-                    <div
-                      className={`text-[10px] ${
-                        trade.status === "COMPLETED"
-                          ? "text-cyan-400"
-                          : trade.status === "PENDING"
-                          ? "text-yellow-400"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      {trade.status}
-                    </div>
-                  )}
-                </div>
-
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ----------------------- */}
-        {/* Become Agent Box        */}
-        {/* ----------------------- */}
-
-        <div className="rounded-2xl p-5 bg-gradient-to-br from-cyan-500/20 to-blue-600/10 border border-cyan-400/50 mb-20 backdrop-blur-xl shadow-lg">
-          <h3 className="text-lg font-semibold mb-2 text-white">Become a PP2 Agent</h3>
-          <p className="text-xs text-gray-300 mb-4">Earn more by facilitating trades</p>
-
-          <button
-            onClick={() => onNavigate("register-agent")}
-            style={{
-            background: "linear-gradient(135deg, #06eef5, #00ffa3)",
-            boxShadow: "0 0 20px rgba(6, 238, 245, 0.4)",
-          }}
-            className="w-full py-2.5 rounded-lg text-slate-900 font-semibold text-sm transition duration-300 transform hover:scale-[1.02]"
-            onMouseEnter={(e) => {
-              e.target.style.boxShadow = "0 0 30px rgba(6, 238, 245, 0.6)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.boxShadow = "0 0 20px rgba(6, 238, 245, 0.4)";
-            }}
+          <motion.div
+            className={styles.statsGrid}
+            variants={listContainerVariants}
           >
-            Register as Agent
-          </button>
-        </div>
+            {stats.map((stat) => (
+              <motion.div
+                key={stat.label}
+                className={styles.statItem}
+                variants={cardVariants}
+              >
+                <p className={`${styles.statValue} ${styles[`stat${stat.color}`]}`}>
+                  {stat.value}
+                </p>
+                <p className={styles.statLabel}>{stat.label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
 
-      </div>
+        <motion.div className={styles.tradeCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
+          <h2 className={styles.cardTitle}>Trade History</h2>
+          <motion.div
+            className={styles.tradeList}
+            variants={listContainerVariants}
+          >
+            {trades.map((trade) => (
+              <motion.div
+                key={trade.id}
+                className={styles.tradeItem}
+                variants={cardVariants}
+                whileHover={{ scale: 1.05, x: 5 }}
+              >
+                <div className={styles.tradeDetails}>
+                  <div className={`${styles.tradeIcon} ${styles[`icon${trade.icon === "✓" ? "Success" : trade.icon === "!" ? "Pending" : "Default"}`]}`}>
+                    <span className={trade.color}>{trade.icon}</span>
+                  </div>
+                  <div className={styles.tradeInfo}>
+                    <div className={styles.tradeAmount}>
+                      {trade.type && `${trade.type} `}
+                      {trade.amount}
+                    </div>
+                    {trade.status && (
+                      <div className={`${styles.tradeStatus} ${styles[`status${trade.status.replace(" ", "")}`]}`}>
+                        {trade.status}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
 
-      {/* Bottom Navigation (Mobile Only) */}
-      <Navigation />
+        <motion.div className={styles.agentCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
+          <h2 className={styles.cardTitle}>Become a P2P Agent</h2>
+          <p className={styles.agentDescription}>Earn more by facilitating trades</p>
+          <Link to="/agent" >
+            <motion.button type="button" className={styles.agentButton} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              Register as Agent
+            </motion.button>
+          </Link>
+        </motion.div>
 
-      <style>{`
-        @keyframes gridMove {
-          0% { transform: translate(0, 0); }
-          100% { transform: translate(60px, 60px); }
-        }
-      `}</style>
+      </motion.div>
+
+      <Navigation onNavigate={onNavigate} activeTab="profile" />
     </div>
   );
 }

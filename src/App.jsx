@@ -13,6 +13,18 @@ import AdminOrders from "./pages/AdminPanel/AdminOrders";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile } from "./services/authservices/authapi";
 import { logout, setCredentials } from "./store/authslice";
+<<<<<<< Updated upstream
+=======
+import About from "./pages/about";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Career from "./pages/Career";
+import Sonic_Incentive from "./pages/Sonic_Incentive";
+import Agent from "./pages/agent";
+import Presale from "./pages/Presale";
+import Info from "./pages/Info";
+import Earn_info from "./pages/Earn_info";
+>>>>>>> Stashed changes
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -66,12 +78,51 @@ function App() {
             <Register/>
           </Protected>
 
+<<<<<<< Updated upstream
           } />
           <Route path="/airdrop" element={<Airdrop />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/p2p" element={<P2P />} />
           {/* P2P Sell route */}
           <Route path="/p2p/sell" element={<P2P mode="sell" />} />
+=======
+            <style>
+              {`@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}`}
+            </style>
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/login"
+              element={
+                <Protected authenication={false}>
+                  <Login />
+                </Protected>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <Protected authenication={false}>
+                  <Register />
+                </Protected>
+              }
+            />
+            <Route path="/airdrop" element={<Airdrop />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/p2p" element={<P2P />} />
+            <Route path="/p2p/sell" element={<P2P mode="sell" />} />
+            <Route path="/p2p/buy" element={<P2P mode="buy" />} />
+            <Route path="/admin" element={<AdminOrders />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/career" element={<Career />} />
+            <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
+            <Route path="/agent" element={<Agent />} />
+            <Route path="/presale" element={<Presale />} />
+            <Route path="/info" element={<Info />} />
+              <Route path="/earninfo" element={<Earn_info />} />
+>>>>>>> Stashed changes
 
           {/* P2P Buy route */}
           <Route path="/p2p/buy" element={<P2P mode="buy" />} />
