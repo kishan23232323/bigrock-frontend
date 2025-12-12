@@ -1,7 +1,8 @@
 /* Main Page Wrapper */
 .pageWrapper {
   min-height: 100vh;
-  relative: true;
+  
+  
   overflow: hidden;
   padding-bottom: 120px;
   background: linear-gradient(135deg, #050b14 0%, #0a1520 100%);
