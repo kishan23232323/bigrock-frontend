@@ -13,7 +13,7 @@ import AdminOrders from "./pages/AdminPanel/AdminOrders";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile } from "./services/authservices/authapi";
 import { logout, setCredentials } from "./store/authslice";
-import About from "./pages/about";
+import About from "./pages/About";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Career from "./pages/Career";
