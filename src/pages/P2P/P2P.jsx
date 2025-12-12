@@ -11,6 +11,30 @@ import {
 
 import { confirmSellOrder, createSellOrder, getFiatPairs,createBuyOrder, confirmBuyOrder } from "../../services/P2Pservices/p2papi";
 import useConvert from "../../Hooks/useAutoConversion";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
+// Helper validators
+const isValidTrc20Address = (addr) => {
+  if (!addr || typeof addr !== 'string') return false;
+  // Allow TRON addresses starting with T (approx 34 chars) or Ethereum-style 0x address
+  const tronRegex = /^T[1-9A-HJ-NP-Za-km-z]{33}$/; // basic base58 check
+  const ethRegex = /^0x[0-9a-fA-F]{40}$/;
+  return tronRegex.test(addr) || ethRegex.test(addr);
+};
+
+const isValidTxnHash = (h) => {
+  if (!h || typeof h !== 'string') return false;
+  const regex = /^[0-9a-fA-F]{64}$/;
+  return regex.test(h);
+};
+
+const isValidProofFile = (file) => {
+  if (!file) return true; // optional proof may be allowed
+  const maxSize = 5 * 1024 * 1024; // 5MB
+  const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+  return file.size <= maxSize && allowedTypes.includes(file.type);
+};
 
 
 
@@ -18,7 +42,8 @@ const P2P = ({ mode = "sell" }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containers} >
+      <div className={styles.container}>
       <P2PHeader />
       <P2PToggle activeMode={mode} />
 
@@ -31,6 +56,7 @@ const P2P = ({ mode = "sell" }) => {
         <BuySection selectedCountry={selectedCountry} />
       )}
     </div>
+    </div>
   );
 };
 
@@ -38,9 +64,10 @@ const P2P = ({ mode = "sell" }) => {
 const P2PHeader = () => (
   <div className={styles.header}>
     <h1 className={styles.title}>P2P Trading</h1>
+    <Link  to="/info"  >
     <button className={styles.infoButton}>
       <GrCircleInformation size={20} />
-    </button>
+    </button></Link>
   </div>
 );
 
@@ -95,12 +122,13 @@ const CountrySelector = ({ onSelectCountry }) => {
     <div className={styles.countrySelector}>
       <button className={styles.countryInput} onClick={() => setOpen(!open)}>
         {selected}
-      </button>
-
-      <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
+         <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
         <IoChevronDownOutline size={28} />
       </button>
 
+      </button>
+
+     
       {open && (
         <div className={styles.countryDropdown}>
           {countries.length === 0 && <p className={styles.loadingText}>Loading...</p>}
@@ -149,6 +177,9 @@ const SellSection = ({ selectedCountry }) => {
   const navigate = useNavigate();
 
   const isIndia = selectedCountry?.country === "India";
+
+  const { accessToken } = useSelector((state) => state.auth || {});
+  const isLoggedIn = Boolean(accessToken);
 
 
   // Conversion
@@ -228,28 +259,28 @@ const SellSection = ({ selectedCountry }) => {
   const handleCreateOrder = async () => {
    
     if (!usdtAmount || !fiatAmount || expandedPayment == null) {
-      alert("Please enter USDT, fiat and select a payment method");
+      toast.error("Please enter USDT amount, fiat amount and select a payment method");
       return;
     }
 
     
     if (expandedPayment === "bank") {
       if (!bankAccountNumber || !bankSwiftCode || !bankHolderName) {
-        alert("Please fill bank account number, swift code and account holder name");
+        toast.error("Please fill bank account number, SWIFT/IFSC and account holder name");
         return;
       }
     } else if (expandedPayment === "upi") {
       if (!upiId) {
-        alert("Please enter UPI ID");
+        toast.error("Please enter UPI ID");
         return;
       }
     } else if (expandedPayment === "paypal") {
       if (!paypalId) {
-        alert("Please enter PayPal ID");
+        toast.error("Please enter PayPal ID");
         return;
       }
     } else {
-      alert("Invalid payment method");
+      toast.error("Invalid payment method");
       return;
     }
 
@@ -275,7 +306,7 @@ const SellSection = ({ selectedCountry }) => {
       setStage("CONFIRM");
     } catch (err) {
       console.error("Create sell order failed:", err);
-      alert(err?.message || "Failed to create order");
+      toast.error(err?.message || "Failed to create order");
     }
   };
 
@@ -285,11 +316,21 @@ const SellSection = ({ selectedCountry }) => {
   // CONFIRM ORDER
   const handleConfirmSell = async () => {
     if (!orderData) {
-      alert("Order not found");
+      toast.error("Order not found");
       return;
     }
     if (!txnHash) {
-      alert("Please enter transaction hash");
+      toast.error("Please enter transaction hash");
+      return;
+    }
+
+    if (!isValidTxnHash(txnHash)) {
+      toast.error("Invalid transaction hash format");
+      return;
+    }
+
+    if (!isValidProofFile(proofFile)) {
+      toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
       return;
     }
 
@@ -305,12 +346,12 @@ const SellSection = ({ selectedCountry }) => {
         proof: proofFile
       });
 
-      alert("Order submitted, awaiting admin approval");
+      toast.success("Order submitted, awaiting admin approval");
       navigate("/profile");
 
     } catch (err) {
       console.error("Confirm sell failed:", err);
-      alert(err?.message || "Failed to confirm sell");
+      toast.error(err?.message || "Failed to confirm sell");
     }
   };
 
@@ -472,8 +513,14 @@ const SellSection = ({ selectedCountry }) => {
       {/* Buttons */}
       <div className={styles.buttonGroup}>
         <button className={styles.cancelButton}>Cancel</button>
-        <button className={styles.confirmButton} onClick={handleCreateOrder}>
-          Create Sell Order
+ <button className={styles.confirmButton} onClick={()=>{
+          if(!isLoggedIn){
+            navigate("/login");
+            return;
+          }
+          handleCreateOrder(); 
+        }}>
+          {isLoggedIn ? "Create Sell Order" : "Login to Use P2P Service"}
         </button>
       </div>
     </div>
@@ -595,6 +642,8 @@ const BuySection = ({ selectedCountry }) => {
   const navigate = useNavigate();
   const isIndia = selectedCountry?.country === "India";
 
+    const { accessToken } = useSelector((state) => state.auth || {});
+    const isLoggedIn = Boolean(accessToken);
 
   // ------------------------- Conversion -------------------------
   const onUsdtChange = (v) => {
@@ -646,15 +695,20 @@ const BuySection = ({ selectedCountry }) => {
   // ------------------------- Create Buy Order -------------------------
   const handleCreateOrder = async () => {
     if (!usdtAmount || !fiatAmount) {
-      alert("Please enter both USDT and fiat amounts");
+      toast.error("Please enter both USDT and fiat amounts");
       return;
     }
     if (!expandedPayment) {
-      alert("Please select a payment method");
+      toast.error("Please select a payment method");
       return;
     }
     if (!userUsdtWallet || userUsdtWallet.trim() === "") {
-      alert("Please enter your TRC20 USDT wallet address");
+      toast.error("Please enter your TRC20 USDT wallet address");
+      return;
+    }
+
+    if (!isValidTrc20Address(userUsdtWallet.trim())) {
+      toast.error("Please provide a valid TRC20 address");
       return;
     }
 
@@ -679,29 +733,34 @@ const BuySection = ({ selectedCountry }) => {
       setStage("CONFIRM");
     } catch (err) {
       console.error("Create buy order failed:", err);
-      alert(err?.message || "Failed to create buy order");
+      toast.error(err?.message || "Failed to create buy order");
     }
   };
 
   // ------------------------- Confirm Buy Order -------------------------
   const handleConfirmBuy = async () => {
     if (!orderData?._id) {
-      alert("Order not found");
+      toast.error("Order not found");
       return;
     }
     if (!proofFile) {
-      alert("Please upload payment screenshot");
+      toast.error("Please upload payment screenshot");
+      return;
+    }
+
+    if (!isValidProofFile(proofFile)) {
+      toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
       return;
     }
 
     try {
       await confirmBuyOrder({ orderId: orderData._id, proof: proofFile });
-      alert("Buy order submitted, awaiting admin approval");
+      toast.success("Buy order submitted, awaiting admin approval");
       navigate("/profile");
       
     } catch (err) {
       console.error("Confirm buy failed:", err);
-      alert(err?.message || "Failed to confirm buy");
+      toast.error(err?.message || "Failed to confirm buy");
     }
   };
 
@@ -819,8 +878,14 @@ const BuySection = ({ selectedCountry }) => {
       {/* Buttons */}
       <div className={styles.buttonGroup}>
         <button className={styles.cancelButton}>Cancel</button>
-        <button className={styles.confirmButton} onClick={handleCreateOrder}>
-          Create Buy Order
+        <button className={styles.confirmButton} onClick={()=>{
+          if(!isLoggedIn){
+            navigate("/login");
+            return;
+          }
+          handleCreateOrder(); 
+        }}>
+          {isLoggedIn ? "Create Buy Order" : "Login to Use P2P Service"}
         </button>
       </div>
     </div>

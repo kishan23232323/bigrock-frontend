@@ -1,3 +1,5 @@
+
+
 .navContainer {
   position: sticky;
   top: 0;
@@ -6,15 +8,19 @@
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(6, 238, 245, 0.1);
   width: 100%;
+ 
+
 }
 
 .navContent {
-  max-width: 1200px;
-  margin: 0 auto;
+
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
+  background: transparent;
+ 
 }
 
 /* Logo */
@@ -29,18 +35,22 @@
   cursor: pointer;
   flex-shrink: 0;
   margin-right: auto;
+  background: transparent;
 }
 
 .logoIcon {
   font-size: 24px;
+  background: transparent;
 }
 
 .logoTextPrimary {
   color: #06eef5;
+  background: transparent;
 }
 
 .logoTextSecondary {
   color: #00d4ff;
+  background: transparent;
 }
 
 /* Desktop Navigation Menu - Moved to Right */
@@ -48,10 +58,14 @@
   display: flex;
   list-style: none;
   gap: 32px;
+  background: transparent;
   margin: 0;
   padding: 0;
   align-items: center;
-  margin-left: auto;
+  margin-left: 100px;
+  margin-right: 100px;
+
+
 }
 
 .navLink {
@@ -62,8 +76,10 @@
   transition: all 0.3s ease;
   padding: 8px 12px;
   border-radius: 6px;
-  display: block;
-  white-space: nowrap;
+
+
+  background: transparent;
+
 }
 
 .navLink:hover {
@@ -80,6 +96,8 @@
 .authButton {
   list-style: none;
   margin-left: 16px;
+  
+
 }
 
 .authButton button,
@@ -101,12 +119,13 @@
 .authButton a:hover {
   box-shadow: 0 0 25px rgba(6, 238, 245, 0.5);
   transform: scale(1.02);
+  color: #08111B;
 }
 
 /* Mobile Menu Toggle Button */
 .mobileMenuToggle {
   display: none;
-  background: none;
+  background: transparent;
   border: none;
   color: #06eef5;
   cursor: pointer;
@@ -138,6 +157,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  background: transparent;
   padding: 12px 0;
 }
 
@@ -147,6 +167,7 @@
   gap: 12px;
   color: #aaa;
   text-decoration: none;
+  background: transparent;
   font-weight: 500;
   font-size: 14px;
   padding: 14px 20px;
@@ -168,6 +189,7 @@
 
 .mobileLink svg {
   font-size: 18px;
+  background: transparent;
 }
 
 /* Mobile Auth Section */
@@ -175,6 +197,7 @@
   padding: 12px 20px;
   border-top: 1px solid rgba(6, 238, 245, 0.1);
   margin-top: 8px;
+  background: transparent;
 }
 
 .mobileLogoutWrapper button {
@@ -219,6 +242,7 @@
     display: block;
   }
 
+
   .mobileDropdown {
     display: block;
   }
@@ -227,18 +251,22 @@
     padding: 12px 16px;
   }
 
+
   .logo {
     font-size: 16px;
     margin-right: auto;
   }
 
+
   .logoIcon {
     font-size: 20px;
   }
 
+
   .navContainer {
     position: relative;
   }
+ 
 
   .mobileDropdown {
     position: static;
@@ -250,11 +278,14 @@
     display: none !important;
   }
 
+
   .mobileDropdown {
     display: none !important;
   }
+ 
 
   .navContainer {
     position: sticky;
   }
+  
 }

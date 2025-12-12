@@ -1,6 +1,7 @@
 .pageWrapper {
   padding: 30px;
   color: white;
+  background-color: #08111b;
 }
 
 .heading {
@@ -110,6 +111,11 @@
 
 .detailValueGray {
   color: #9ca3af;
+   max-width: 100%;
+  word-break: break-all;   
+  overflow-wrap: anywhere;
+  white-space: normal;     
+  padding-left: 5px;
 }
 
 /* BLOCK */

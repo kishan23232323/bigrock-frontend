@@ -1,198 +1,518 @@
 /* Airdrop.module.css */
-.page {
+.pageWrapper {
+  position: relative;
   min-height: 100vh;
-  padding: 6rem 1.5rem 3rem;
+  overflow: hidden;
+  padding-bottom: 120px;
+  background: linear-gradient(135deg, #050b14 0%, #0a1520 100%);
+}
+
+
+/* Content Wrapper */
+.contentWrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 500px;
+  background: transparent;
+  margin: 0 auto;
+  padding: 40px 16px;
+}
+
+/* Header Card */
+.headerCard {
+
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(6, 238, 245, 0.15);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 24px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  /* background:
-    radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 60%),
-    radial-gradient(circle at bottom, rgba(129, 140, 248, 0.25), transparent 60%),
-    #020617; */
-  color: #e5e7eb;
+  gap: 20px;
+  background: transparent;
+  flex-wrap: wrap;
 }
 
-.card {
-  width: 100%;
-  max-width: 420px;
-  border-radius: 26px;
-  border: 1px solid rgba(56, 189, 248, 0.6);
-  padding: 2.4rem 2.1rem 1.9rem;
-  background:
-    radial-gradient(circle at top, rgba(59, 130, 246, 0.18), transparent 65%),
-    radial-gradient(circle at bottom, rgba(129, 140, 248, 0.2), transparent 65%),
-    rgba(15, 23, 42, 0.98);
-  box-shadow:
-    0 24px 80px rgba(15, 23, 42, 0.95),
-    0 0 40px rgba(56, 189, 248, 0.4);
-  text-align: center;
+.headerContent {
+  flex: 1;
+  min-width: 200px;
+  background: transparent;
 }
 
-.headerLogo {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: #67e8f9;
-  margin-bottom: 0.7rem;
-}
-
-.mainTitle {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 2.6rem;
-  letter-spacing: 0.35em;
-  text-indent: 0.35em;
-  font-weight: 800;
-  margin: 0;
-  background: linear-gradient(135deg, #a855f7, #e0f2fe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.title {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  background: transparent;
 }
 
 .subtitle {
-  margin-top: 0.9rem;
-  font-size: 0.82rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #7dd3fc;
+  margin: 0;
+  font-size: 12px;
+  color: #9aa6ad;
+  background: transparent;
 }
 
-.sectionBox {
-  margin-top: 1.9rem;
-  border-radius: 18px;
-  border: 1px solid rgba(56, 189, 248, 0.6);
-  padding: 1.1rem 1.1rem 1rem;
-  background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.7), transparent 85%);
+.totalRewards {
+  text-align: right;
+  background: transparent;
 }
 
-.sectionTitle {
-  font-size: 0.82rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #67e8f9;
-  text-align: left;
-  margin-bottom: 0.75rem;
+.rewardsLabel {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  color: #9aa6ad;
+  background: transparent;
 }
 
-.progressBarOuter {
-  width: 100%;
-  height: 0.85rem;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.9);
-  overflow: hidden;
-  box-shadow: inset 0 0 6px rgba(15, 23, 42, 0.9);
+.rewardsAmount {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #06eef5;
+  text-shadow: 0 0 10px rgba(6, 238, 245, 0.5);
+  background: transparent;
 }
 
-.progressBarInner {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #38bdf8, #a855f7);
-  box-shadow:
-    0 0 16px rgba(56, 189, 248, 0.8),
-    0 0 26px rgba(168, 85, 247, 0.8);
-  transition: width 0.3s ease;
+/* Cards Grid */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  background: transparent;
 }
 
-.progressRow {
-  margin-top: 0.45rem;
+.airdropCard {
+
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(6, 238, 245, 0.15);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.airdropCard:hover {
+  border-color: rgba(6, 238, 245, 0.4);
+  box-shadow: 0 8px 32px rgba(6, 238, 245, 0.2);
+}
+
+.cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8rem;
+  margin-bottom: 12px;
+  background: transparent;
 }
 
-.progressAmount {
-  color: #e5e7eb;
-}
-
-.progressPercent {
-  color: #67e8f9;
-  font-weight: 600;
-}
-
-.tasksList {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.taskRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.55rem 0.2rem 0.55rem 0;
-}
-
-.taskLeft {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.taskIcon {
-  width: 2.1rem;
-  height: 2.1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(56, 189, 248, 0.7);
+.statusIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #67e8f9;
-  font-size: 1.1rem;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
-}
-
-.taskLabel {
-  font-size: 0.9rem;
-  color: #e5e7eb;
-}
-
-.taskStatus {
-  min-width: 90px;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  border: 1px solid rgba(56, 189, 248, 0.6);
+  font-size: 14px;
   background: transparent;
-  color: #67e8f9;
-  font-size: 0.78rem;
+}
+
+.statusCLAIMABLE {
+  background: rgba(6, 238, 245, 0.2);
+  border: 1px solid rgba(6, 238, 245, 0.5);
+}
+
+.statusCLAIMED {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+}
+
+.statusPENDING {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+}
+
+.statusLOCKED {
+  background: rgba(100, 116, 139, 0.3);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.statusBadge {
+  font-size: 10px;
   font-weight: 600;
-  text-transform: capitalize;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: transparent;
+}
+
+.badgeCLAIMABLE {
+  background: rgba(6, 238, 245, 0.2);
+  color: #06eef5;
+}
+
+.badgeCLAIMED {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.badgePENDING {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.badgeLOCKED {
+  background: rgba(100, 116, 139, 0.3);
+  color: #9ca3af;
+}
+
+.airdropName {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #dff8fb;
+  background: transparent;
+}
+
+.airdropAmount {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #06eef5;
+  background: transparent;
+}
+
+.claimBtn {
+  width: 100%;
+  background: linear-gradient(135deg, #06eef5, #00d4ff);
+  color: #041018;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.claimBtn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(6, 238, 245, 0.3);
+}
+
+.claimBtn.disabled {
+  background: rgba(100, 116, 139, 0.3);
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Referral Card */
+.referralCard {
+  background: linear-gradient(135deg, rgba(6, 238, 245, 0.15), rgba(0, 212, 255, 0.08));
+  border: 1px solid rgba(6, 238, 245, 0.15);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #dff8fb;
+  background: transparent;
+}
+
+.referralDesc {
+  margin: 0 0 16px 0;
+  font-size: 12px;
+  color: #9aa6ad;
+  background: transparent;
+}
+
+.referralLinkBox {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  background: transparent;
+}
+
+.referralInput {
+  flex: 1;
+  background: rgba(3, 6, 10, 0.6);
+  color: #e6eef3;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.copyBtn {
+  background: rgba(6, 238, 245, 0.2);
+  color: #06eef5;
+  border: 1px solid rgba(6, 238, 245, 0.5);
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.copyBtn:hover {
+  background: rgba(6, 238, 245, 0.3);
+  box-shadow: 0 0 10px rgba(6, 238, 245, 0.2);
+}
+
+/* Referral Stats */
+.referralStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background: transparent;
+}
+
+.statItem {
+  text-align: center;
+  padding: 12px;
+  background: rgba(3, 6, 10, 0.4);
+  border-radius: 8px;
+  background: transparent;
+}
+
+.statLabel {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  color: #9aa6ad;
+}
+
+.statValue {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #06eef5;
+  background: transparent;
+}
+
+/* Loading */
+.loadingRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.loadingText {
+  color: #9aa6ad;
+  font-size: 14px;
+}
+
+/* Info Cards Grid */
+.infoCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 100px;
+  background: transparent;
+}
+
+.infoCard {
+  background: rgba(6, 12, 18, 0.75);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(6, 238, 245, 0.15);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.infoTitle {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dff8fb;
+  background: transparent;
+}
+
+.infoList {
+  margin: 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.infoList li {
+  font-size: 12px;
+  color: #9aa6ad;
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+/* Bottom Navigation */
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(5, 11, 20, 0.95);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(6, 238, 245, 0.15);
+  z-index: 50;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 20px;
+  background: transparent;
+}
+
+.navButton {
+  background: transparent;
+  border: none;
+  color: #9aa6ad;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+  padding: 8px;
+}
+
+.navButton:hover {
+  color: #06eef5;
+}
+
+.navButton.active {
+  color: #06eef5;
+}
+
+/* Tablet/Desktop */
+@media (min-width: 768px) {
+  .contentWrapper {
+    max-width: 900px;
+    padding: 40px 24px;
+  }
+
+
+  .headerCard {
+    padding: 28px;
+    flex-wrap: nowrap;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+  
+
+  .cardsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+
+  .airdropCard {
+    padding: 20px;
+  }
+
+
+  .airdropName {
+    font-size: 15px;
+  }
+  
+
+  .infoCardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bottomNav {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .contentWrapper {
+    padding: 24px 12px;
+  }
+
+
+  .headerCard {
+    padding: 16px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .totalRewards {
+    text-align: center;
+  }
+
+
+  .title {
+    font-size: 20px;
+  }
+  
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .airdropCard {
+    padding: 14px;
+  }
+
+
+  .referralLinkBox {
+    flex-direction: column;
+  }
+
+
+  .referralStats {
+    grid-template-columns: 1fr;
+  }
+ 
+
+  .infoCardsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .infoCard {
+    padding: 12px;
+  }
+ 
+
+  .infoTitle {
+    font-size: 12px;
+  }
+ 
+
+  .infoList li {
+    font-size: 11px;
+  }
+ 
+}
+
+
+
+.infoButton {
+  background: rgba(10, 22, 40, 0.85);
+  border-radius: 999px;
+  border: 1px solid rgba(6, 238, 245, 0.35);
+  padding: 0.45rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.taskStatus:hover {
-  background: rgba(56, 189, 248, 0.12);
-  box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
-}
-
-.statusCompleted {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: rgba(34, 197, 94, 0.9);
-  color: #bbf7d0;
-  box-shadow: 0 0 20px rgba(34, 197, 94, 0.7);
-}
-
-.footerBanner {
-  margin-top: 1.4rem;
-  border-radius: 14px;
-  border: 1px solid rgba(56, 189, 248, 0.7);
-  padding: 0.65rem 0.8rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #67e8f9;
-  background: rgba(15, 23, 42, 0.9);
-}
-
-@media (max-width: 480px) {
-  .card {
-    padding: 2rem 1.6rem 1.8rem;
-  }
-
-  .mainTitle {
-    font-size: 2.2rem;
-    letter-spacing: 0.3em;
-  }
+.infoButton:hover {
+  color: #e5e7eb;
+  box-shadow: 0 0 18px rgba(6, 238, 245, 0.6);
 }
