@@ -18,7 +18,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Career from "./pages/Career";
 import Sonic_Incentive from "./pages/Sonic_Incentive";
-import Agent from "./pages/agent";
+import Agent from "./pages/Agent";
 import Presale from "./pages/Presale";
 import Info from "./pages/Info";
 import Earn_info from "./pages/Earn_info";
