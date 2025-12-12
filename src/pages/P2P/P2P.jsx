@@ -106,6 +106,7 @@ const CountrySelector = ({ onSelectCountry }) => {
       try {
         const res = await getFiatPairs();
         setCountries(res || []);
+        console.log("Fetched countries:", res);
       } catch (error) {
         console.error("Failed to load countries:", error);
       }
@@ -122,14 +123,21 @@ const CountrySelector = ({ onSelectCountry }) => {
   return (
     <div className={styles.countrySelector}>
       <button className={styles.countryInput} onClick={() => setOpen(!open)}>
-        {selected}
-         <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
-        <IoChevronDownOutline size={28} />
-      </button>
+        {selected !== "Select Country" && (
+          <img
+            src={countries.find((c) => c.country === selected)?.image}
+            alt={selected}
+            className={styles.flag}
+          />
+        )}
+        <span>{selected}</span>
+        <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
+          <IoChevronDownOutline size={28} />
+        </button>
 
       </button>
 
-     
+
       {open && (
         <div className={styles.countryDropdown}>
           {countries.length === 0 && <p className={styles.loadingText}>Loading...</p>}
@@ -140,6 +148,11 @@ const CountrySelector = ({ onSelectCountry }) => {
               className={styles.countryItem}
               onClick={() => handleSelect(item)}
             >
+              <img
+                src={item.image}
+                alt={item.country}
+                className={styles.flag}
+              />
               <span>{item.country}</span>
               <span className={styles.currencyTag}>{item.currency}</span>
             </div>
