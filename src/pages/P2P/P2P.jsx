@@ -12,6 +12,7 @@ import {
 import { confirmSellOrder, createSellOrder, getFiatPairs,createBuyOrder, confirmBuyOrder } from "../../services/P2Pservices/p2papi";
 import useConvert from "../../Hooks/useAutoConversion";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 // Helper validators
 const isValidTrc20Address = (addr) => {
@@ -176,6 +177,9 @@ const SellSection = ({ selectedCountry }) => {
   const navigate = useNavigate();
 
   const isIndia = selectedCountry?.country === "India";
+
+  const { accessToken } = useSelector((state) => state.auth || {});
+  const isLoggedIn = Boolean(accessToken);
 
 
   // Conversion
@@ -509,8 +513,14 @@ const SellSection = ({ selectedCountry }) => {
       {/* Buttons */}
       <div className={styles.buttonGroup}>
         <button className={styles.cancelButton}>Cancel</button>
-        <button className={styles.confirmButton} onClick={handleCreateOrder}>
-          Create Sell Order
+ <button className={styles.confirmButton} onClick={()=>{
+          if(!isLoggedIn){
+            navigate("/login");
+            return;
+          }
+          handleCreateOrder(); 
+        }}>
+          {isLoggedIn ? "Create Sell Order" : "Login to Use P2P Service"}
         </button>
       </div>
     </div>
@@ -632,6 +642,8 @@ const BuySection = ({ selectedCountry }) => {
   const navigate = useNavigate();
   const isIndia = selectedCountry?.country === "India";
 
+    const { accessToken } = useSelector((state) => state.auth || {});
+    const isLoggedIn = Boolean(accessToken);
 
   // ------------------------- Conversion -------------------------
   const onUsdtChange = (v) => {
@@ -866,8 +878,14 @@ const BuySection = ({ selectedCountry }) => {
       {/* Buttons */}
       <div className={styles.buttonGroup}>
         <button className={styles.cancelButton}>Cancel</button>
-        <button className={styles.confirmButton} onClick={handleCreateOrder}>
-          Create Buy Order
+        <button className={styles.confirmButton} onClick={()=>{
+          if(!isLoggedIn){
+            navigate("/login");
+            return;
+          }
+          handleCreateOrder(); 
+        }}>
+          {isLoggedIn ? "Create Buy Order" : "Login to Use P2P Service"}
         </button>
       </div>
     </div>
