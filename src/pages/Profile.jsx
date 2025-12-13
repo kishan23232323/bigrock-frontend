@@ -17,27 +17,8 @@ export default function ProfilePage({ onNavigate }) {
     { label: "Success Rate", value: "98%", color: "cyan" }
   ];
 
-  const Navigation = () => (
-    <div className={styles.bottomNav}>
-      <div className={styles.navContainer}>
-        <button onClick={() => onNavigate("home")} className={styles.navButton}>
-          <Home size={22} />
-        </button>
-        <button onClick={() => onNavigate("p2p")} className={styles.navButton}>
-          <ArrowLeftRight size={22} />
-        </button>
-        <button onClick={() => onNavigate("airdrop")} className={styles.navButton}>
-          <Star size={22} />
-        </button>
-        <button onClick={() => onNavigate("profile")} className={`${styles.navButton} ${styles.active}`}>
-          <User size={22} />
-        </button>
-      </div>
-    </div>
-  );
-
   return (
-    <div className={styles.pageWrapper}>
+    <div className={`${styles.pageWrapper} min-h-screen`}>
       <div className={styles.gridBackground}>
         <div className={styles.gridOverlay} />
       </div>
@@ -46,7 +27,7 @@ export default function ProfilePage({ onNavigate }) {
       <div className={styles.orbBottomRight} />
       <div className={styles.orbCenter} />
 
-      <div className={styles.contentWrapper}>
+      <div className={`${styles.contentWrapper} overflow-y-auto`}>
         
         <div className={styles.profileCard}>
           <div className={styles.profileHeader}>
@@ -113,8 +94,6 @@ export default function ProfilePage({ onNavigate }) {
         </div>
 
       </div>
-
-      <Navigation />
 
     </div>
   );
