@@ -114,6 +114,7 @@ export default function ProfilePage({ onNavigate }) {
 
       </div>
 
+      <Navigation />
 
     </div>
   );

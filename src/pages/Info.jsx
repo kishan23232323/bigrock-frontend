@@ -76,9 +76,14 @@ import { Link } from 'react-router-dom';
 
   return (
     <div className={styles['info-page-container']}>
-     <Link to="/p2p"> <GrFormPrevious size={50} style={{marginLeft:"30px",marginTop:"30px" }} /></Link>
-      <h1 className={styles['info-header']} style={{marginTop:"-55px"}}>Information</h1>
-      
+      <div className={styles['page-header']}>
+        <Link to="/p2p" className={styles['back-button']}>
+          <GrFormPrevious size={32} />
+        </Link>
+        <h1 className={styles['info-header']}>
+          Information
+        </h1>
+      </div>
       <div>
         {/* --- How to Buy Timeline --- */}
         <h2 className={styles['info-header']} style={{ fontSize: '2rem', marginTop: '20px' }}>How to Buy</h2>
