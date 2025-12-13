@@ -70,8 +70,12 @@ function Earn_info() {
 
     return (
         <div className={styles['info-page-container']}>
-            <Link to="/airdrop"> <GrFormPrevious size={50} style={{ marginLeft: "30px", marginTop: "30px" }} /></Link>
-            <h1 className={styles['info-header']} style={{ marginTop: "-55px" }}>Sonic Airdrop Is Live!</h1>
+            <div className={styles['page-header']}>
+                <Link to="/airdrop" className={styles['back-button']}>
+                    <GrFormPrevious size={32} />
+                </Link>
+                <h1 className={styles['info-header']}>Sonic Airdrop Is Live!</h1>
+            </div>
             <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#ccc' }}>Complete tasks to earn your share of SONIC tokens.</p>
 
             <div>
