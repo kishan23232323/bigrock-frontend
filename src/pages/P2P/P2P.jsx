@@ -368,8 +368,18 @@ const SellSection = ({ selectedCountry }) => {
       toast.error(err?.message || "Failed to confirm sell");
     }
   };
+  const handleCopyAddress = async () => {
+  if (!orderData?.usdtWalletAddress) return;
 
- 
+  try {
+    await navigator.clipboard.writeText(orderData.usdtWalletAddress);
+    toast.success("Wallet address copied");
+  } catch (err) {
+    toast.error("Failed to copy address");
+  }
+};
+
+
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
       {/* USDT */}
@@ -548,10 +558,13 @@ const SellSection = ({ selectedCountry }) => {
 
       {/* Wallet Address */}
       <div className={styles.walletSection}>
-        <h3 className={styles.walletTitle}>Send USDT to this Address</h3>
+        <h3 className={styles.walletTitle}>Send USDT to this Address ( TRC20 ONLY ) </h3>
         <div className={styles.addressContainer}>
           <span className={styles.address}>{orderData?.usdtWalletAddress}</span>
-          <button className={styles.copyButton}>
+          <button className={styles.copyButton}
+            onClick={handleCopyAddress}
+            aria-label="Copy Wallet Address"
+          >
             <IoCopyOutline size={18} />
           </button>
         </div>
@@ -778,29 +791,29 @@ const BuySection = ({ selectedCountry }) => {
     }
   };
 
+  const handleCopyText = async (text, successMsg = "Copied") => {
+  if (!text) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    toast.success(successMsg);
+  } catch (err) {
+    toast.error("Failed to copy");
+  }
+};
+
+
   // ------------------------- Render Create UI -------------------------
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
      
+          {/* USDT amount */}
       <div className={styles.inputGroup}>
-        <label className={styles.label}>Amount to Pay ({currencyCode})</label>
-        <input
-          type="number"
-          className={styles.input}
-          placeholder="Enter amount"
-          value={fiatAmount}
-          disabled
-          onChange={(e) => onFiatChange(e.target.value)}
-        />
-      </div>
-
-      {/* USDT amount */}
-      <div className={styles.inputGroup}>
-        <label className={styles.label}>You Will Get (USDT)</label>
+        <label className={styles.label}>USDT to Buy </label>
         <input
           type="text"
           className={styles.input}
-          placeholder=""
+          placeholder="Enter amount"
           value={usdtAmount}
           onChange={(e) => onUsdtChange(e.target.value)}
         />
@@ -811,6 +824,20 @@ const BuySection = ({ selectedCountry }) => {
           </small>
         )}
       </div>
+
+      <div className={styles.inputGroup}>
+        <label className={styles.label}>Amount to Pay ({currencyCode})</label>
+        <input
+          type="number"
+          className={styles.input}
+          placeholder=""
+          value={fiatAmount}
+          disabled
+          onChange={(e) => onFiatChange(e.target.value)}
+        />
+      </div>
+
+
 
       {/* User TRC20 wallet address (user must provide for buy) */}
       <div className={styles.inputGroup}>
@@ -908,10 +935,24 @@ const BuySection = ({ selectedCountry }) => {
   const renderConfirmUI = () => {
     const details = orderData?.receiverDetails || {};
     
-    const displayPaymentDetail =
-      details.upiId ||
-      details.paypalId ||
-      (details.bankHolderName ? `${details.bankHolderName} • ${details.bankAccountNumber}` : null);
+      const paymentDisplayText = details.upiId
+    ? `UPI ID: ${details.upiId}`
+    : details.paypalId
+    ? `PayPal: ${details.paypalId}`
+    : details.bankHolderName
+    ? `Account Holder: ${details.bankHolderName}
+  Account No: ${details.bankAccountNumber}
+  IFSC/SWIFT: ${details.bankSwiftCode}`
+    : "";
+
+    const paymentCopyText = details.upiId
+  ? details.upiId
+  : details.paypalId
+  ? details.paypalId
+  : details.bankHolderName
+  ? `${details.bankHolderName}\n${details.bankAccountNumber}\n${details.bankSwiftCode}`
+  : "";
+
 
     return (
       <div className={styles.sectionContent}>
@@ -921,9 +962,21 @@ const BuySection = ({ selectedCountry }) => {
           <h3 className={styles.walletTitle}>Send Money To</h3>
 
           <div className={styles.addressContainer}>
-            <span className={styles.address}>
-              {displayPaymentDetail || "Payment details will appear here"}
-            </span>
+<span className={styles.address}>
+  {paymentDisplayText || "Payment details will appear here"}
+</span>
+
+{paymentCopyText && (
+  <button
+    className={styles.copyButton}
+    onClick={() => handleCopyText(paymentCopyText, "Payment details copied")}
+    aria-label="Copy payment details"
+  >
+    <IoCopyOutline size={18} />
+  </button>
+)}
+
+
           </div>
 
          
