@@ -27,7 +27,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 
 function App() {
-  const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken);
 
@@ -36,7 +35,6 @@ function App() {
 
     if (!token) {
       dispatch(logout());
-      setLoading(false);
       return;
     }
 
@@ -56,82 +54,48 @@ function App() {
       .catch((error) => {
         console.log("App.jsx :: error in getUserProfile", error);
         dispatch(logout());
-      })
-      .finally(() => setLoading(false));
+      });
   }, [accessToken, dispatch]);
 
   return (
     <div className="appWrapper">
       <NavBar />
-
-      <div className="contentWrapper">
-        {loading ? (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "60vh",
-              flexDirection: "column",
-              gap: 12,
-            }}
-          >
-            <div
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: "50%",
-                border: "5px solid rgba(6,238,245,0.15)",
-                borderTopColor: "#06eef5",
-                animation: "spin 1s linear infinite",
-              }}
-            />
-            <div style={{ color: "#aaa" }}>Loading...</div>
-
-            <style>
-              {`@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}`}
-            </style>
-          </div>
-        ) : (
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/login"
-              element={
-                <Protected authenication={false}>
-                  <Login />
-                </Protected>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <Protected authenication={false}>
-                  <Register />
-                </Protected>
-              }
-            />
-            <Route path="/airdrop" element={<Airdrop />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/p2p" element={<P2P />} />
-            <Route path="/p2p/sell" element={<P2P mode="sell" />} />
-            <Route path="/p2p/buy" element={<P2P mode="buy" />} />
-            <Route path="/admin" element={<AdminOrders />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/career" element={<Career />} />
-            <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
-            <Route path="/agent" element={<Agent />} />
-            <Route path="/presale" element={<Presale />} />
-            <Route path="/info" element={<Info />} />
-            <Route path="/earninfo" element={<Earn_info />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} /> 
-
-
-            
-          </Routes>
-        )}
+      <div className="contentWrapper" style={{ minHeight: "60vh" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={
+              <Protected authenication={false}>
+                <Login />
+              </Protected>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Protected authenication={false}>
+                <Register />
+              </Protected>
+            }
+          />
+          <Route path="/airdrop" element={<Airdrop />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/p2p" element={<P2P />} />
+          <Route path="/p2p/sell" element={<P2P mode="sell" />} />
+          <Route path="/p2p/buy" element={<P2P mode="buy" />} />
+          <Route path="/admin" element={<AdminOrders />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/career" element={<Career />} />
+          <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
+          <Route path="/agent" element={<Agent />} />
+          <Route path="/presale" element={<Presale />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/earninfo" element={<Earn_info />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+        </Routes>
       </div>
 
       <Footer />
