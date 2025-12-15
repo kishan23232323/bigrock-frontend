@@ -120,7 +120,7 @@ function Login() {
           {" "}
           <span
             className="text-blue-100 font-semibold hover:underline cursor-pointer"
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/forgot-password")}
             
           >
             Forget Password?

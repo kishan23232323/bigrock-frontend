@@ -22,6 +22,9 @@ import Agent from "./pages/Agent";
 import Presale from "./pages/Presale";
 import Info from "./pages/Info";
 import Earn_info from "./pages/Earn_info";
+import VerifyEmail from "./pages/Verify";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [loading, setLoading] = React.useState(true);
@@ -121,6 +124,10 @@ function App() {
             <Route path="/presale" element={<Presale />} />
             <Route path="/info" element={<Info />} />
             <Route path="/earninfo" element={<Earn_info />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} /> 
+
 
             
           </Routes>
