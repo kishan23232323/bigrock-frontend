@@ -7,7 +7,7 @@ function Earn_info() {
     const participationSteps = [
         { title: 'Connect Your Wallet', description: 'Connect your wallet to check your eligibility for the airdrop.' },
         { title: 'Complete Social Tasks', description: 'Follow our social media channels and join the community to earn points.' },
-        { title: 'Bridge Assets', description: 'Bridge assets to the Sonic network to get a multiplier on your points.' },
+        { title: 'Bridge Assets', description: 'Bridge assets to the BigRock network to get a multiplier on your points.' },
         { title: 'Refer Friends', description: 'Invite your friends to join the airdrop and earn bonus points for each successful referral.' },
     ];
 
@@ -74,9 +74,9 @@ function Earn_info() {
                 <Link to="/airdrop" className={styles['back-button']}>
                     <GrFormPrevious size={32} />
                 </Link>
-                <h1 className={styles['info-header']}>Sonic Airdrop Is Live!</h1>
+                <h1 className={styles['info-header']}>BigRock Airdrop Is Live!</h1>
             </div>
-            <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#ccc' }}>Complete tasks to earn your share of SONIC tokens.</p>
+            <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#ccc' }}>Complete tasks to earn your share of BIGROCK tokens.</p>
 
             <div>
                 <h2 className={styles['info-header']} style={{ fontSize: '2rem', marginTop: '20px' }}>How to Participate</h2>

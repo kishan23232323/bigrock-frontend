@@ -29,13 +29,13 @@ export default function AirdropPage({ onNavigate }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const referralLink = "https://sonic.exchange/ref/pavan123";
+  const referralLink = "https://BigRock.exchange/ref/pavan123";
 
   const initialAirdropData = [
-    { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: "CLAIMABLE", icon: "✓" },
-    { id: 2, name: "Early Bird Bonus", amount: "250 SONIC", status: "CLAIMED", icon: "✓" },
-    { id: 3, name: "Referral Rewards", amount: "1250 SONIC", status: "PENDING", icon: "!" },
-    { id: 4, name: "Trading Volume", amount: "750 SONIC", status: "LOCKED", icon: "🔒" },
+    { id: 1, name: "BigRock Launch", amount: "500 BIGROCK", status: "CLAIMABLE", icon: "✓" },
+    { id: 2, name: "Early Bird Bonus", amount: "250 BIGROCK", status: "CLAIMED", icon: "✓" },
+    { id: 3, name: "Referral Rewards", amount: "1250 BIGROCK", status: "PENDING", icon: "!" },
+    { id: 4, name: "Trading Volume", amount: "750 BIGROCK", status: "LOCKED", icon: "🔒" },
   ];
 
   const [airdropData, setAirdropData] = useState(initialAirdropData);
@@ -122,7 +122,7 @@ export default function AirdropPage({ onNavigate }) {
           </div>
           <div className={styles.totalRewards}>
             <p className={styles.rewardsLabel}>Total Claimable</p>
-            <p className={styles.rewardsAmount}>2,750 SONIC</p>
+            <p className={styles.rewardsAmount}>2,750 BIGROCK</p>
           </div>
               <Link  to="/earninfo"  >
     <button className={styles.infoButton}>
@@ -159,7 +159,7 @@ export default function AirdropPage({ onNavigate }) {
         {/* Referral Section */}
         <div className={styles.referralCard}>
           <h2 className={styles.sectionTitle}>Referral Program</h2>
-          <p className={styles.referralDesc}>Earn SONIC for every friend you invite</p>
+          <p className={styles.referralDesc}>Earn BIGROCK for every friend you invite</p>
           
           <div className={styles.referralLinkBox}>
             <input
@@ -180,7 +180,7 @@ export default function AirdropPage({ onNavigate }) {
             </div>
             <div className={styles.statItem}>
               <p className={styles.statLabel}>Earnings</p>
-              <p className={styles.statValue}>1,250 SONIC</p>
+              <p className={styles.statValue}>1,250 BIGROCK</p>
             </div>
             <div className={styles.statItem}>
               <p className={styles.statLabel}>Commission</p>
@@ -205,7 +205,7 @@ export default function AirdropPage({ onNavigate }) {
             <h3 className={styles.infoTitle}>Requirements</h3>
             <ul className={styles.infoList}>
               <li>Complete KYC verification</li>
-              <li>Minimum wallet balance: 100 SONIC</li>
+              <li>Minimum wallet balance: 100 BIGROCK</li>
               <li>Active trading account</li>
               <li>7+ days account age</li>
             </ul>
