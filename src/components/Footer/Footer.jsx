@@ -28,7 +28,7 @@ const Footer = () => {
               }
             >
              <div  className={styles.link}>
-               <span className={styles.logoAccent }>Sonic</span>{" "}
+               <span className={styles.logoAccent }>BigRock</span>{" "}
               <span className={styles.logoSub}>Exchange</span>
              </div>
             </Link>
@@ -93,7 +93,7 @@ const Footer = () => {
                 <Link to="/career">Career</Link>
               </li>
               <li className={styles.link}>
-                <Link to="/sonic-insentive">Sonic Incentive</Link>
+                <Link to="/sonic-insentive">BigRock Incentive</Link>
               </li>
               <li className={styles.link}>
                 <Link to="/airdrop">Earn</Link>
@@ -127,7 +127,7 @@ const Footer = () => {
       </div>
 
       <div className={styles.footerBottom}>
-        <p className={styles.powered}>© 2025 Sonic Exchange. All rights reserved.</p>
+        <p className={styles.powered}>© 2025 BigRock Exchange. All rights reserved.</p>
         <p className={styles.powered}>Powered by Web3 • Built for Multichain</p>
       </div>
     </footer>
