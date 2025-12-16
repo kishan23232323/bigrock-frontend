@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
+import RubicWidget from "../../components/Widget/RubicWidget";
 
 const cardInfo = [
   {
@@ -45,7 +46,11 @@ const Home = () => {
               <h1 className={styles.title}>Next-Gen Cross-Chain Swapping</h1>
               <p className={styles.titleSub}>One Platform. Every Chain.</p>
             </div>
-
+          </div>
+          <div className={styles.titleWrap}>
+            <RubicWidget />
+          </div>
+          <div className={styles.content}>
             <p className={styles.subtext}>
               Swap, trade, and earn across 80+ blockchains from a single
               decentralized interface. Experience true multichain freedom.

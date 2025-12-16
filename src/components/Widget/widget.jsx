@@ -1,8 +1,8 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 
-export default function RubicWidget() {
-    const [loaded, setLoaded] = useState(false);
+export default function Widget() {
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://widgets.rubic.exchange/iframe/bundle.new-app.min.js";
@@ -17,8 +17,8 @@ export default function RubicWidget() {
         theme: "dark",
         iframe: "flex",
         language: "en",
-        useLargeIframe:false,   // full features
-        hideBranding: false,    
+        useLargeIframe: false,   // full features
+        hideBranding: false,
         hideUnusedUi: false,
         amount: 1,
         slippagePercent: { instantTrades: 1, crossChain: 3 },
@@ -28,7 +28,7 @@ export default function RubicWidget() {
 
       window.rubicWidget.init(config);
 
-      setTimeout(()=> setLoaded(true), 80000);
+      setTimeout(() => setLoaded(true), 80000);
     };
 
     document.body.appendChild(script);
@@ -41,25 +41,24 @@ export default function RubicWidget() {
       <div className='absolute mt-10 mr-6 w-100 rounded-t-2xl h-16 bg-[#1B1E2B] z-20 flex items-center px-8 '>
       </div>
 
-        {/* Loader */}
-        {!loaded && (
-      <div className="absolute inset-0 flex justify-center items-center bg-[#1B1E2B] z-30">
-        <h1 className="text-[#40a9ff] text-4xl font-bold animate-pulse">
-          Sonic
-          <br />
+      {/* Loader */}
+      {!loaded && (
+        <div className="absolute inset-0 flex justify-center items-center bg-[#1B1E2B] z-30">
+          <h1 className="text-[#40a9ff] text-4xl font-bold animate-pulse">
+            Sonic
+            <br />
             <span className="text-white text-lg pl-3">  Loading...</span>
-        </h1>
-        
-        
-      </div>
-    )}
+          </h1>
+
+
+        </div>
+      )}
 
       {/* Widget */}
       <div
         id="rubic-widget-root"
-        className={`pt-12 pb-10 transition-opacity duration-300 ${
-          loaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={`pt-12 pb-10 transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"
+          }`}
       />
     </div>
   );
