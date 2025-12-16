@@ -51,19 +51,19 @@ const Home = () => {
               decentralized interface. Experience true multichain freedom.
             </p>
 
-          
+
           </div>
-           
+
 
           {/* Removed RubicWidget */}
           {/* <div className={styles.widgetWrapper}>
             <RubicWidget />
           </div> */}
         </div>
-         <div className={styles.buttons}>
-              <Link to="/presale"  className={styles.primaryButton}>Presale</Link>
+        <div className={styles.buttons}>
+          <Link to="/presale" className={styles.primaryButton}>Presale</Link>
 
-            </div>
+        </div>
 
         <div className={styles.cardsSection}>
           <h2 className={styles.sectionTitle}>Why Sonic Exchange</h2>
@@ -80,11 +80,11 @@ const Home = () => {
           </div>
         </div>
         <div className={styles.buttons}>
-              <Link to=""  className={styles.primaryButton}>whitepaper</Link>
+          <Link to="" className={styles.primaryButton}>whitepaper</Link>
 
-            </div>
+        </div>
       </section>
-       
+
     </div>
   );
 };
