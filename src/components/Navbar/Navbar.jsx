@@ -45,7 +45,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className={styles.logo}>
             <span className={styles.logoIcon}>⚡</span>
-            <span className={styles.logoTextPrimary}>Sonic</span>
+            <span className={styles.logoTextPrimary}>BigRock</span>
             <span className={styles.logoTextSecondary}>Exchange</span>
           </div>
 

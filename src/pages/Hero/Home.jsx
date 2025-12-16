@@ -39,7 +39,7 @@ const Home = () => {
       <section className={styles.heroSection}>
         <div className={styles.heroTop}>
           <div className={styles.content}>
-            <div className={styles.eyebrow}>SONIC EXCHANGE • MULTICHAIN DEFI</div>
+            <div className={styles.eyebrow}>BigRock EXCHANGE • MULTICHAIN DEFI</div>
 
             <div className={styles.titleWrap}>
               <h1 className={styles.title}>Next-Gen Cross-Chain Swapping</h1>
@@ -66,7 +66,7 @@ const Home = () => {
             </div>
 
         <div className={styles.cardsSection}>
-          <h2 className={styles.sectionTitle}>Why Sonic Exchange</h2>
+          <h2 className={styles.sectionTitle}>Why Bigrock Exchange</h2>
           <div className={styles.cardsGrid}>
             {cardInfo.map((card, index) => (
               <div key={index} className={styles.card}>
