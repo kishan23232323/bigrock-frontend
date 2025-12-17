@@ -17,3 +17,24 @@ export const claimAirdrop = async (id) => {
     throw err.response ? err.response.data : err;
   }
 };
+
+export const saveWalletAddress = async ({ walletAddress, token }) => {
+  try {
+    if (!token) {
+      console.log("User not logged in");
+      return;
+    }
+
+    const response = await API.post(
+      "/api/v1/users/wallet",
+      { walletAddress },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
