@@ -47,9 +47,13 @@ const Home = () => {
               <p className={styles.titleSub}>One Platform. Every Chain.</p>
             </div>
           </div>
+          {/* <div className={styles.titleWrap}>
+            <RubicWidget />
+          </div> */}
           <div className={styles.titleWrap}>
             <RubicWidget />
           </div>
+
           <div className={styles.content}>
             <p className={styles.subtext}>
               Swap, trade, and earn across 80+ blockchains from a single
