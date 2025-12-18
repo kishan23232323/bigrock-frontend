@@ -22,6 +22,10 @@ import Agent from "./pages/Agent";
 import Presale from "./pages/Presale";
 import Info from "./pages/Info";
 import Earn_info from "./pages/Earn_info";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyEmail from "./pages/Verify";
+import ResetPassword from "./pages/ResetPassword";
+import EditProfile from "./components/EditProfile/EditProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -122,7 +126,17 @@ function App() {
             <Route path="/agent" element={<Agent />} />
             <Route path="/presale" element={<Presale />} />
             <Route path="/info" element={<Info />} />
-              <Route path="/earninfo" element={<Earn_info />} />
+            <Route path="/earninfo" element={<Earn_info />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/reset-password/:token" element={<ResetPassword/>} />
+            <Route path ="/edit-profile" element={
+              <Protected>
+                <EditProfile/>
+              </Protected>
+            }/>
+
+
 
             
           </Routes>
