@@ -717,6 +717,7 @@ const BuySection = ({ selectedCountry }) => {
   const selectPaymentMethod = (method, displayName) => {
     setSelectedPaymentMethod(displayName);
     setExpandedPayment(method);
+    setIsPaymentExpanded(false); // Close dropdown on selection
   };
 
   // ------------------------- Create Buy Order -------------------------

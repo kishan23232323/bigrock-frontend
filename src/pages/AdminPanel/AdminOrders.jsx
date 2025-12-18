@@ -100,6 +100,21 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
   );
 };
 
+const OrderRow = ({ order, expanded, onToggle }) => {
+  return (
+    <div className={styles.orderRow} onClick={onToggle}>
+      <div>
+        <p className={styles.orderType}>{order.type === "BUY" ? "🟢 BUY ORDER" : "🔴 SELL ORDER"}</p>
+        <p className={styles.orderSub}>{order.usdtAmount} USDT • {order.fiatAmount} {order.currency || ""}</p>
+      </div>
+      <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>{order.status}</span>
+      <button className={styles.expandBtn}>
+        {expanded ? <IoChevronUp size={22} /> : <IoChevronDown size={22} />}
+      </button>
+    </div>
+  );
+};
+
 const OrderCard = ({ order, onUpdate, onPreviewImage }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -115,16 +130,7 @@ const OrderCard = ({ order, onUpdate, onPreviewImage }) => {
 
   return (
     <div className={styles.orderCard}>
-      <div className={styles.orderRow}>
-        <div>
-          <p className={styles.orderType}>{order.type === "BUY" ? "🟢 BUY ORDER" : "🔴 SELL ORDER"}</p>
-          <p className={styles.orderSub}>{order.usdtAmount} USDT • {order.fiatAmount} {order.currency || ""}</p>
-        </div>
-        <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>{order.status}</span>
-        <button className={styles.expandBtn} onClick={() => setExpanded(!expanded)}>
-          {expanded ? <IoChevronUp size={22} /> : <IoChevronDown size={22} />}
-        </button>
-      </div>
+      <OrderRow order={order} expanded={expanded} onToggle={() => setExpanded(!expanded)} />
       {expanded && <OrderDetails order={order} onApprove={handleApprove} onReject={handleReject} onPreviewImage={onPreviewImage} />}
     </div>
   );
@@ -144,7 +150,11 @@ const AdminOrders = () => {
       setOrders(data || []);
     } catch (err) {
       console.error("Failed to load orders", err);
-      setError("Failed to load orders. Please try again later.");
+      if (err.message === 'Network Error') {
+        setError("Failed to connect to the server. Please ensure the backend is running and accessible.");
+      } else {
+        setError("Failed to load orders. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }

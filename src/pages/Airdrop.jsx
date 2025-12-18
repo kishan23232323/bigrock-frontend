@@ -133,25 +133,6 @@ export default function AirdropPage({ onNavigate }) {
     }
   };
 
-  const Navigation = () => (
-    <div className={styles.bottomNav}>
-      <div className={styles.navContainer}>
-        <button onClick={() => onNavigate("home")} className={styles.navButton}>
-          <Home size={22} />
-        </button>
-        <button onClick={() => onNavigate("p2p")} className={styles.navButton}>
-          <ArrowLeftRight size={22} />
-        </button>
-        <button onClick={() => onNavigate("airdrop")} className={`${styles.navButton} ${styles.active}`}>
-          <Star size={22} />
-        </button>
-        <button onClick={() => onNavigate("profile")} className={styles.navButton}>
-          <User size={22} />
-        </button>
-      </div>
-    </div>
-  );
-
   const total = 100;
   const current = 50;
   const progress = (current / total) * 100;
@@ -203,10 +184,10 @@ export default function AirdropPage({ onNavigate }) {
             <p className={styles.rewardsLabel}>Total Claimable</p>
             <p className={styles.rewardsAmount}>2,750 BIGROCK</p>
           </div>
-          <Link to="/earninfo" >
-            <button className={styles.infoButton}>
-              <GrCircleInformation size={20} />
-            </button></Link>
+              <Link  to="/earninfo"  >
+    <button className={styles.infoButton}>
+      <GrCircleInformation size={20} />
+    </button></Link>
         </div>
 
 
