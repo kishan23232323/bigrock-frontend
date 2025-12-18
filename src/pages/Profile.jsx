@@ -1,22 +1,56 @@
-import { Home, ArrowLeftRight, Star, User } from "lucide-react";
+import { Home, ArrowLeftRight, Star, User, CheckCircle, Clock, Circle, ShieldCheck } from "lucide-react";
 import styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function ProfilePage({ onNavigate }) {
   const trades = [
-    { id: 1, type: "BUY", amount: "31 BTC", status: "COMPLETED", icon: "✓", color: "text-cyan-400" },
-    { id: 2, type: "BUY", amount: "0 BTC", status: "COMPLETED", icon: "✓", color: "text-cyan-400" },
-    { id: 3, type: "SELL", amount: "0.5 ETH", status: "PENDING", icon: "!", color: "text-cyan-400" },
-    { id: 4, type: "SELL", amount: "0.5 ETH", status: "", icon: "○", color: "text-gray-500" },
-    { id: 5, type: "", amount: "2.0 Z Of 91x (100 Trades)", status: "", icon: "○", color: "text-gray-500" }
+    { id: 1, type: "BUY", amount: "31 BTC", status: "COMPLETED", Icon: CheckCircle, color: "text-cyan-400" },
+    { id: 2, type: "BUY", amount: "0 BTC", status: "COMPLETED", Icon: CheckCircle, color: "text-cyan-400" },
+    { id: 3, type: "SELL", amount: "0.5 ETH", status: "PENDING", Icon: Clock, color: "text-yellow-400" },
+    { id: 4, type: "SELL", amount: "0.5 ETH", status: "CANCELLED", Icon: Circle, color: "text-gray-500" },
+    { id: 5, type: "SWAP", amount: "2.0 Z Of 91x (100 Trades)", status: "CANCELLED", Icon: Circle, color: "text-gray-500" }
   ];
 
   const stats = [
     { label: "Completed", value: "43", color: "cyan" },
     { label: "Pending", value: "2", color: "yellow" },
-    { label: "Success Rate", value: "98%", color: "cyan" }
+    { label: "Success Rate", value: "98%", color: "green" }
   ];
 
+  const Navigation = () => (
+    <div className={styles.bottomNav}>
+      <div className={styles.navContainer}>
+        <button onClick={() => onNavigate("home")} className={styles.navButton}>
+          <Home size={22} />
+        </button>
+        <button onClick={() => onNavigate("p2p")} className={styles.navButton}>
+          <ArrowLeftRight size={22} />
+        </button>
+        <button onClick={() => onNavigate("airdrop")} className={styles.navButton}>
+          <Star size={22} />
+        </button>
+        <button onClick={() => onNavigate("profile")} className={`${styles.navButton} ${styles.active}`}>
+          <User size={22} />
+        </button>
+      </div>
+    </div>
+  );
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const listContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
   return (
     <div className={`${styles.pageWrapper} min-h-screen`}>
       <div className={styles.gridBackground}>
@@ -27,74 +61,94 @@ export default function ProfilePage({ onNavigate }) {
       <div className={styles.orbBottomRight} />
       <div className={styles.orbCenter} />
 
-      <div className={`${styles.contentWrapper} overflow-y-auto`}>
+      <motion.div
+        className={styles.contentWrapper}
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
+      >
         
-        <div className={styles.profileCard}>
+        <motion.div className={styles.profileCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
           <div className={styles.profileHeader}>
             <div className={styles.avatar}>
               <User size={32} className={styles.avatarIcon} />
             </div>
             <div className={styles.profileInfo}>
-              <h1 className={styles.userName}>Pavan Kumar</h1>
+              <div className={styles.userNameContainer}>
+                <h1 className={styles.userName}>Pavan Kumar</h1>
+                <ShieldCheck size={20} className={styles.verifiedBadge} />
+              </div>
               <p className={styles.userUID}>UID: 927261</p>
-              <span className={styles.badge}>Level 3 Trader</span>
+              <div className={styles.levelBadge}>
+                <span>Level 3 Trader</span>
+              </div>
             </div>
           </div>
 
-          <div className={styles.statsGrid}>
+          <motion.div
+            className={styles.statsGrid}
+            variants={listContainerVariants}
+          >
             {stats.map((stat) => (
-              <div key={stat.label} className={styles.statItem}>
+              <motion.div
+                key={stat.label}
+                className={styles.statItem}
+                variants={cardVariants}
+              >
                 <p className={`${styles.statValue} ${styles[`stat${stat.color}`]}`}>
                   {stat.value}
                 </p>
                 <p className={styles.statLabel}>{stat.label}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className={styles.tradeCard}>
+        <motion.div className={styles.tradeCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
           <h2 className={styles.cardTitle}>Trade History</h2>
-          <div className={styles.tradeList}>
+          <motion.div
+            className={styles.tradeList}
+            variants={listContainerVariants}
+          >
             {trades.map((trade) => (
-              <div key={trade.id} className={styles.tradeItem}>
-                <div className={`${styles.tradeIcon} ${styles[`icon${trade.icon === "✓" ? "Success" : trade.icon === "!" ? "Pending" : "Default"}`]}`}>
-                  <span className={trade.color}>{trade.icon}</span>
-                </div>
+              <motion.div
+                key={trade.id}
+                className={styles.tradeItem}
+                variants={cardVariants}
+                whileHover={{ scale: 1.05, x: 5 }}
+              >
                 <div className={styles.tradeDetails}>
-                  <div className={styles.tradeAmount}>
-                    {trade.type && `${trade.type} `}
-                    {trade.amount}
-                  </div>
-                  {trade.status && (
-                    <div className={`${styles.tradeStatus} ${styles[`status${trade.status.replace(" ", "")}`]}`}>
-                      {trade.status}
+                  <trade.Icon size={20} className={`${styles.tradeIcon} ${trade.color}`} />
+                   <div className={styles.tradeInfo}>
+                    <div className={styles.tradeAmount}>
+                      {trade.type && `${trade.type} `}
+                      {trade.amount}
                     </div>
-                  )}
+                    {trade.status && (
+                      <div className={`${styles.tradeStatus} ${styles[`status${trade.status.replace(" ", "")}`]}`}>
+                        {trade.status}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className={styles.agentCard}>
+        <motion.div className={styles.agentCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
           <h2 className={styles.cardTitle}>Become a P2P Agent</h2>
           <p className={styles.agentDescription}>Earn more by facilitating trades</p>
           <Link to="/agent" >
-          <button
-            type="button" 
-            
-            className={styles.agentButton}
-          >
-            Register as Agent
-              
-            
-          </button>
- </Link>
-        </div>
+            <motion.button type="button" className={styles.agentButton} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              Register as Agent
+            </motion.button>
+          </Link>
+        </motion.div>
 
-      </div>
+      </motion.div>
 
+      <Navigation />
     </div>
   );
 }

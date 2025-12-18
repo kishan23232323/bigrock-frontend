@@ -49,7 +49,7 @@ const Home = () => {
 
             <div className={styles.titleWrap}>
               <h1 className={styles.title}>
-                Swap  <span className={styles.highlight}>100+</span> blockchains & <span className={styles.highlight}>15,000+</span> tokens
+                Swap across <span className={styles.highlight}>100+</span> blockchains & <span className={styles.highlight}>15,000+</span> tokens
               </h1>
               <p className={styles.titleSub}>
                 Fast, secure, and non-custodial trading.

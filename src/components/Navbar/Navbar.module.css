@@ -37,6 +37,11 @@
   margin-right: auto;
   background: transparent;
 }
+.logoImage{
+  margin-left: 20px;
+  width: 60px;
+  height: 60px;
+}
 
 .logoWord {
   display: flex;

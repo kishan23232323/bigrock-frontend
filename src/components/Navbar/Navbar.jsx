@@ -44,7 +44,8 @@ const Navbar = () => {
         <div className={styles.navContent}>
           {/* Logo */}
           <NavLink to="/" className={styles.logo}>
-            <span className={styles.logoIcon}>⚡</span>
+            <img src="/heroCardImages/logo.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+
             <span className={styles.logoWord}>
               <span className={styles.logoTextPrimary}>BIG</span>
               <span className={styles.logoTextHighlight}>ROCK</span>
