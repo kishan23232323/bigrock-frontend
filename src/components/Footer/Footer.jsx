@@ -27,6 +27,8 @@ const Footer = () => {
                 window.scrollTo({ top: 0, behavior: "smooth" })
               }
             >
+              <img src="/heroCardImages/logo.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+              
               <span className={styles.logoWord}>
                 <span className={styles.logoTextPrimary}>BIG</span>
                 <span className={styles.logoTextHighlight}>ROCK</span>

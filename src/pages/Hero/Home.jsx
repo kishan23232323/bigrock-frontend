@@ -96,8 +96,15 @@ const Home = () => {
           <Link to="" className={styles.primaryButton}>whitepaper</Link>
 
         </div>
+        <div className={styles.mainImage}>
+            <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+          </div>
+        
       </section>
-
+              
+            
+                  
+          
     </div>
   );
 };
