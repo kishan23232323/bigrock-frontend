@@ -1,134 +1,162 @@
-import { Home, ArrowLeftRight, Star, User, CheckCircle, Clock, Circle, ShieldCheck } from "lucide-react";
+import { User, CheckCircle, Clock, Circle, ShieldCheck } from "lucide-react";
 import styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { getMyOrders } from "../services/P2Pservices/p2papi";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
-  const trades = [
-    { id: 1, type: "BUY", amount: "31 BTC", status: "COMPLETED", Icon: CheckCircle, color: "text-cyan-400" },
-    { id: 2, type: "BUY", amount: "0 BTC", status: "COMPLETED", Icon: CheckCircle, color: "text-cyan-400" },
-    { id: 3, type: "SELL", amount: "0.5 ETH", status: "PENDING", Icon: Clock, color: "text-yellow-400" },
-    { id: 4, type: "SELL", amount: "0.5 ETH", status: "CANCELLED", Icon: Circle, color: "text-gray-500" },
-    { id: 5, type: "SWAP", amount: "2.0 Z Of 91x (100 Trades)", status: "CANCELLED", Icon: Circle, color: "text-gray-500" }
+  const { accessToken, user } = useSelector((state) => state.auth || {});
+  const[trades, setTrades]=useState([]);
+  useEffect(()=>{
+    if(!accessToken) return;
+    getMyOrders()
+    .then((res)=>{
+      setTrades(res);
+    })
+    .catch((err)=>{
+      console.log("Error fetching user trades:", err);
+    });
+  })
+
+  
+  const stats = [
+    {
+      label: "Completed",
+      value: trades.filter((t) => t.status === "COMPLETED").length,
+      color: "cyan",
+    },
+    {
+      label: "Pending",
+      value: trades.filter(
+        (t) => t.status === "PENDING" || t.status === "AWAITING_CONFIRMATION"
+      ).length,
+      color: "yellow",
+    },
+    {
+      label: "Success Rate",
+      value:
+        trades.length > 0
+          ? `${Math.round(
+              (trades.filter((t) => t.status === "COMPLETED").length /
+                trades.length) *
+                100
+            )}%`
+          : "0%",
+      color: "green",
+    },
   ];
 
-  const stats = [
-    { label: "Completed", value: "43", color: "cyan" },
-    { label: "Pending", value: "2", color: "yellow" },
-    { label: "Success Rate", value: "98%", color: "green" }
-  ];
+  const getTradeIcon = (status) => {
+    if (status === "COMPLETED") return CheckCircle;
+    if (status === "PENDING" || status === "AWAITING_CONFIRMATION") return Clock;
+    return Circle;
+  };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  const listContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
   return (
     <div className={`${styles.pageWrapper} min-h-screen`}>
-      <div className={styles.gridBackground}>
-        <div className={styles.gridOverlay} />
-      </div>
+      <motion.div className={styles.contentWrapper} initial="hidden" animate="visible">
 
-      <div className={styles.orbTopLeft} />
-      <div className={styles.orbBottomRight} />
-      <div className={styles.orbCenter} />
-
-      <motion.div
-        className={styles.contentWrapper}
-        initial="hidden"
-        animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
-      >
-        
-        <motion.div className={styles.profileCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
+        {/* PROFILE CARD */}
+        <motion.div className={styles.profileCard} variants={cardVariants}>
           <div className={styles.profileHeader}>
             <div className={styles.avatar}>
               <User size={32} className={styles.avatarIcon} />
             </div>
+
             <div className={styles.profileInfo}>
               <div className={styles.userNameContainer}>
-                <h1 className={styles.userName}>Pavan Kumar</h1>
-                <ShieldCheck size={20} className={styles.verifiedBadge} />
+                <h1 className={styles.userName}>
+                  {accessToken ? user?.name : "User"}
+                </h1>
+                {user?.isVerified && (
+                  <ShieldCheck size={20} className={styles.verifiedBadge} />
+                )}
               </div>
-              <p className={styles.userUID}>UID: 927261</p>
-              <div className={styles.levelBadge}>
-                <span>Level 3 Trader</span>
-              </div>
+
+              {accessToken && (
+                <p className={styles.userUID}>UID: {user?.uid}</p>
+              )}
             </div>
+            <Link to="/edit-profile">
+                <button
+                  className="lg:text-lg lg:w-24 lg:ml-[260px] ml-auto h-auto w-auto  lg:h-12 px-3 py-1 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition"
+                >
+                  Edit
+                </button>
+              </Link>
           </div>
 
-          <motion.div
-            className={styles.statsGrid}
-            variants={listContainerVariants}
-          >
+          <div className={styles.statsGrid}>
             {stats.map((stat) => (
-              <motion.div
-                key={stat.label}
-                className={styles.statItem}
-                variants={cardVariants}
-              >
+              <div key={stat.label} className={styles.statItem}>
                 <p className={`${styles.statValue} ${styles[`stat${stat.color}`]}`}>
                   {stat.value}
                 </p>
                 <p className={styles.statLabel}>{stat.label}</p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </motion.div>
 
-        <motion.div className={styles.tradeCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
+        {/* TRADE HISTORY */}
+        <motion.div className={styles.tradeCard} variants={cardVariants}>
           <h2 className={styles.cardTitle}>Trade History</h2>
-          <motion.div
-            className={styles.tradeList}
-            variants={listContainerVariants}
-          >
-            {trades.map((trade) => (
-              <motion.div
-                key={trade.id}
-                className={styles.tradeItem}
-                variants={cardVariants}
-                whileHover={{ scale: 1.05, x: 5 }}
-              >
-                <div className={styles.tradeDetails}>
-                  <trade.Icon size={20} className={`${styles.tradeIcon} ${trade.color}`} />
-                   <div className={styles.tradeInfo}>
-                    <div className={styles.tradeAmount}>
-                      {trade.type && `${trade.type} `}
-                      {trade.amount}
-                    </div>
-                    {trade.status && (
-                      <div className={`${styles.tradeStatus} ${styles[`status${trade.status.replace(" ", "")}`]}`}>
+
+          {trades.length === 0 ? (
+            <p className="text-center text-gray-400">
+              No P2P transactions yet
+            </p>
+          ) : (
+            <div className={styles.tradeList}>
+              {trades.map((trade) => {
+                const Icon = getTradeIcon(trade.status);
+                return (
+                  <motion.div
+                    key={trade._id}
+                    className={styles.tradeItem}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <Icon size={20} />
+                    <div className={styles.tradeDetails}>
+                      <div className={styles.tradeAmount}>
+                        {trade.type} — {trade.usdtAmount} USDT
+                      </div>
+                      <div
+                        className={`${styles.tradeStatus} ${
+                          styles[`status${trade.status}`]
+                        }`}
+                      >
                         {trade.status}
                       </div>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </motion.div>
 
-        <motion.div className={styles.agentCard} variants={cardVariants} whileHover={{ scale: 1.02 }}>
+        {/* AGENT CARD */}
+        <motion.div className={styles.agentCard} variants={cardVariants}>
           <h2 className={styles.cardTitle}>Become a P2P Agent</h2>
-          <p className={styles.agentDescription}>Earn more by facilitating trades</p>
-          <Link to="/agent" >
-            <motion.button type="button" className={styles.agentButton} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <p className={styles.agentDescription}>
+            Earn more by facilitating trades
+          </p>
+          <Link to="/agent">
+            <motion.button className={styles.agentButton}>
               Register as Agent
             </motion.button>
           </Link>
         </motion.div>
 
       </motion.div>
-
     </div>
   );
 }
