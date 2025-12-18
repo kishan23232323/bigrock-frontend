@@ -3,7 +3,7 @@ import styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-export default function ProfilePage({ onNavigate }) {
+export default function ProfilePage() {
   const trades = [
     { id: 1, type: "BUY", amount: "31 BTC", status: "COMPLETED", Icon: CheckCircle, color: "text-cyan-400" },
     { id: 2, type: "BUY", amount: "0 BTC", status: "COMPLETED", Icon: CheckCircle, color: "text-cyan-400" },
@@ -17,25 +17,6 @@ export default function ProfilePage({ onNavigate }) {
     { label: "Pending", value: "2", color: "yellow" },
     { label: "Success Rate", value: "98%", color: "green" }
   ];
-
-  const Navigation = () => (
-    <div className={styles.bottomNav}>
-      <div className={styles.navContainer}>
-        <button onClick={() => onNavigate("home")} className={styles.navButton}>
-          <Home size={22} />
-        </button>
-        <button onClick={() => onNavigate("p2p")} className={styles.navButton}>
-          <ArrowLeftRight size={22} />
-        </button>
-        <button onClick={() => onNavigate("airdrop")} className={styles.navButton}>
-          <Star size={22} />
-        </button>
-        <button onClick={() => onNavigate("profile")} className={`${styles.navButton} ${styles.active}`}>
-          <User size={22} />
-        </button>
-      </div>
-    </div>
-  );
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -148,7 +129,6 @@ export default function ProfilePage({ onNavigate }) {
 
       </motion.div>
 
-      <Navigation />
     </div>
   );
 }
