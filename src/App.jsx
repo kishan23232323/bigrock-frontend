@@ -13,31 +13,28 @@ import AdminOrders from "./pages/AdminPanel/AdminOrders";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile } from "./services/authservices/authapi";
 import { logout, setCredentials } from "./store/authslice";
-<<<<<<< Updated upstream
-=======
-import About from "./pages/about";
+import About from "./pages/About";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Career from "./pages/Career";
 import Sonic_Incentive from "./pages/Sonic_Incentive";
-import Agent from "./pages/agent";
+import Agent from "./pages/Agent";
 import Presale from "./pages/Presale";
 import Info from "./pages/Info";
 import Earn_info from "./pages/Earn_info";
->>>>>>> Stashed changes
+import VerifyEmail from "./pages/Verify";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
-  const [loading, setLoading] = React.useState(true);
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken);
-
 
   useEffect(() => {
     const token = accessToken || localStorage.getItem("accessToken");
 
     if (!token) {
       dispatch(logout());
-      setLoading(false);
       return;
     }
 
@@ -46,7 +43,7 @@ function App() {
         if (userData) {
           dispatch(
             setCredentials({
-              user: userData, 
+              user: userData,
               accessToken: token,
             })
           );
@@ -57,81 +54,52 @@ function App() {
       .catch((error) => {
         console.log("App.jsx :: error in getUserProfile", error);
         dispatch(logout());
-      })
-      .finally(() => setLoading(false));
+      });
   }, [accessToken, dispatch]);
 
   return (
     <div className="appWrapper">
       <NavBar />
-
-      <div className="contentWrapper">
+      <div className="contentWrapper" style={{ minHeight: "60vh" }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={
-         <Protected authenication={false}>
-          <Login/>
-          </Protected>
-          } />
-          <Route path="/signup" element={
-          <Protected authenication={false}>
-            <Register/>
-          </Protected>
-
-<<<<<<< Updated upstream
-          } />
+          <Route
+            path="/login"
+            element={
+              <Protected authenication={false}>
+                <Login />
+              </Protected>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Protected authenication={false}>
+                <Register />
+              </Protected>
+            }
+          />
           <Route path="/airdrop" element={<Airdrop />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/p2p" element={<P2P />} />
-          {/* P2P Sell route */}
           <Route path="/p2p/sell" element={<P2P mode="sell" />} />
-=======
-            <style>
-              {`@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}`}
-            </style>
-          </div>
-        ) : (
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/login"
-              element={
-                <Protected authenication={false}>
-                  <Login />
-                </Protected>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <Protected authenication={false}>
-                  <Register />
-                </Protected>
-              }
-            />
-            <Route path="/airdrop" element={<Airdrop />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/p2p" element={<P2P />} />
-            <Route path="/p2p/sell" element={<P2P mode="sell" />} />
-            <Route path="/p2p/buy" element={<P2P mode="buy" />} />
-            <Route path="/admin" element={<AdminOrders />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/career" element={<Career />} />
-            <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
-            <Route path="/agent" element={<Agent />} />
-            <Route path="/presale" element={<Presale />} />
-            <Route path="/info" element={<Info />} />
-              <Route path="/earninfo" element={<Earn_info />} />
->>>>>>> Stashed changes
-
-          {/* P2P Buy route */}
           <Route path="/p2p/buy" element={<P2P mode="buy" />} />
-
-          <Route path="/admin" element= {<AdminOrders/>} />
+          <Route path="/admin" element={<AdminOrders />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/career" element={<Career />} />
+          <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
+          <Route path="/agent" element={<Agent />} />
+          <Route path="/presale" element={<Presale />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/earninfo" element={<Earn_info />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </div>
 
       <Footer />
+      <ToastContainer autoClose={3000} position="top-right" />
     </div>
   );
 }

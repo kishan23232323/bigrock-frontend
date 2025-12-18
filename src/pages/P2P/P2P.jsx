@@ -11,6 +11,30 @@ import {
 
 import { confirmSellOrder, createSellOrder, getFiatPairs,createBuyOrder, confirmBuyOrder } from "../../services/P2Pservices/p2papi";
 import useConvert from "../../Hooks/useAutoConversion";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
+// Helper validators
+const isValidTrc20Address = (addr) => {
+  if (!addr || typeof addr !== 'string') return false;
+  // Allow TRON addresses starting with T (approx 34 chars) or Ethereum-style 0x address
+  const tronRegex = /^T[1-9A-HJ-NP-Za-km-z]{33}$/; // basic base58 check
+  const ethRegex = /^0x[0-9a-fA-F]{40}$/;
+  return tronRegex.test(addr) || ethRegex.test(addr);
+};
+
+const isValidTxnHash = (h) => {
+  if (!h || typeof h !== 'string') return false;
+  const regex = /^[0-9a-fA-F]{64}$/;
+  return regex.test(h);
+};
+
+const isValidProofFile = (file) => {
+  if (!file) return true; // optional proof may be allowed
+  const maxSize = 5 * 1024 * 1024; // 5MB
+  const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+  return file.size <= maxSize && allowedTypes.includes(file.type);
+};
 
 
 
@@ -18,7 +42,9 @@ const P2P = ({ mode = "sell" }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containers} >
+    
+      <div className={styles.container}>
       <P2PHeader />
       <P2PToggle activeMode={mode} />
 
@@ -31,6 +57,7 @@ const P2P = ({ mode = "sell" }) => {
         <BuySection selectedCountry={selectedCountry} />
       )}
     </div>
+    </div>
   );
 };
 
@@ -38,9 +65,10 @@ const P2P = ({ mode = "sell" }) => {
 const P2PHeader = () => (
   <div className={styles.header}>
     <h1 className={styles.title}>P2P Trading</h1>
+    <Link  to="/info"  >
     <button className={styles.infoButton}>
       <GrCircleInformation size={20} />
-    </button>
+    </button></Link>
   </div>
 );
 
@@ -78,6 +106,7 @@ const CountrySelector = ({ onSelectCountry }) => {
       try {
         const res = await getFiatPairs();
         setCountries(res || []);
+        console.log("Fetched countries:", res);
       } catch (error) {
         console.error("Failed to load countries:", error);
       }
@@ -94,12 +123,20 @@ const CountrySelector = ({ onSelectCountry }) => {
   return (
     <div className={styles.countrySelector}>
       <button className={styles.countryInput} onClick={() => setOpen(!open)}>
-        {selected}
+        {selected !== "Select Country" && (
+          <img
+            src={countries.find((c) => c.country === selected)?.image}
+            alt={selected}
+            className={styles.flag}
+          />
+        )}
+        <span>{selected}</span>
+        <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
+          <IoChevronDownOutline size={28} />
+        </button>
+
       </button>
 
-      <button className={styles.dropdownButton} onClick={() => setOpen(!open)}>
-        <IoChevronDownOutline size={28} />
-      </button>
 
       {open && (
         <div className={styles.countryDropdown}>
@@ -111,6 +148,11 @@ const CountrySelector = ({ onSelectCountry }) => {
               className={styles.countryItem}
               onClick={() => handleSelect(item)}
             >
+              <img
+                src={item.image}
+                alt={item.country}
+                className={styles.flag}
+              />
               <span>{item.country}</span>
               <span className={styles.currencyTag}>{item.currency}</span>
             </div>
@@ -149,6 +191,9 @@ const SellSection = ({ selectedCountry }) => {
   const navigate = useNavigate();
 
   const isIndia = selectedCountry?.country === "India";
+
+  const { accessToken } = useSelector((state) => state.auth || {});
+  const isLoggedIn = Boolean(accessToken);
 
 
   // Conversion
@@ -228,28 +273,28 @@ const SellSection = ({ selectedCountry }) => {
   const handleCreateOrder = async () => {
    
     if (!usdtAmount || !fiatAmount || expandedPayment == null) {
-      alert("Please enter USDT, fiat and select a payment method");
+      toast.error("Please enter USDT amount, fiat amount and select a payment method");
       return;
     }
 
     
     if (expandedPayment === "bank") {
       if (!bankAccountNumber || !bankSwiftCode || !bankHolderName) {
-        alert("Please fill bank account number, swift code and account holder name");
+        toast.error("Please fill bank account number, SWIFT/IFSC and account holder name");
         return;
       }
     } else if (expandedPayment === "upi") {
       if (!upiId) {
-        alert("Please enter UPI ID");
+        toast.error("Please enter UPI ID");
         return;
       }
     } else if (expandedPayment === "paypal") {
       if (!paypalId) {
-        alert("Please enter PayPal ID");
+        toast.error("Please enter PayPal ID");
         return;
       }
     } else {
-      alert("Invalid payment method");
+      toast.error("Invalid payment method");
       return;
     }
 
@@ -275,7 +320,7 @@ const SellSection = ({ selectedCountry }) => {
       setStage("CONFIRM");
     } catch (err) {
       console.error("Create sell order failed:", err);
-      alert(err?.message || "Failed to create order");
+      toast.error(err?.message || "Failed to create order");
     }
   };
 
@@ -285,11 +330,21 @@ const SellSection = ({ selectedCountry }) => {
   // CONFIRM ORDER
   const handleConfirmSell = async () => {
     if (!orderData) {
-      alert("Order not found");
+      toast.error("Order not found");
       return;
     }
     if (!txnHash) {
-      alert("Please enter transaction hash");
+      toast.error("Please enter transaction hash");
+      return;
+    }
+
+    if (!isValidTxnHash(txnHash)) {
+      toast.error("Invalid transaction hash format");
+      return;
+    }
+
+    if (!isValidProofFile(proofFile)) {
+      toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
       return;
     }
 
@@ -305,16 +360,26 @@ const SellSection = ({ selectedCountry }) => {
         proof: proofFile
       });
 
-      alert("Order submitted, awaiting admin approval");
+      toast.success("Order submitted, awaiting admin approval");
       navigate("/profile");
 
     } catch (err) {
       console.error("Confirm sell failed:", err);
-      alert(err?.message || "Failed to confirm sell");
+      toast.error(err?.message || "Failed to confirm sell");
     }
   };
+  const handleCopyAddress = async () => {
+  if (!orderData?.usdtWalletAddress) return;
 
- 
+  try {
+    await navigator.clipboard.writeText(orderData.usdtWalletAddress);
+    toast.success("Wallet address copied");
+  } catch (err) {
+    toast.error("Failed to copy address");
+  }
+};
+
+
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
       {/* USDT */}
@@ -472,8 +537,14 @@ const SellSection = ({ selectedCountry }) => {
       {/* Buttons */}
       <div className={styles.buttonGroup}>
         <button className={styles.cancelButton}>Cancel</button>
-        <button className={styles.confirmButton} onClick={handleCreateOrder}>
-          Create Sell Order
+ <button className={styles.confirmButton} onClick={()=>{
+          if(!isLoggedIn){
+            navigate("/login");
+            return;
+          }
+          handleCreateOrder(); 
+        }}>
+          {isLoggedIn ? "Create Sell Order" : "Login to Use P2P Service"}
         </button>
       </div>
     </div>
@@ -487,10 +558,13 @@ const SellSection = ({ selectedCountry }) => {
 
       {/* Wallet Address */}
       <div className={styles.walletSection}>
-        <h3 className={styles.walletTitle}>Send USDT to this Address</h3>
+        <h3 className={styles.walletTitle}>Send USDT to this Address ( TRC20 ONLY ) </h3>
         <div className={styles.addressContainer}>
           <span className={styles.address}>{orderData?.usdtWalletAddress}</span>
-          <button className={styles.copyButton}>
+          <button className={styles.copyButton}
+            onClick={handleCopyAddress}
+            aria-label="Copy Wallet Address"
+          >
             <IoCopyOutline size={18} />
           </button>
         </div>
@@ -595,6 +669,8 @@ const BuySection = ({ selectedCountry }) => {
   const navigate = useNavigate();
   const isIndia = selectedCountry?.country === "India";
 
+    const { accessToken } = useSelector((state) => state.auth || {});
+    const isLoggedIn = Boolean(accessToken);
 
   // ------------------------- Conversion -------------------------
   const onUsdtChange = (v) => {
@@ -641,20 +717,26 @@ const BuySection = ({ selectedCountry }) => {
   const selectPaymentMethod = (method, displayName) => {
     setSelectedPaymentMethod(displayName);
     setExpandedPayment(method);
+    setIsPaymentExpanded(false); // Close dropdown on selection
   };
 
   // ------------------------- Create Buy Order -------------------------
   const handleCreateOrder = async () => {
     if (!usdtAmount || !fiatAmount) {
-      alert("Please enter both USDT and fiat amounts");
+      toast.error("Please enter both USDT and fiat amounts");
       return;
     }
     if (!expandedPayment) {
-      alert("Please select a payment method");
+      toast.error("Please select a payment method");
       return;
     }
     if (!userUsdtWallet || userUsdtWallet.trim() === "") {
-      alert("Please enter your TRC20 USDT wallet address");
+      toast.error("Please enter your TRC20 USDT wallet address");
+      return;
+    }
+
+    if (!isValidTrc20Address(userUsdtWallet.trim())) {
+      toast.error("Please provide a valid TRC20 address");
       return;
     }
 
@@ -679,55 +761,60 @@ const BuySection = ({ selectedCountry }) => {
       setStage("CONFIRM");
     } catch (err) {
       console.error("Create buy order failed:", err);
-      alert(err?.message || "Failed to create buy order");
+      toast.error(err?.message || "Failed to create buy order");
     }
   };
 
   // ------------------------- Confirm Buy Order -------------------------
   const handleConfirmBuy = async () => {
     if (!orderData?._id) {
-      alert("Order not found");
+      toast.error("Order not found");
       return;
     }
     if (!proofFile) {
-      alert("Please upload payment screenshot");
+      toast.error("Please upload payment screenshot");
+      return;
+    }
+
+    if (!isValidProofFile(proofFile)) {
+      toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
       return;
     }
 
     try {
       await confirmBuyOrder({ orderId: orderData._id, proof: proofFile });
-      alert("Buy order submitted, awaiting admin approval");
+      toast.success("Buy order submitted, awaiting admin approval");
       navigate("/profile");
       
     } catch (err) {
       console.error("Confirm buy failed:", err);
-      alert(err?.message || "Failed to confirm buy");
+      toast.error(err?.message || "Failed to confirm buy");
     }
   };
+
+  const handleCopyText = async (text, successMsg = "Copied") => {
+  if (!text) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    toast.success(successMsg);
+  } catch (err) {
+    toast.error("Failed to copy");
+  }
+};
+
 
   // ------------------------- Render Create UI -------------------------
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
      
+          {/* USDT amount */}
       <div className={styles.inputGroup}>
-        <label className={styles.label}>Amount to Pay ({currencyCode})</label>
-        <input
-          type="number"
-          className={styles.input}
-          placeholder="Enter amount"
-          value={fiatAmount}
-          disabled
-          onChange={(e) => onFiatChange(e.target.value)}
-        />
-      </div>
-
-      {/* USDT amount */}
-      <div className={styles.inputGroup}>
-        <label className={styles.label}>You Will Get (USDT)</label>
+        <label className={styles.label}>USDT to Buy </label>
         <input
           type="text"
           className={styles.input}
-          placeholder=""
+          placeholder="Enter amount"
           value={usdtAmount}
           onChange={(e) => onUsdtChange(e.target.value)}
         />
@@ -738,6 +825,20 @@ const BuySection = ({ selectedCountry }) => {
           </small>
         )}
       </div>
+
+      <div className={styles.inputGroup}>
+        <label className={styles.label}>Amount to Pay ({currencyCode})</label>
+        <input
+          type="number"
+          className={styles.input}
+          placeholder=""
+          value={fiatAmount}
+          disabled
+          onChange={(e) => onFiatChange(e.target.value)}
+        />
+      </div>
+
+
 
       {/* User TRC20 wallet address (user must provide for buy) */}
       <div className={styles.inputGroup}>
@@ -819,8 +920,14 @@ const BuySection = ({ selectedCountry }) => {
       {/* Buttons */}
       <div className={styles.buttonGroup}>
         <button className={styles.cancelButton}>Cancel</button>
-        <button className={styles.confirmButton} onClick={handleCreateOrder}>
-          Create Buy Order
+        <button className={styles.confirmButton} onClick={()=>{
+          if(!isLoggedIn){
+            navigate("/login");
+            return;
+          }
+          handleCreateOrder(); 
+        }}>
+          {isLoggedIn ? "Create Buy Order" : "Login to Use P2P Service"}
         </button>
       </div>
     </div>
@@ -829,10 +936,24 @@ const BuySection = ({ selectedCountry }) => {
   const renderConfirmUI = () => {
     const details = orderData?.receiverDetails || {};
     
-    const displayPaymentDetail =
-      details.upiId ||
-      details.paypalId ||
-      (details.bankHolderName ? `${details.bankHolderName} • ${details.bankAccountNumber}` : null);
+      const paymentDisplayText = details.upiId
+    ? `UPI ID: ${details.upiId}`
+    : details.paypalId
+    ? `PayPal: ${details.paypalId}`
+    : details.bankHolderName
+    ? `Account Holder: ${details.bankHolderName}
+  Account No: ${details.bankAccountNumber}
+  IFSC/SWIFT: ${details.bankSwiftCode}`
+    : "";
+
+    const paymentCopyText = details.upiId
+  ? details.upiId
+  : details.paypalId
+  ? details.paypalId
+  : details.bankHolderName
+  ? `${details.bankHolderName}\n${details.bankAccountNumber}\n${details.bankSwiftCode}`
+  : "";
+
 
     return (
       <div className={styles.sectionContent}>
@@ -842,9 +963,21 @@ const BuySection = ({ selectedCountry }) => {
           <h3 className={styles.walletTitle}>Send Money To</h3>
 
           <div className={styles.addressContainer}>
-            <span className={styles.address}>
-              {displayPaymentDetail || "Payment details will appear here"}
-            </span>
+<span className={styles.address}>
+  {paymentDisplayText || "Payment details will appear here"}
+</span>
+
+{paymentCopyText && (
+  <button
+    className={styles.copyButton}
+    onClick={() => handleCopyText(paymentCopyText, "Payment details copied")}
+    aria-label="Copy payment details"
+  >
+    <IoCopyOutline size={18} />
+  </button>
+)}
+
+
           </div>
 
          

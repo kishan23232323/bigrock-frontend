@@ -1,13 +1,19 @@
+*{
+   background: linear-gradient(135deg, #050b14 0%, #0a1520 100%);;
+}
+
 .homeContainer {
   position: relative;
   width: 100%;
   min-height: 100vh;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #050b14;
+  background: transparent;
   color: #e0e0e0;
   overflow: hidden;
   display: flex;
   justify-content: center;
+ 
+  background: #08111B;
 }
 
 .bgAnimation {
@@ -23,10 +29,7 @@
   height: 200%;
   top: -50%;
   left: -50%;
-  background-image:
-    linear-gradient(rgba(6, 238, 245, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(6, 238, 245, 0.06) 1px, transparent 1px);
-  background-size: 60px 60px;
+
   animation: gridMove 22s linear infinite;
 }
 
@@ -34,6 +37,7 @@
   width: 100%;
   max-width: 1280px;
   padding: 96px 20px 96px;
+  background: transparent;
   display: flex;
   flex-direction: column;
   gap: 72px;
@@ -45,6 +49,7 @@
   display: flex;
   flex-direction: column; /* keep column after removing widget */
   gap: 48px;
+  background: transparent;
   align-items: center;
   justify-content: center; /* center horizontally */
 }
@@ -53,6 +58,7 @@
   max-width: 620px;
   text-align: center;
   animation: fadeInUp 0.9s ease-out forwards;
+  background: transparent;
   opacity: 0;
 }
 
@@ -62,12 +68,14 @@
   justify-content: center;
   padding: 6px 14px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #06eef5;
+  
   border: 1px solid rgba(6, 238, 245, 0.4);
-  background: radial-gradient(circle at top left, rgba(6, 238, 245, 0.16), transparent 60%);
+ 
   box-shadow: 0 0 18px rgba(6, 238, 245, 0.35);
   margin-bottom: 18px;
 }
@@ -77,14 +85,11 @@
   display: inline-block;
   padding: 18px 22px 20px;
   border-radius: 26px;
-  background:
-    radial-gradient(circle at top left, rgba(6, 238, 245, 0.16), transparent 60%),
-    radial-gradient(circle at bottom right, rgba(138, 43, 226, 0.14), transparent 60%),
-    rgba(5, 11, 20, 0.9);
+  
   box-shadow:
     0 18px 60px rgba(0, 0, 0, 0.9),
     0 0 40px rgba(6, 238, 245, 0.35);
-  backdrop-filter: blur(20px);
+
 }
 
 .titleWrap::before {
@@ -99,7 +104,7 @@
 
 .title {
   font-family: "Orbitron", system-ui, sans-serif;
-  font-size: clamp(2.1rem, 3.4vw, 3rem);
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
   font-weight: 900;
   line-height: 1.2;
   letter-spacing: -0.06em;
@@ -119,6 +124,7 @@
 
 .subtext {
   margin-top: 26px;
+  background: transparent;
   font-size: 1.02rem;
   color: #b0b0b0;
   line-height: 1.7;
@@ -144,7 +150,7 @@
   color: #050b14;
   box-shadow: 0 0 30px rgba(6, 238, 245, 0.45);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  animation: pulse 2s infinite;
+
 }
 
 .primaryButton:hover {
@@ -177,7 +183,7 @@
 }
 
 .card {
-  background: rgba(10, 22, 40, 0.7);
+
   border-radius: 20px;
   padding: 22px;
   border: 1px solid rgba(6, 238, 245, 0.22);

@@ -1,3 +1,4 @@
+
 .footer {
   width: 100%;
   background:
@@ -16,12 +17,14 @@
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  background: transparent;
 }
 
 .brandSection {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  background: transparent;
 }
 
 .logo {
@@ -29,33 +32,53 @@
   font-weight: 800;
   margin: 0;
   font-family: "Orbitron", system-ui, sans-serif;
+  background-color: transparent;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .logo a {
   text-decoration: none;
+  background: transparent;
 }
 
-.logoAccent {
-  background: linear-gradient(135deg, #06eef5, #8a2be2, #00ffa3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.logoWord {
+  display: flex;
+  background: transparent;
 }
 
-.logoSub {
-  color: #e5e7eb;
-  opacity: 0.85;
+.logoTextPrimary {
+  color: #06eef5; /* Blue for BIG */
+  background: transparent;
+}
+
+.logoTextHighlight {
+  color: #f9fafb; /* White for ROCK */
+  background: transparent;
+}
+
+.logoTextSecondary {
+  color: #00d4ff; /* Blue for EXCHANGE */
+  background: transparent;
 }
 
 .tagline {
   font-size: 0.9rem;
   color: #9ca3af;
   max-width: 320px;
+  background: transparent;
 }
 
 .socialRow {
   display: flex;
   gap: 0.75rem;
   margin-top: 0.2rem;
+  background: transparent;
+  
 }
 
 .socialCircle {
@@ -68,11 +91,12 @@
   justify-content: center;
   color: #06eef5;
   text-decoration: none;
+  background: transparent;
   font-size: 1.1rem;
-  background: rgba(10, 22, 40, 0.85);
+
   box-shadow: 0 0 14px rgba(6, 238, 245, 0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
-    background 0.2s ease;
+   
 }
 
 .socialCircle:hover {
@@ -86,12 +110,14 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background: transparent;
 }
 
 .linksSection {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  background: transparent;
 }
 
 .linksSection h3 {
@@ -101,6 +127,7 @@
   font-weight: 600;
   color: #9ca3af;
 }
+  
 
 .linksSection ul {
   list-style: none;
@@ -109,6 +136,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+  background: transparent;
 }
 
 .linksSection a {
@@ -117,6 +145,7 @@
   font-size: 0.9rem;
   opacity: 0.85;
   transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  background: transparent;
 }
 
 .linksSection a:hover {
@@ -129,6 +158,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  background: transparent;
 }
 
 .newsletterSection h3 {
@@ -139,9 +169,11 @@
   color: #9ca3af;
 }
 
+
 .newsletterText {
   font-size: 0.86rem;
   color: #9ca3af;
+  background: transparent;
   max-width: 260px;
 }
 
@@ -150,6 +182,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  background: transparent;
+
+
 }
 
 .inputWrapper {
@@ -158,13 +193,14 @@
   gap: 0.5rem;
   padding: 0.55rem 0.75rem;
   border-radius: 999px;
-  background: rgba(5, 11, 20, 0.96);
+  background: transparent;
   border: 1px solid rgba(148, 163, 184, 0.8);
 }
 
 .emailIcon {
   font-size: 1.1rem;
   color: #9ca3af;
+  background: transparent;
 }
 
 .inputWrapper input {
@@ -174,6 +210,7 @@
   background: transparent;
   color: #e5e7eb;
   font-size: 0.9rem;
+  background: transparent;
 }
 
 .inputWrapper input::placeholder {
@@ -206,7 +243,7 @@
   max-width: 1280px;
   margin: 2.1rem auto 0;
   border-top: 1px solid rgba(148, 163, 184, 0.3);
-  padding-top: 0.9rem;
+ background: transparent;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -216,6 +253,7 @@
 
 .powered {
   opacity: 0.8;
+  background: transparent;
 }
 
 @media (min-width: 768px) {
@@ -224,10 +262,13 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 3.5rem;
+  background: transparent;
+
   }
 
   .brandSection {
     flex: 1.2;
+    background: transparent;
   }
 
   .linkColumns {
@@ -235,21 +276,22 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2.2rem;
-  }
-
-  .newsletterSection {
-    align-items: flex-start;
+    background: transparent;
   }
 }
 
 @media (min-width: 1024px) {
   .footer {
     padding: 3.2rem 3rem 2rem;
+
   }
+ 
 
   .footerBottom {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
   }
+
 }

@@ -1,6 +1,6 @@
 /* General container styling */
 .info-page-container {
-  padding: 40px 20px;
+  padding: 20px;
   width: 100%;
   background: #08111B;
   min-height: 50vh;
@@ -8,10 +8,34 @@
   overflow-x: hidden; /* Prevents horizontal scrollbar from animation */
 }
 
+.page-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  color: #06eef5;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.back-button:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
 .info-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin: 0; /* Centered by flex, remove margin */
   font-size: 2.5rem;
+  font-family: "Orbitron", system-ui, sans-serif;
+  background: linear-gradient(135deg, #06eef5, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(6, 238, 245, 0.3);
 }
 
 /* --- Timeline Styles --- */
@@ -35,6 +59,14 @@
   animation: drawLine 1s ease-out forwards;
 }
 
+.timeline-progress-line {
+  position: absolute;
+  width: 4px;
+  background: linear-gradient(to top, #06eef5, #00d4ff);
+  left: 20px;
+  top: 10px;
+}
+
 @keyframes drawLine {
   from { height: 0; }
   to { height: 100%; }
@@ -54,7 +86,7 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  background-color: #4a90e2;
+  background-color: #06eef5;
   border: 4px solid #08111B;
   top: 35px;
   border-radius: 50%;
@@ -97,16 +129,23 @@
 /* Dynamic hover effect */
 .info-section:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(6, 238, 245, 0.3);
 }
 
-.info-section h2 {
-  color: #4a90e2; /* A highlight color for headings */
+.sectionTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 15px;
 }
 
+.info-section h3 {
+  color: #e5e7eb;
+  margin: 0;
+}
+
 .info-section p, .info-section li {
-  line-height: 1.6;
+  line-height: 1.7;
   color: #c5c5c5; /* Softer white for text */
 }
 
@@ -124,4 +163,71 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 40px;
+}
+
+.sectionHeader h2 {
+  font-size: 2rem;
+  font-family: "Orbitron", system-ui, sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #f9fafb, #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.headerIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(6, 238, 245, 0.15);
+  color: #06eef5;
+  font-size: 24px;
+  border: 1px solid rgba(6, 238, 245, 0.3);
+  box-shadow: 0 0 20px rgba(6, 238, 245, 0.3);
+}
+
+.headerIconWrapper.buyIcon {
+  background: rgba(138, 43, 226, 0.15);
+  color: #c4b5fd;
+  border-color: rgba(138, 43, 226, 0.3);
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+}
+
+/* --- Buy Timeline Specific Styles --- */
+.buyTimeline .timeline-progress-line {
+  background: linear-gradient(to top, #c4b5fd, #8a2be2);
+}
+
+.buyTimeline .timeline-dot {
+  background-color: #c4b5fd;
+}
+
+.buyTimeline .info-section {
+  border-color: rgba(138, 43, 226, 0.4);
+}
+
+.buyTimeline .info-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.3);
+}
+
+.timeline-icon-wrapper {
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.buyIconWrapper {
+  background: rgba(138, 43, 226, 0.15);
+  color: #c4b5fd;
+  border-color: rgba(138, 43, 226, 0.3);
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
 }

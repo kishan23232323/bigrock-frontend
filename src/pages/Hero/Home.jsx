@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./Home.module.css";
+import { Link } from "react-router-dom";
+import RubicWidget from "../../components/Widget/RubicWidget";
 
 const cardInfo = [
   {
@@ -38,31 +40,46 @@ const Home = () => {
       <section className={styles.heroSection}>
         <div className={styles.heroTop}>
           <div className={styles.content}>
-            <div className={styles.eyebrow}>SONIC EXCHANGE • MULTICHAIN DEFI</div>
+            <div className={styles.eyebrow}>
+              BigRock EXCHANGE
+              <br />
+              The universal multi-chain decentralized exchange.
+            </div>
+            
 
             <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Next-Gen Cross-Chain Swapping</h1>
-              <p className={styles.titleSub}>One Platform. Every Chain.</p>
-            </div>
-
-            <p className={styles.subtext}>
-              Swap, trade, and earn across 80+ blockchains from a single
-              decentralized interface. Experience true multichain freedom.
-            </p>
-
-            <div className={styles.buttons}>
-              <button className={styles.primaryButton}>Presale</button>
+              <h1 className={styles.title}>
+                Swap  <span className={styles.highlight}>100+</span> blockchains & <span className={styles.highlight}>15,000+</span> tokens
+              </h1>
+              <p className={styles.titleSub}>
+                Fast, secure, and non-custodial trading.
+              </p>
             </div>
           </div>
+          <div className={styles.titleWrap}>
+            <RubicWidget />
+          </div>
+          <div className={styles.content}>
+            <p className={styles.subtext}>
+              Built for traders. Powered by DeFi. Driven by Bigrock.
+            </p>
+
+
+          </div>
+
 
           {/* Removed RubicWidget */}
           {/* <div className={styles.widgetWrapper}>
             <RubicWidget />
           </div> */}
         </div>
+        <div className={styles.buttons}>
+          <Link to="/presale" className={styles.primaryButton}>Presale</Link>
+
+        </div>
 
         <div className={styles.cardsSection}>
-          <h2 className={styles.sectionTitle}>Why Sonic Exchange</h2>
+         
           <div className={styles.cardsGrid}>
             {cardInfo.map((card, index) => (
               <div key={index} className={styles.card}>
@@ -75,7 +92,12 @@ const Home = () => {
             ))}
           </div>
         </div>
+        <div className={styles.buttons}>
+          <Link to="" className={styles.primaryButton}>whitepaper</Link>
+
+        </div>
       </section>
+
     </div>
   );
 };

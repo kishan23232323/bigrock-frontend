@@ -33,21 +33,24 @@ const Navbar = () => {
   const navItems = [
     { to: "/", label: "Home", icon: <AiFillHome /> },
     { to: "/p2p", label: "P2P", icon: <FaExchangeAlt />, state: getP2PState() },
-    { to: "/airdrop", label: "Airdrop", icon: <FaGift /> },
+    { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/profile", label: "Profile", icon: <FaUser /> },
     ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
   ];
 
   return (
-    <>
+    < >
       <nav className={styles.navContainer}>
         <div className={styles.navContent}>
           {/* Logo */}
-          <div className={styles.logo}>
+          <NavLink to="/" className={styles.logo}>
             <span className={styles.logoIcon}>⚡</span>
-            <span className={styles.logoTextPrimary}>Sonic</span>
-            <span className={styles.logoTextSecondary}>Exchange</span>
-          </div>
+            <span className={styles.logoWord}>
+              <span className={styles.logoTextPrimary}>BIG</span>
+              <span className={styles.logoTextHighlight}>ROCK</span>
+            </span>
+            <span className={styles.logoTextSecondary}>EXCHANGE</span>
+          </NavLink>
 
           {/* Desktop Menu */}
           <ul className={styles.navMenu}>
