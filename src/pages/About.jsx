@@ -9,14 +9,15 @@ import styles from './About.module.css';
     <div className={styles.pageWrapper}>
       <div className={styles.container}>
         <header className={styles.header}>
-          <h1 className={styles.title}>About Sonic</h1>
+          <h1 className={styles.title}>About BIGROCK</h1>
           <p className={styles.subtitle}>
             Your gateway to a seamless, efficient, and secure decentralized experience. We are building the future of digital interaction, one block at a time.
           </p>
         </header>
 
         <div className={styles.mainImage}>
-          <span>Your Image Here (e.g., 800x300)</span>
+            <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+
         </div>
 
         <div className={styles.contentGrid}>
@@ -53,7 +54,7 @@ import styles from './About.module.css';
         <div className={styles.teamSection}>
           <h2 className={styles.teamTitle}>Join the Journey</h2>
           <p className={styles.teamText}>
-            Thank you for being a part of the Sonic story. We are a passionate team of builders and visionaries excited to grow with our community and redefine what's possible.
+            Thank you for being a part of the BigRock story. We are a passionate team of builders and visionaries excited to grow with our community and redefine what's possible.
           </p>
         </div>
 

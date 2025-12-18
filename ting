@@ -1,0 +1,144 @@
+[33mcommit 7ecc879eaff614e92d8554e92682e6ff819125d7[m[33m ([m[1;31morigin/test[m[33m)[m
+Author: Pavanchowdary-1111 <pavanchowdary1010@gmail.com>
+Date:   Wed Dec 10 21:08:24 2025 +0530
+
+    fixed mobile navbar issue
+
+[33mcommit 12737daeff5193d9a0442cadc3cb2dd39ad5f3a4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtest[m[33m)[m
+Author: Tarun Tiwari <tiwaritarun700@gmail.com>
+Date:   Wed Dec 10 17:58:20 2025 +0530
+
+    added some changes for deplyoment
+
+[33mcommit d58553411280d7595903ac988567450ee5ae7707[m
+Author: Pavanchowdary-1111 <pavanchowdary1010@gmail.com>
+Date:   Wed Dec 10 16:57:18 2025 +0530
+
+    Moved work from main to test
+
+[33mcommit 04fc78995b7fc370fdb72a6b0628a87d3716de7c[m
+Author: farman13 <farman327440@gmail.com>
+Date:   Sat Dec 6 15:17:57 2025 +0530
+
+    added referral using link
+
+[33mcommit 1433fdb8c837f8be191f47e49c61f9e33fe04ccd[m
+Author: Tarun Tiwari <tiwaritarun700@gmail.com>
+Date:   Sat Dec 6 12:57:06 2025 +0530
+
+    REFERAL BOX ADDED
+
+[33mcommit dc649cd6565a34648221b563776d682f60c19fe5[m
+Author: Tarun Tiwari <tiwaritarun700@gmail.com>
+Date:   Sat Dec 6 12:48:24 2025 +0530
+
+    P2P IMPLEMENTATION COMPLETED
+
+[33mcommit d9437b111bc5cf2f1f2a5d9c0e63a2ef248abc42[m
+Author: Tarun Tiwari <tiwaritarun700@gmail.com>
+Date:   Wed Dec 3 00:26:31 2025 +0530
+
+    Login Sign up and Logout Features Added
+
+[33mcommit a697988b462952f11297fa41a99bc1c25c1ea0d8[m
+Author: Tarun Tiwari <tiwaritarun700@gmail.com>
+Date:   Wed Nov 26 17:39:08 2025 +0530
+
+    Widget Integrated
+
+[33mcommit 10846d43e3366dbf7987eac569df714898138216[m
+Merge: cb6cea1 8729322
+Author: Tarun Tiwari <tiwaritarun700@gmail.com>
+Date:   Wed Nov 26 16:22:51 2025 +0530
+
+    Merge branch 'main' of https://github.com/Prashantww/Sonic-Exchange
+
+[33mcommit cb6cea16310d86acc8cbca144bb9f1271f0ce933[m
+Author: Tarun Tiwari <tiwaritarun700@gmail.com>
+Date:   Wed Nov 26 16:18:15 2025 +0530
+
+    clean repo
+
+[33mcommit 87293223294018a9e87f72ebf9181cd7cae4ea11[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Tue Nov 25 16:30:20 2025 +0530
+
+    completed p2p/buy page, Whole P2P page completed
+
+[33mcommit ca23c30c240e8d5095c128d206b839af3fd9eb52[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Tue Nov 25 16:05:37 2025 +0530
+
+    added payment options
+
+[33mcommit 3779314550d3243f1807455778c0740ba3d6827b[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Tue Nov 25 13:47:01 2025 +0530
+
+    added /p2p and /p2p/sell pages with a basic layout of /p2p/buy
+
+[33mcommit 5db1c41308374e9fad68e7961253aa392ad89a32[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 21:46:14 2025 +0530
+
+    made changes to home cards
+
+[33mcommit a197ac542411da811f0e67373a3a31c6e5613ade[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 19:30:12 2025 +0530
+
+    Added footer
+
+[33mcommit c17dfc85f22e85feadbe5e50fd6499fc7560bdda[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 17:16:51 2025 +0530
+
+    fixed P2P pop up
+
+[33mcommit b8defb7b96702a2da1f3605aad9d6e7e5c1ff10e[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 16:52:45 2025 +0530
+
+    added Home page
+
+[33mcommit 9f276c0c453963fe83c3eaa010c772553d548b29[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 14:38:50 2025 +0530
+
+    made some changes to nav bar
+
+[33mcommit 4941d5674ad686eb966a14ddb6f00407b911549a[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 14:28:44 2025 +0530
+
+    fixed navbar component link 2
+
+[33mcommit 62a463c48cd7fcb8f87585acd544f1d351a27407[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 14:26:48 2025 +0530
+
+    fixed navbar component link
+
+[33mcommit d2b477e57c6e84ea988a6319c7d2a525227527d2[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Mon Nov 24 14:22:48 2025 +0530
+
+    initial commit with nav bar and routing done
+
+[33mcommit 24eec58bc8df92b3ffe7be1ea17442277646920e[m
+Author: Prashantww <prashant1warghude@gmail.com>
+Date:   Thu Nov 20 17:02:40 2025 +0530
+
+    deploy
+
+[33mcommit df69a76deb18e25e6bae5e49d29d056bb7456625[m
+Author: Dhruv <your-github-email@example.com>
+Date:   Tue Nov 18 19:59:29 2025 +0530
+
+    Initial push
+
+[33mcommit c09e48c62103858898aa5f715f0791babb9f053e[m
+Author: Dhruv <your-github-email@example.com>
+Date:   Tue Nov 18 19:59:02 2025 +0530
+
+    first commit

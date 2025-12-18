@@ -303,6 +303,13 @@ const roadmapData = [
           </button>
         </div>
 
+
+        <div className={styles.mainImage}>
+                    <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+                  </div>
+
+
+
         <div className={styles.infoGrid}>
           {/* Tokenomics Card */}
           <div className={styles.card}>

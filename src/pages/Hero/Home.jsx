@@ -40,11 +40,20 @@ const Home = () => {
       <section className={styles.heroSection}>
         <div className={styles.heroTop}>
           <div className={styles.content}>
-            <div className={styles.eyebrow}>BigRock EXCHANGE • MULTICHAIN DEFI</div>
+            <div className={styles.eyebrow}>
+              BigRock EXCHANGE
+              <br />
+              The universal multi-chain decentralized exchange.
+            </div>
+            
 
             <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Next-Gen Cross-Chain Swapping</h1>
-              <p className={styles.titleSub}>One Platform. Every Chain.</p>
+              <h1 className={styles.title}>
+                Swap across <span className={styles.highlight}>100+</span> blockchains & <span className={styles.highlight}>15,000+</span> tokens
+              </h1>
+              <p className={styles.titleSub}>
+                Fast, secure, and non-custodial trading.
+              </p>
             </div>
           </div>
           {/* <div className={styles.titleWrap}>
@@ -56,8 +65,7 @@ const Home = () => {
 
           <div className={styles.content}>
             <p className={styles.subtext}>
-              Swap, trade, and earn across 80+ blockchains from a single
-              decentralized interface. Experience true multichain freedom.
+              Built for traders. Powered by DeFi. Driven by Bigrock.
             </p>
 
 
@@ -75,7 +83,7 @@ const Home = () => {
         </div>
 
         <div className={styles.cardsSection}>
-          <h2 className={styles.sectionTitle}>Why Bigrock Exchange</h2>
+         
           <div className={styles.cardsGrid}>
             {cardInfo.map((card, index) => (
               <div key={index} className={styles.card}>
@@ -92,8 +100,15 @@ const Home = () => {
           <Link to="" className={styles.primaryButton}>whitepaper</Link>
 
         </div>
+        <div className={styles.mainImage}>
+            <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+          </div>
+        
       </section>
-
+              
+            
+                  
+          
     </div>
   );
 };

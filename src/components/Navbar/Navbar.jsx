@@ -43,11 +43,15 @@ const Navbar = () => {
       <nav className={styles.navContainer}>
         <div className={styles.navContent}>
           {/* Logo */}
-          <div className={styles.logo}>
-            <span className={styles.logoIcon}>⚡</span>
-            <span className={styles.logoTextPrimary}>BigRock</span>
-            <span className={styles.logoTextSecondary}>Exchange</span>
-          </div>
+          <NavLink to="/" className={styles.logo}>
+            <img src="/heroCardImages/logo.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+
+            <span className={styles.logoWord}>
+              <span className={styles.logoTextPrimary}>BIG</span>
+              <span className={styles.logoTextHighlight}>ROCK</span>
+            </span>
+            <span className={styles.logoTextSecondary}>EXCHANGE</span>
+          </NavLink>
 
           {/* Desktop Menu */}
           <ul className={styles.navMenu}>
@@ -67,7 +71,7 @@ const Navbar = () => {
             {/* Desktop Auth Button */}
             <li className={styles.authButton}>
               {isLoggedIn ? (
-                <LogoutBtn />
+                <LogoutBtn/>
               ) : (
                 <NavLink className={linkClass} to="/login">
                   Join Now
