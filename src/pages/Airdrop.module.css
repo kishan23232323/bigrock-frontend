@@ -24,6 +24,7 @@
   backdrop-filter: blur(15px);
   border: 1px solid rgba(6, 238, 245, 0.15);
   padding: 24px;
+  margin-top: 10px;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   margin-bottom: 24px;
@@ -406,7 +407,7 @@
   .title {
     font-size: 28px;
   }
-  
+
 
   .cardsGrid {
     grid-template-columns: repeat(4, 1fr);
@@ -422,7 +423,7 @@
   .airdropName {
     font-size: 15px;
   }
-  
+
 
   .infoCardsGrid {
     grid-template-columns: repeat(2, 1fr);
@@ -454,7 +455,7 @@
   .title {
     font-size: 20px;
   }
-  
+
 
   .cardsGrid {
     grid-template-columns: 1fr;
@@ -474,7 +475,7 @@
   .referralStats {
     grid-template-columns: 1fr;
   }
- 
+
 
   .infoCardsGrid {
     grid-template-columns: 1fr;
@@ -484,17 +485,17 @@
   .infoCard {
     padding: 12px;
   }
- 
+
 
   .infoTitle {
     font-size: 12px;
   }
- 
+
 
   .infoList li {
     font-size: 11px;
   }
- 
+
 }
 
 
@@ -515,4 +516,30 @@
 .infoButton:hover {
   color: #e5e7eb;
   box-shadow: 0 0 18px rgba(6, 238, 245, 0.6);
+}
+
+.connectBtn {
+  width: 100%;
+  background: linear-gradient(135deg, #06eef5, #00d4ff);
+  color: #041018;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  /* safety */
+  position: relative;
+  z-index: 20;
+}
+
+.connectBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 212, 255, 0.4);
+}
+
+.connectBtn:active {
+  transform: translateY(0);
 }

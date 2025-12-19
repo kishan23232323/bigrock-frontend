@@ -1,20 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Info.module.css'; // Reusing styles from Info.jsx
-import { GrFormPrevious  } from "react-icons/gr";
 import { Link } from 'react-router-dom';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
+import {
+  FaWallet,
+  FaUsers,
+  FaExchangeAlt,
+  FaUserFriends,
+  FaRocket,
+  FaCalendarAlt,
+  FaPlayCircle,
+  FaCogs,
+  FaGift,
+} from 'react-icons/fa';
 
 function Earn_info() {
     const participationSteps = [
-        { title: 'Connect Your Wallet', description: 'Connect your wallet to check your eligibility for the airdrop.' },
-        { title: 'Complete Social Tasks', description: 'Follow our social media channels and join the community to earn points.' },
-        { title: 'Bridge Assets', description: 'Bridge assets to the Sonic network to get a multiplier on your points.' },
-        { title: 'Refer Friends', description: 'Invite your friends to join the airdrop and earn bonus points for each successful referral.' },
+        { icon: <FaWallet />, title: 'Connect Your Wallet', description: 'Connect your wallet to check your eligibility for the airdrop.' },
+        { icon: <FaUsers />, title: 'Complete Social Tasks', description: 'Follow our social media channels and join the community to earn points.' },
+        { icon: <FaExchangeAlt />, title: 'Bridge Assets', description: 'Bridge assets to the BigRock network to get a multiplier on your points.' },
+        { icon: <FaUserFriends />, title: 'Refer Friends', description: 'Invite your friends to join the airdrop and earn bonus points for each successful referral.' },
     ];
 
     const airdropTimelineSteps = [
-        { title: 'Phase 1: Social Tasks & Early Participation', description: 'Currently active!' },
-        { title: 'Phase 2: On-chain Interaction', description: 'Coming Soon' },
-        { title: 'Token Claim', description: 'To be announced after the campaign concludes.' },
+        { icon: <FaPlayCircle />, title: 'Phase 1: Social Tasks & Early Participation', description: 'Currently active!' },
+        { icon: <FaCogs />, title: 'Phase 2: On-chain Interaction', description: 'Coming Soon' },
+        { icon: <FaGift />, title: 'Token Claim', description: 'To be announced after the campaign concludes.' },
     ];
 
     // Custom hook to manage the interactive timeline logic
@@ -70,29 +81,55 @@ function Earn_info() {
 
     return (
         <div className={styles['info-page-container']}>
-            <Link to="/airdrop"> <GrFormPrevious size={50} style={{ marginLeft: "30px", marginTop: "30px" }} /></Link>
-            <h1 className={styles['info-header']} style={{ marginTop: "-55px" }}>Sonic Airdrop Is Live!</h1>
-            <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#ccc' }}>Complete tasks to earn your share of SONIC tokens.</p>
+            <div className={styles['page-header']}>
+                <Link to="/airdrop" className={styles['back-button']}>
+                    <IoArrowBackCircleOutline size={40} />
+                </Link>
+                <h1 className={styles['info-header']}>BigRock Airdrop Is Live!</h1>
+            </div>
+            <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#ccc' }}>Complete tasks to earn your share of BIGROCK tokens.</p>
 
             <div>
-                <h2 className={styles['info-header']} style={{ fontSize: '2rem', marginTop: '20px' }}>How to Participate</h2>
+                <div className={styles.sectionHeader} style={{ marginTop: '40px' }}>
+                    <div className={styles.headerIconWrapper}>
+                        <FaRocket />
+                    </div>
+                    <h2>How to Participate</h2>
+                </div>
                 <div className={styles.timeline} ref={participationTimeline.timelineRef}>
                     <div className={styles['timeline-progress-line']} style={{ height: participationTimeline.progressHeight }}></div>
                     {participationSteps.map((step, index) => (
                         <div key={`participate-${index}`} className={styles['timeline-item']} ref={participationTimeline.itemRefs.current[index]}>
                             <div className={styles['timeline-dot']}></div>
-                            <section className={styles['info-section']}><h3>{step.title}</h3><p>{step.description}</p></section>
+                            <section className={styles['info-section']}>
+                                <div className={styles.sectionTitleContainer}>
+                                    <div className={styles['timeline-icon-wrapper']}>{step.icon}</div>
+                                    <h3>{step.title}</h3>
+                                </div>
+                                <p>{step.description}</p>
+                            </section>
                         </div>
                     ))}
                 </div>
 
-                <h2 className={styles['info-header']} style={{ fontSize: '2rem', marginTop: '60px' }}>Airdrop Timeline</h2>
-                <div className={styles.timeline} ref={airdropTimeline.timelineRef}>
+                <div className={styles.sectionHeader} style={{ marginTop: '60px' }}>
+                    <div className={`${styles.headerIconWrapper} ${styles.buyIcon}`}>
+                        <FaCalendarAlt />
+                    </div>
+                    <h2>Airdrop Timeline</h2>
+                </div>
+                <div className={`${styles.timeline} ${styles.buyTimeline}`} ref={airdropTimeline.timelineRef}>
                     <div className={styles['timeline-progress-line']} style={{ height: airdropTimeline.progressHeight }}></div>
                     {airdropTimelineSteps.map((step, index) => (
                         <div key={`airdrop-${index}`} className={styles['timeline-item']} ref={airdropTimeline.itemRefs.current[index]}>
                             <div className={styles['timeline-dot']}></div>
-                            <section className={styles['info-section']}><h3>{step.title}</h3><p>{step.description}</p></section>
+                            <section className={styles['info-section']}>
+                                <div className={styles.sectionTitleContainer}>
+                                    <div className={`${styles['timeline-icon-wrapper']} ${styles.buyIconWrapper}`}>{step.icon}</div>
+                                    <h3>{step.title}</h3>
+                                </div>
+                                <p>{step.description}</p>
+                            </section>
                         </div>
                     ))}
                 </div>

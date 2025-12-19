@@ -1,19 +1,65 @@
 import API from "../../config/axios";
 
-export const getAirdrops = async () => {
+
+export const saveWalletAddress = async ({ walletAddress, token }) => {
   try {
-    const resp = await API.get('/api/v1/airdrops/my');
-    return resp.data?.data || [];
-  } catch (err) {
-    throw err.response ? err.response.data : err;
+    if (!token) {
+      console.log("User not logged in");
+      return;
+    }
+
+    const response = await API.post(
+      "/api/v1/users/wallet",
+      { walletAddress },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
   }
 };
 
-export const claimAirdrop = async (id) => {
+export const markWalletClaimed = async ({ address, token }) => {
   try {
-    const resp = await API.post('/api/v1/airdrops/claim', { airdropId: id });
-    return resp.data || { success: true, message: 'Claimed' };
-  } catch (err) {
-    throw err.response ? err.response.data : err;
+    if (!token) {
+      console.log("User not logged in");
+      return;
+    }
+
+    const response = await API.post(
+      "/api/v1/users/airdrop/wallet-reward-claimed",
+      { address },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const markReferralClaimed = async ({ token }) => {
+  try {
+    if (!token) {
+      console.log("User not logged in");
+      return;
+    }
+
+    const response = await API.post(
+      "/api/v1/users/airdrop/referral-reward-claimed",
+      {}, // no body needed
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
   }
 };

@@ -38,12 +38,12 @@ function Login() {
   };
 
   return (
-    <div className="flex p-6 justify-center items-center    h-screen" style={{ background: "#08111B" }}>
+    <div className="flex p-4 sm:p-6 justify-center items-center h-screen" style={{ background: "#08111B" }}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96 border bg-transparent border-gray-200"
+        className="backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-sm border bg-transparent border-gray-700"
       >
-        <h2 className="text-3xl font-extrabold text-center text-slate-200 mb-2">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-slate-200 mb-2">
           Welcome Back
         </h2>
         <p className="text-center text-gray-400 mb-6 text-sm">
@@ -58,9 +58,9 @@ function Login() {
             {...register("email", {
               required: "Email is required",
               // UNCOMMENT THE LINE BELOW TO ENABLE EMAIL FORMAT VALIDATION at time of final deployment
-              // pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
             })}
-            className="w-full px-4 py-2 border text-slate-300 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            className="w-full px-4 py-2 bg-gray-800/50 border text-slate-300 border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-sm"
             placeholder="your@email.com"
           />
           {errors.email && (
@@ -76,7 +76,7 @@ function Login() {
           <input
             type="password"
             {...register("password", { required: "Password is required" })}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none text-slate-200 border-slate-200 focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            className="w-full px-4 py-2 bg-gray-800/50 border rounded-lg focus:outline-none text-slate-200 border-gray-600 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-sm"
             placeholder="••••••••"
           />
           {errors.password && (
@@ -120,7 +120,7 @@ function Login() {
           {" "}
           <span
             className="text-blue-100 font-semibold hover:underline cursor-pointer"
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/forgot-password")}
             
           >
             Forget Password?

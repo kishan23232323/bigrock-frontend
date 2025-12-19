@@ -37,7 +37,7 @@ import styles from './Career.module.css';
         </header>
 
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Why Join Sonic?</h2>
+          <h2 className={styles.sectionTitle}>Why Join BIGROCK?</h2>
           <div className={styles.benefitsGrid}>
             <div className={styles.benefitCard}>
               <div className={styles.iconWrapper}><Sparkles size={28} className={styles.icon} /></div>

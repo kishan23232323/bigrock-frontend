@@ -21,21 +21,25 @@ const Footer = () => {
         <div className={styles.brandSection}>
           <h2 className={styles.logo}>
             <Link
-             className={styles.link}
+             className={styles.logoLink}
               to="/"
               onClick={() =>
                 window.scrollTo({ top: 0, behavior: "smooth" })
               }
             >
-             <div  className={styles.link}>
-               <span className={styles.logoAccent }>Sonic</span>{" "}
-              <span className={styles.logoSub}>Exchange</span>
-             </div>
+              <img src="/heroCardImages/logo.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+              
+              <span className={styles.logoWord}>
+                <span className={styles.logoTextPrimary}>BIG</span>
+                <span className={styles.logoTextHighlight}>ROCK</span>
+              </span>
+              <span className={styles.logoTextSecondary}>EXCHANGE</span>
+
             </Link>
           </h2>
           <p className={styles.tagline}>
-            Next-gen cross-chain swapping across 80+ blockchains. Fast, secure,
-            non-custodial.
+            Swap 100+ blockchains & 15,000+ tokens. Fast, secure, and
+            non-custodial trading.
           </p>
           <div className={styles.socialRow}>
             <a
@@ -46,14 +50,7 @@ const Footer = () => {
             >
               <FaXTwitter />
             </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.socialCircle}
-            >
-              <FaLinkedin />
-            </a>
+            
             <a
               href="https://instagram.com"
               target="_blank"
@@ -61,14 +58,6 @@ const Footer = () => {
               className={styles.socialCircle}
             >
               <FaInstagram />
-            </a>
-            <a
-              href="https://discord.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.socialCircle}
-            >
-              <FaDiscord />
             </a>
             <a
               href="https://telegram.org"
@@ -92,42 +81,39 @@ const Footer = () => {
               <li className={styles.link}>
                 <Link to="/career">Career</Link>
               </li>
-              <li className={styles.link}>
-                <Link to="/sonic-insentive">Sonic Incentive</Link>
-              </li>
+              
               <li className={styles.link}>
                 <Link to="/airdrop">Earn</Link>
               </li>
             </ul>
           </div>
-  </div>
-        </div>
-          <div  className={styles.newsletterSection}>
-            <h3  className={styles.link} >Stay in the loop</h3>
-            <p className={styles.newsletterText}>
-              Get early access to new chains, features, and airdrop campaigns.
-            </p>
-            <form onSubmit={handleSubscribe} className={styles.newsletterForm}>
-              <div className={styles.inputWrapper}>
-                <MdEmail className={styles.emailIcon} />
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <button type="submit" className={styles.subscribeButton}>
-                Subscribe
-              </button>
-            </form>
+          <div className={styles.newsletterSection}>
+              <h3 className={styles.link}>Stay in the loop</h3>
+              <p className={styles.newsletterText}>
+                Get early access to new chains, features, and airdrop campaigns.
+              </p>
+              <form onSubmit={handleSubscribe} className={styles.newsletterForm}>
+                <div className={styles.inputWrapper}>
+                  <MdEmail className={styles.emailIcon} />
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <button type="submit" className={styles.subscribeButton}>
+                  Subscribe
+                </button>
+              </form>
+            </div>
           </div>
-      
+        </div>
       </div>
 
       <div className={styles.footerBottom}>
-        <p className={styles.powered}>© 2025 Sonic Exchange. All rights reserved.</p>
+        <p className={styles.powered}>© 2025 BigRock Exchange. All rights reserved.</p>
         <p className={styles.powered}>Powered by Web3 • Built for Multichain</p>
       </div>
     </footer>

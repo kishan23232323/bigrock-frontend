@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Navbar";
 import Home from "./pages/Hero/Home";
@@ -22,18 +22,22 @@ import Agent from "./pages/Agent";
 import Presale from "./pages/Presale";
 import Info from "./pages/Info";
 import Earn_info from "./pages/Earn_info";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyEmail from "./pages/Verify";
+import ResetPassword from "./pages/ResetPassword";
+import EditProfile from "./components/EditProfile/EditProfile";
 
 function App() {
-  const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = accessToken || localStorage.getItem("accessToken");
 
     if (!token) {
-      dispatch(logout());
       setLoading(false);
+      dispatch(logout());
       return;
     }
 
@@ -54,7 +58,9 @@ function App() {
         console.log("App.jsx :: error in getUserProfile", error);
         dispatch(logout());
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });;
   }, [accessToken, dispatch]);
 
   return (
@@ -121,6 +127,16 @@ function App() {
             <Route path="/presale" element={<Presale />} />
             <Route path="/info" element={<Info />} />
             <Route path="/earninfo" element={<Earn_info />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/reset-password/:token" element={<ResetPassword/>} />
+            <Route path ="/edit-profile" element={
+              <Protected>
+                <EditProfile/>
+              </Protected>
+            }/>
+
+
 
             
           </Routes>

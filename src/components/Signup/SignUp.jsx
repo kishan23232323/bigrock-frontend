@@ -24,28 +24,25 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    try {
-      const response = await registerUser(data);
+  try {
+    const response = await registerUser(data);
 
-      dispatch(
-        setCredentials({
-          user: response.data.user,
-          accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
-        })
-      );
+    toast.success("Verification email sent! Please check your inbox.");
 
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("userId", response.data.user._id);
+    reset();
 
-      toast.success("Registration successful!");
-      navigate("/");
-      reset();
-    } catch (error) {
-      console.error("Register Error:", error);
-      toast.error(error.message || "Registration failed!");
-    }
-  };
+    
+    navigate("/login", {
+      state: {
+        message: "Please verify your email before logging in."
+      }
+    });
+
+  } catch (error) {
+    console.error("Register Error:", error);
+    toast.error(error.message || "Registration failed!");
+  }
+};
 
   useEffect(() => {
     if (urlReferral) setValue("referral", urlReferral);
@@ -85,7 +82,7 @@ const Register = () => {
               {...register("email", {
                 required: "Email is required",
                 // UNCOMMENT THE LINE BELOW TO ENABLE EMAIL FORMAT VALIDATION at time of final deployment
-                // pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               })}
               className="mt-1 w-full px-4 py-2 border text-slate-200 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Enter your email"

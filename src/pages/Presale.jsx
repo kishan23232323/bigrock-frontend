@@ -92,7 +92,7 @@ const roadmapData = [
       quarter: 'Q4 2025',
       title: 'Project Inception & Whitepaper',
       status: 'Completed',
-      details: 'Initial concept, team formation, and drafting the foundational whitepaper outlining Sonic\'s vision.'
+      details: 'Initial concept, team formation, and drafting the foundational whitepaper outlining BigRock\'s vision.'
     },
     {
       quarter: 'Q1 2026',
@@ -116,8 +116,8 @@ const roadmapData = [
 
   const faqData = [
     {
-      question: 'What is the SONIC token?',
-      answer: 'SONIC is the native utility token of the Sonic ecosystem. It is used for governance, staking, paying transaction fees, and accessing exclusive features within our decentralized exchange.'
+      question: 'What is the BigRock token?',
+      answer: 'BigRock is the native utility token of the BigRock ecosystem. It is used for governance, staking, paying transaction fees, and accessing exclusive features within our decentralized exchange.'
     },
     {
       question: 'How can I participate in the presale?',
@@ -125,7 +125,7 @@ const roadmapData = [
     },
     {
       question: 'What happens after the presale ends?',
-      answer: 'After the presale concludes, the SONIC token will be listed on our decentralized exchange and other partner exchanges. You will be able to claim your purchased tokens according to the vesting schedule outlined in our whitepaper.'
+      answer: 'After the presale concludes, the BigRock token will be listed on our decentralized exchange and other partner exchanges. You will be able to claim your purchased tokens according to the vesting schedule outlined in our whitepaper.'
     },
     {
       question: 'Is my investment secure?',
@@ -217,7 +217,7 @@ const roadmapData = [
     <div className={styles.pageWrapper}>
       <div className={styles.container}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Sonic Token Presale</h1>
+          <h1 className={styles.title}>BigRock Token Presale</h1>
           <div className={styles.premium}>
             <Star size={18} className={styles.premiumIcon} />
             <span>Early Access: Limited to First <b>2,000</b> Members</span>
@@ -228,7 +228,7 @@ const roadmapData = [
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <h2 className={styles.cardTitle}>Stage 2 is Live!</h2>
-            <span className={styles.priceBadge}>1 SONIC = $0.12</span>
+            <span className={styles.priceBadge}>1 BIGROCK = $0.12</span>
           </div>
 
           {timeLeft && (
@@ -285,7 +285,7 @@ const roadmapData = [
               />
             </div>
             <div>
-              <label htmlFor="sonic" className={styles.inputLabel}>You will receive (SONIC)</label>
+              <label htmlFor="sonic" className={styles.inputLabel}>You will receive (BIGROCK)</label>
               <input
                 id="sonic"
                 type="text"
@@ -302,6 +302,14 @@ const roadmapData = [
             Connect Wallet & Buy
           </button>
         </div>
+
+
+         <div className={`${styles.mainImage} my-12 md:my-16 mx-auto px-4`} style={{ width: "100%", maxWidth: "800px", height: "auto", display: "flex", justifyContent: "center" }}>
+                    <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={`${styles.logoImage} w-full h-auto rounded-lg shadow-2xl`} />
+        
+                </div>
+
+
 
         <div className={styles.infoGrid}>
           {/* Tokenomics Card */}

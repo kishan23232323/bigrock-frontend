@@ -89,7 +89,7 @@ export const updateUserProfile = async ({ name, email }) => {
   }
 }
 
-export const resetPassword = async ({ oldPassword, newPassword }) => {
+export const changePassword = async ({ oldPassword, newPassword }) => {
   try {
     const token = localStorage.getItem("accessToken");
     if (!token) {
@@ -102,3 +102,50 @@ export const resetPassword = async ({ oldPassword, newPassword }) => {
     throw error.response ? error.response.data : error;
   }
 }
+
+export const verifyEmail = async (token) => {
+  try {
+    const response = await API.get(`/api/v1/users/verify-email/${token}`);
+    return response.data; 
+    // returns { user, accessToken, refreshToken }
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const resendVerificationEmail = async (email) => {
+  try {
+    const response = await API.post(
+      "/api/v1/users/resend-verification-email",
+      { email }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const forgotPassword = async (email) => {
+  try {
+    const response = await API.post(
+      "/api/v1/users/forgot-password",
+      { email }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const resetPassword = async (token, newPassword) => {
+  try {
+    const response = await API.post(
+      `/api/v1/users/reset-password/${token}`,
+      { newPassword }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
+import RubicWidget from "../../components/Widget/RubicWidget";
 
 const cardInfo = [
   {
@@ -33,40 +34,55 @@ const Home = () => {
   return (
     <div className={styles.homeContainer}>
       <div className={styles.bgAnimation}>
-        <div className={styles.gridPattern} />
       </div>
 
       <section className={styles.heroSection}>
         <div className={styles.heroTop}>
           <div className={styles.content}>
-            <div className={styles.eyebrow}>SONIC EXCHANGE • MULTICHAIN DEFI</div>
+            <div className={styles.eyebrow}>
+              BigRock EXCHANGE
+              <br />
+              The universal multi-chain decentralized exchange.
+            </div>
+            
 
             <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Next-Gen Cross-Chain Swapping</h1>
-              <p className={styles.titleSub}>One Platform. Every Chain.</p>
+              <h1 className={styles.title}>
+                Swap across <span className={styles.highlight}>100+</span> blockchains & <span className={styles.highlight}>15,000+</span> tokens
+              </h1>
+              <p className={styles.titleSub}>
+                Fast, secure, and non-custodial trading.
+              </p>
             </div>
+          </div>
+          {/* <div className={styles.titleWrap}>
+            <RubicWidget />
+          </div> */}
+          <div className={styles.titleWrap}>
+            <RubicWidget />
+          </div>
 
+          <div className={styles.content}>
             <p className={styles.subtext}>
-              Swap, trade, and earn across 80+ blockchains from a single
-              decentralized interface. Experience true multichain freedom.
+              Built for traders. Powered by DeFi. Driven by Bigrock.
             </p>
 
-          
+
           </div>
-           
+
 
           {/* Removed RubicWidget */}
           {/* <div className={styles.widgetWrapper}>
             <RubicWidget />
           </div> */}
         </div>
-         <div className={styles.buttons}>
-              <Link to="/presale"  className={styles.primaryButton}>Presale</Link>
+        <div className={styles.buttons}>
+          <Link to="/presale" className={styles.primaryButton}>Presale</Link>
 
-            </div>
+        </div>
 
         <div className={styles.cardsSection}>
-          <h2 className={styles.sectionTitle}>Why Sonic Exchange</h2>
+         
           <div className={styles.cardsGrid}>
             {cardInfo.map((card, index) => (
               <div key={index} className={styles.card}>
@@ -80,11 +96,19 @@ const Home = () => {
           </div>
         </div>
         <div className={styles.buttons}>
-              <Link to=""  className={styles.primaryButton}>whitepaper</Link>
+          <Link to="" className={styles.primaryButton}>whitepaper</Link>
 
-            </div>
+        </div>
+         <div className={`${styles.mainImage} my-12 md:my-16 mx-auto px-4`} style={{ width: "100%", maxWidth: "800px", height: "auto", display: "flex", justifyContent: "center" }}>
+                    <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={`${styles.logoImage} w-full h-auto rounded-lg shadow-2xl`} />
+        
+                </div>
+        
       </section>
-       
+              
+            
+                  
+          
     </div>
   );
 };
