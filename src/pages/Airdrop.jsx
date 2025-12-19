@@ -47,7 +47,7 @@ export default function AirdropPage({ onNavigate }) {
   } = useWeb3();
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:5173/signup?referral=${user ? user.referralCode : ''}`);
+    navigator.clipboard.writeText(`https://www.bigrock.exchange/signup?referral=${user ? user.referralCode : ''}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
