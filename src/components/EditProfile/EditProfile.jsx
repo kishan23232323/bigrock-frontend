@@ -63,7 +63,7 @@ export default function EditProfile() {
       setLoading(true);
       await changePassword(data);
       toast.success("Password changed successfully");
-      resetPasswordForm(); // ✅ clear password fields
+      resetPasswordForm();
       navigate("/profile");
     } catch (err) {
       toast.error(err.message || "Password change failed");
