@@ -8,7 +8,6 @@ import {
 import { ShieldCheck, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export default function EditProfile() {
   const { user } = useSelector((state) => state.auth);
@@ -46,13 +45,11 @@ export default function EditProfile() {
     try {
       setLoading(true);
       await updateUserProfile({ name: data.name });
-      toast.success("Profile updated successfully");
-      setTimeout(() => {
+      alert("Profile updated successfully");
         navigate("/");
         window.location.reload();
-      }, 2000);
     } catch (err) {
-      toast.error(err.message || "Update failed");
+      alert(err.message || "Update failed");
     } finally {
       setLoading(false);
     }
@@ -63,10 +60,10 @@ export default function EditProfile() {
       setLoading(true);
       await changePassword(data);
       toast.success("Password changed successfully");
-      resetPasswordForm(); // ✅ clear password fields
+      resetPasswordForm();
       navigate("/profile");
     } catch (err) {
-      toast.error(err.message || "Password change failed");
+      alert(err.message || "Password change failed");
     } finally {
       setLoading(false);
     }
@@ -75,11 +72,11 @@ export default function EditProfile() {
   const handleResendVerification = async () => {
     try {
       await resendVerificationEmail(user.email);
-      toast.success("Verification email sent");
+      alert("Verification email sent");
       navigate("/profile");
       
     } catch (err) {
-      toast.error(err.message || "Failed to send email");
+      alert(err.message || "Failed to send email");
     }
   };
 

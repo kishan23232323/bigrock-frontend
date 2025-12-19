@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { GrCircleInformation } from "react-icons/gr";
 import { getUserProfile } from "../services/authservices/authapi";
 import { useAccount, useAccountEffect } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useWeb3 } from "../../context/Web3Context.jsx";
 // TASKS DATA
 // const tasks = [
@@ -27,7 +27,6 @@ const initialAirdropData = [
   { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: "CLAIMABLE", icon: "✓" },
   { id: 2, name: "Early Bird Bonus", amount: "0 SONIC", status: "LOCKED", icon: "🔒" },
   { id: 3, name: "Referral Rewards", amount: "1250 SONIC", status: "PENDING", icon: "!" },
-  { id: 4, name: "Trading Volume", amount: "0 SONIC", status: "LOCKED", icon: "🔒" },
 ];
 
 export default function AirdropPage({ onNavigate }) {
@@ -38,6 +37,7 @@ export default function AirdropPage({ onNavigate }) {
 
   const token = localStorage.getItem("accessToken");
   const { isConnected, address } = useAccount();
+  const { openConnectModal } = useConnectModal();
 
   const {
     withdrawReferReward,
@@ -108,8 +108,7 @@ export default function AirdropPage({ onNavigate }) {
         setAirdropData([
           { id: 1, name: "BIGROCK Launch", amount: "500 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
           { id: 2, name: "Early Bird Bonus", amount: "0 BIGROCK", status: "LOCKED", icon: "🔒" },
-          { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : "CLAIMED", icon: "!" },
-          { id: 4, name: "Trading Volume", amount: "0 BIGROCK", status: "LOCKED", icon: "🔒" },
+          { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : (user.referredCount > 0 ? "CLAIMED" : "PENDING"), icon: "!" },
         ]);
       }
     } catch (err) {
@@ -179,26 +178,6 @@ export default function AirdropPage({ onNavigate }) {
 
       {/* Content */}
       <div className={styles.contentWrapper}>
-        <ConnectButton.Custom>
-          {({
-            openConnectModal,
-            openAccountModal,
-            account,
-            mounted,
-          }) => {
-            const connected = mounted && account;
-
-            return (
-              <button
-                onClick={connected ? openAccountModal : openConnectModal}
-                className={styles.connectBtn}
-              >
-                {connected ? "Connected" : "Connect Wallet"}
-              </button>
-            );
-          }}
-        </ConnectButton.Custom>
-
         {/* Header Card */}
 
         <div className={styles.headerCard}>
@@ -220,7 +199,7 @@ export default function AirdropPage({ onNavigate }) {
 
         {/* Airdrop Cards Grid */}
         {loading && <div className={styles.loadingRow}><p className={styles.loadingText}>Loading airdrops...</p></div>}
-        <div className={styles.cardsGrid}>
+        <div className="flex flex-wrap justify-center gap-6 my-8">
           {airdropData.map((airdrop) => (
             <div key={airdrop.id} className={styles.airdropCard}>
               <div className={styles.cardHeader}>
@@ -242,14 +221,17 @@ export default function AirdropPage({ onNavigate }) {
               <p className={styles.airdropAmount}>{airdrop.amount}</p>
 
               <button
-                disabled={!isConnected || airdrop.status !== "CLAIMABLE" || loading === airdrop.id}
-                onClick={() => handleClaim(airdrop.id)}
-                className={`${styles.claimBtn} ${!isConnected || airdrop.status !== "CLAIMABLE" || loading === airdrop.id
-                  ? styles.disabled
-                  : ""
-                  }`}
+                disabled={(isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id}
+                onClick={() => {
+                  if (!isConnected) {
+                    openConnectModal && openConnectModal();
+                  } else {
+                    handleClaim(airdrop.id);
+                  }
+                }}
+                className={`${styles.claimBtn} ${((isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id) ? styles.disabled : ""}`}
               >
-                {!isConnected
+                {!isConnected && openConnectModal
                   ? "Connect Wallet"
                   : loading === airdrop.id
                     ? "Claiming..."
@@ -262,7 +244,7 @@ export default function AirdropPage({ onNavigate }) {
         </div>
 
         {/* Referral Section */}
-        <div div className={styles.referralCard} >
+        <div className={styles.referralCard} >
           <h2 className={styles.sectionTitle}>Referral Program</h2>
           <p className={styles.referralDesc}>Earn BIGROCK for every friend you invite</p>
 
@@ -278,19 +260,37 @@ export default function AirdropPage({ onNavigate }) {
             </button>
           </div>
 
-          <div className={styles.referralStats}>
-            <div className={styles.statItem}>
-              <p className={styles.statLabel}>Referrals</p>
-              <p className={styles.statValue}>{user?.referredCount ? user.referredCount : 0}</p>
+          <div className="mt-8 flex justify-center w-full">
+            <div className="relative group w-full max-w-[280px]">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+              <div className="relative px-6 py-6 bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 flex flex-col items-center justify-center hover:bg-black/50 transition duration-300">
+                <span className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Total Referrals</span>
+                <span className="text-4xl font-black text-white drop-shadow-md tracking-tight">
+                  {user?.referredCount ? user.referredCount : 0}
+                </span>
+              </div>
             </div>
-            <div className={styles.statItem}>
-              <p className={styles.statLabel}>Earnings</p>
-              <p className={styles.statValue}>1,250 BIGROCK</p>
-            </div>
-            <div className={styles.statItem}>
-              <p className={styles.statLabel}>Commission</p>
-              <p className={styles.statValue}>10%</p>
-            </div>
+          </div>
+        </div>
+
+        {/* Social Channels */}
+        <div className={`${styles.referralCard} mt-6 mb-10`}>
+          <h2 className={styles.sectionTitle}>Stay Connected</h2>
+          <p className={styles.referralDesc}>Follow our social channels for the latest airdrop updates, announcements, and community events.</p>
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+            <a href="https://t.me/" target="_blank" rel="noopener noreferrer"
+              className="group flex items-center justify-center gap-3 p-4 rounded-xl border border-[#229ED9]/30 bg-[#229ED9]/10 hover:bg-[#229ED9]/20 transition-all duration-300"
+            >
+              <FaTelegramPlane size={24} className="text-[#229ED9] group-hover:scale-110 transition-transform" />
+              <span className="font-bold text-white">Join Telegram</span>
+            </a>
+
+            <a href="https://x.com/" target="_blank" rel="noopener noreferrer"
+              className="group flex items-center justify-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
+            >
+              <FaXTwitter size={24} className="text-white group-hover:scale-110 transition-transform" />
+              <span className="font-bold text-white">Follow X</span>
+            </a>
           </div>
         </div>
 
