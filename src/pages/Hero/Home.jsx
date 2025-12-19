@@ -56,9 +56,13 @@ const Home = () => {
               </p>
             </div>
           </div>
+          {/* <div className={styles.titleWrap}>
+            <RubicWidget />
+          </div> */}
           <div className={styles.titleWrap}>
             <RubicWidget />
           </div>
+
           <div className={styles.content}>
             <p className={styles.subtext}>
               Built for traders. Powered by DeFi. Driven by Bigrock.

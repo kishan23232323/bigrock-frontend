@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Home, ArrowLeftRight, Star, User, Copy, Check } from "lucide-react";
 import styles from "./Airdrop.module.css";
 import { toast } from 'react-toastify';
-import { getAirdrops, claimAirdrop, saveWalletAddress } from '../services/Airdrops/airdropsapi';
+import { saveWalletAddress } from '../services/Airdrops/airdropsapi';
 
 // ICON IMPORTS
 import { FiCreditCard, FiRepeat, FiUserPlus } from "react-icons/fi";
@@ -14,6 +14,7 @@ import { GrCircleInformation } from "react-icons/gr";
 import { getUserProfile } from "../services/authservices/authapi";
 import { useAccount, useAccountEffect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useWeb3 } from "../../context/Web3Context.jsx";
 // TASKS DATA
 // const tasks = [
 //   { id: 1, label: "Connect your wallet", icon: <FiCreditCard />, status: "Completed" },
@@ -24,19 +25,24 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 // ];
 const initialAirdropData = [
   { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: "CLAIMABLE", icon: "✓" },
-  { id: 2, name: "Early Bird Bonus", amount: "250 SONIC", status: "CLAIMED", icon: "✓" },
+  { id: 2, name: "Early Bird Bonus", amount: "0 SONIC", status: "LOCKED", icon: "🔒" },
   { id: 3, name: "Referral Rewards", amount: "1250 SONIC", status: "PENDING", icon: "!" },
-  { id: 4, name: "Trading Volume", amount: "750 SONIC", status: "LOCKED", icon: "🔒" },
+  { id: 4, name: "Trading Volume", amount: "0 SONIC", status: "LOCKED", icon: "🔒" },
 ];
 
 export default function AirdropPage({ onNavigate }) {
   const [copied, setCopied] = useState(false);
   const [user, setUser] = useState(null);
   const [airdropData, setAirdropData] = useState(initialAirdropData);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(null);
 
   const token = localStorage.getItem("accessToken");
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+
+  const {
+    withdrawReferReward,
+    withdrawWalletReward,
+  } = useWeb3();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`http://localhost:5173/signup?referral=${user ? user.referralCode : ''}`);
@@ -100,10 +106,10 @@ export default function AirdropPage({ onNavigate }) {
 
       if (mounted) {
         setAirdropData([
-          { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
-          { id: 2, name: "Early Bird Bonus", amount: "250 SONIC", status: "CLAIMED", icon: "✓" },
-          { id: 3, name: "Referral Rewards", amount: `${user.points || 0} SONIC`, status: user.points > 0 ? "CLAIMABLE" : "LOCKED", icon: "!" },
-          { id: 4, name: "Trading Volume", amount: "750 SONIC", status: "LOCKED", icon: "🔒" },
+          { id: 1, name: "BIGROCK Launch", amount: "500 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
+          { id: 2, name: "Early Bird Bonus", amount: "0 BIGROCK", status: "LOCKED", icon: "🔒" },
+          { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : "CLAIMED", icon: "!" },
+          { id: 4, name: "Trading Volume", amount: "0 BIGROCK", status: "LOCKED", icon: "🔒" },
         ]);
       }
     } catch (err) {
@@ -117,21 +123,42 @@ export default function AirdropPage({ onNavigate }) {
 
 
   const handleClaim = async (id) => {
-    // optimistic UI update
-    const original = airdropData;
-    setAirdropData(
-      airdropData.map((airdrop) => (airdrop.id === id && airdrop.status === 'CLAIMABLE' ? { ...airdrop, status: 'CLAIMED' } : airdrop))
-    );
-
     try {
-      const res = await claimAirdrop(id);
-      toast.success(res?.message || 'Airdrop claimed successfully');
+      setLoading(id);
+
+      if (id === 1) {
+        await withdrawWalletReward({ address, token });
+      } else if (id === 3) {
+        await withdrawReferReward({ address, token });
+      }
+      window.location.reload();
+
     } catch (err) {
-      // revert
-      setAirdropData(original);
-      toast.error(err?.message || 'Failed to claim airdrop');
+      toast.error("Claim failed");
+    } finally {
+      setLoading(null); // 👈 stop loading
     }
   };
+
+
+  const Navigation = () => (
+    <div className={styles.bottomNav}>
+      <div className={styles.navContainer}>
+        <button onClick={() => onNavigate("home")} className={styles.navButton}>
+          <Home size={22} />
+        </button>
+        <button onClick={() => onNavigate("p2p")} className={styles.navButton}>
+          <ArrowLeftRight size={22} />
+        </button>
+        <button onClick={() => onNavigate("airdrop")} className={`${styles.navButton} ${styles.active}`}>
+          <Star size={22} />
+        </button>
+        <button onClick={() => onNavigate("profile")} className={styles.navButton}>
+          <User size={22} />
+        </button>
+      </div>
+    </div>
+  );
 
   const total = 100;
   const current = 50;
@@ -182,12 +209,12 @@ export default function AirdropPage({ onNavigate }) {
           </div>
           <div className={styles.totalRewards}>
             <p className={styles.rewardsLabel}>Total Claimable</p>
-            <p className={styles.rewardsAmount}>2,750 BIGROCK</p>
+            <p className={styles.rewardsAmount}>{(user?.referralPoints || 0) + (!user?.walletPointsClaimed ? 500 : 0)} BIGROCK</p>
           </div>
-              <Link  to="/earninfo"  >
-    <button className={styles.infoButton}>
-      <GrCircleInformation size={20} />
-    </button></Link>
+          <Link to="/earninfo"  >
+            <button className={styles.infoButton}>
+              <GrCircleInformation size={20} />
+            </button></Link>
         </div>
 
 
@@ -215,18 +242,20 @@ export default function AirdropPage({ onNavigate }) {
               <p className={styles.airdropAmount}>{airdrop.amount}</p>
 
               <button
-                disabled={!isConnected || airdrop.status !== "CLAIMABLE"}
+                disabled={!isConnected || airdrop.status !== "CLAIMABLE" || loading === airdrop.id}
                 onClick={() => handleClaim(airdrop.id)}
-                className={`${styles.claimBtn} ${!isConnected || airdrop.status !== "CLAIMABLE"
+                className={`${styles.claimBtn} ${!isConnected || airdrop.status !== "CLAIMABLE" || loading === airdrop.id
                   ? styles.disabled
                   : ""
                   }`}
               >
                 {!isConnected
                   ? "Connect Wallet"
-                  : airdrop.status === "CLAIMABLE"
-                    ? "Claim Now"
-                    : airdrop.status}
+                  : loading === airdrop.id
+                    ? "Claiming..."
+                    : airdrop.status === "CLAIMABLE"
+                      ? "Claim Now"
+                      : airdrop.status}
               </button>
             </div>
           ))}
@@ -252,7 +281,7 @@ export default function AirdropPage({ onNavigate }) {
           <div className={styles.referralStats}>
             <div className={styles.statItem}>
               <p className={styles.statLabel}>Referrals</p>
-              <p className={styles.statValue}>{user?.points ? user.points / 10 : 0}</p>
+              <p className={styles.statValue}>{user?.referredCount ? user.referredCount : 0}</p>
             </div>
             <div className={styles.statItem}>
               <p className={styles.statLabel}>Earnings</p>

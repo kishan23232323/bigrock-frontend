@@ -1,31 +1,16 @@
-// export default function RubicWidget() {
-//     return (
-//         <div
-//             style={{
-//                 display: "flex",
-//                 justifyContent: "center",
-//                 padding: "20px",
-//             }}
-//         >
-//             <iframe
-//                 width="700"
-//                 height="652"
-//                 style={{
-//                     border: "none",
-//                     borderRadius: "12px",
-//                     maxWidth: "100%",
-//                 }}
-//                 src="https://new-widgets.rubic.exchange/?useLargeIframe=true&hideUnusedUI=true&hideBranding=true"
-//             />
-//         </div>
-//     );
-// }
-
-// RubicIframeListener.jsx
-import { useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function RubicWidget({ sessionToken }) {
+    const [src, setSrc] = useState();
+    useEffect(() => {
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+        if (isMobile)
+            setSrc("https://new-widgets.rubic.exchange/?useLargeIframe=false&hideUnusedUI=true&hideBranding=true&theme=dark&onChainIntegratorAddress=0x12932c436664ab687f4de70d02b1ed6b2d6bb8bb&crossChainIntegratorAddress=0x12932c436664ab687f4de70d02b1ed6b2d6bb8bb&fee=0.5");
+        else
+            setSrc("https://new-widgets.rubic.exchange/?useLargeIframe=true&hideUnusedUI=true&hideBranding=true&theme=dark&crossChainIntegratorAddress=0x12932c436664ab687f4de70d02b1ed6b2d6bb8bb&onChainIntegratorAddress=0x12932c436664ab687f4de70d02b1ed6b2d6bb8bb&fee=0.5");
+    }, []);
+
     useEffect(() => {
         const handler = (event) => {
             // SECURITY: only accept messages from Rubic widget origin(s)
@@ -58,8 +43,7 @@ export default function RubicWidget({ sessionToken }) {
                 width="700"
                 height="460"
                 style={{ border: "none", borderRadius: 12, maxWidth: "100%" }}
-                src="https://new-widgets.rubic.exchange/?useLargeIframe=true&hideUnusedUI=true&hideBranding=true&theme=dark&crossChainIntegratorAddress=0x1e9E2B1Ef6c69169DFb1dB75F216CA174BC3e95c&onChainIntegratorAddress=0x1e9E2B1Ef6c69169DFb1dB75F216CA174BC3e95c&fee=0.5"
-            />
+                src={src} />
         </div>
         // &crossChainIntegratorAddress=0x1e9E2B1Ef6c69169DFb1dB75F216CA174BC3e95c&onChainIntegratorAddress=0x1e9E2B1Ef6c69169DFb1dB75F216CA174BC3e95c&fee=0.1&feeTarget=0xYourWallet
     );
