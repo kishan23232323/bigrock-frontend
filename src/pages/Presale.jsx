@@ -304,10 +304,9 @@ const roadmapData = [
         </div>
 
 
-         <div className={`${styles.mainImage} my-12 md:my-16 mx-auto px-4`} style={{ width: "100%", maxWidth: "800px", height: "auto", display: "flex", justifyContent: "center" }}>
-                    <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={`${styles.logoImage} w-full h-auto rounded-lg shadow-2xl`} />
-        
-                </div>
+        <div className={styles.mainImage}>
+                    <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+                  </div>
 
 
 
