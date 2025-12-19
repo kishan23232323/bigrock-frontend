@@ -73,7 +73,7 @@ export default function ProfilePage() {
             <div className={styles.profileInfo}>
               <div className={styles.userNameContainer}>
                 <h1 className={styles.userName}>
-                  {accessToken ? user?.name : "User"}
+                  {accessToken ? user?.name?.toUpperCase() : "USER"}
                 </h1>
                 {user?.isVerified && (
                   <ShieldCheck size={20} className={styles.verifiedBadge} />
@@ -84,9 +84,12 @@ export default function ProfilePage() {
                 <p className={styles.userUID}>UID: {user?.uid}</p>
               )}
             </div>
-            <Link to="/edit-profile">
+            <Link to="/edit-profile" className="ml-auto">
                 <button
-                  className="lg:text-lg lg:w-24 lg:ml-[260px] ml-auto h-auto w-auto  lg:h-12 px-3 py-1 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition"
+                  className="text-sm md:text-base px-6 py-2 rounded-full font-bold text-black transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(6,238,245,0.6)]"
+                  style={{
+                    background: "linear-gradient(135deg, #06eef5, #00ffa3)",
+                  }}
                 >
                   Edit
                 </button>
