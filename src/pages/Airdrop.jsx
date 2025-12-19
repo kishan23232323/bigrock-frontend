@@ -27,7 +27,6 @@ const initialAirdropData = [
   { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: "CLAIMABLE", icon: "✓" },
   { id: 2, name: "Early Bird Bonus", amount: "0 SONIC", status: "LOCKED", icon: "🔒" },
   { id: 3, name: "Referral Rewards", amount: "1250 SONIC", status: "PENDING", icon: "!" },
-  { id: 4, name: "Trading Volume", amount: "0 SONIC", status: "LOCKED", icon: "🔒" },
 ];
 
 export default function AirdropPage({ onNavigate }) {
