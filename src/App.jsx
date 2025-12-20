@@ -26,6 +26,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyEmail from "./pages/Verify";
 import ResetPassword from "./pages/ResetPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
+import Terms from "./pages/Terms";
 
 function App() {
   const dispatch = useDispatch();
@@ -135,7 +136,7 @@ function App() {
                 <EditProfile/>
               </Protected>
             }/>
-
+            <Route path="/terms" element={<Terms />} />
 
 
             

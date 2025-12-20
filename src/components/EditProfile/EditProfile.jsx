@@ -49,7 +49,7 @@ export default function EditProfile() {
         navigate("/");
         window.location.reload();
     } catch (err) {
-      alert(err.message || "Update failed");
+      toast.error(err.message || "Profile update failed");
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,7 @@ export default function EditProfile() {
       resetPasswordForm();
       navigate("/profile");
     } catch (err) {
-      alert(err.message || "Password change failed");
+      toast.error(err.message || "Password change failed");
     } finally {
       setLoading(false);
     }
@@ -72,11 +72,11 @@ export default function EditProfile() {
   const handleResendVerification = async () => {
     try {
       await resendVerificationEmail(user.email);
-      alert("Verification email sent");
+      toast.success("Verification email sent!");
       navigate("/profile");
       
     } catch (err) {
-      alert(err.message || "Failed to send email");
+      toast.error(err.message || "Failed to resend verification email");
     }
   };
 
