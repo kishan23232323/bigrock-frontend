@@ -12,7 +12,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { GrCircleInformation } from "react-icons/gr";
 import { getUserProfile } from "../services/authservices/authapi";
-import { useAccount, useAccountEffect } from "wagmi";
+import { useAccount, useAccountEffect, useDisconnect } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useWeb3 } from "../../context/Web3Context.jsx";
 // TASKS DATA
@@ -38,6 +38,8 @@ export default function AirdropPage({ onNavigate }) {
   const token = localStorage.getItem("accessToken");
   const { isConnected, address } = useAccount();
   const { openConnectModal } = useConnectModal();
+  const { disconnect } = useDisconnect();
+
 
   const {
     withdrawReferReward,
@@ -45,7 +47,7 @@ export default function AirdropPage({ onNavigate }) {
   } = useWeb3();
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:5173/signup?referral=${user ? user.referralCode : ''}`);
+    navigator.clipboard.writeText(`https://www.bigrock.exchange/signup?referral=${user ? user.referralCode : ''}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -67,6 +69,7 @@ export default function AirdropPage({ onNavigate }) {
 
   useAccountEffect({
     onConnect({ address }) {
+      if (!token) return;
       if (!address) return;
       console.log("Connected address:", address);
       saveWalletAddress({ walletAddress: address, token })
@@ -80,7 +83,7 @@ export default function AirdropPage({ onNavigate }) {
   });
 
 
-  const referralLink = `http://localhost:5173/signup?referral=${user ? user.referralCode : ''}`;
+  const referralLink = `https://www.bigrock.exchange/signup?referral=${user ? user.referralCode : ''}`;
 
 
   // useEffect(() => {
@@ -137,6 +140,14 @@ export default function AirdropPage({ onNavigate }) {
     } finally {
       setLoading(null); // 👈 stop loading
     }
+  };
+
+  const handleConnectWallet = () => {
+    if (!token) {
+      toast.error("Please login first");
+      return;
+    }
+    openConnectModal();
   };
 
 
@@ -223,12 +234,20 @@ export default function AirdropPage({ onNavigate }) {
               <button
                 disabled={(isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id}
                 onClick={() => {
+                  // 🔐 BLOCK if wallet is connected but user not logged in
+                  if (isConnected && !token) {
+                    disconnect();
+                    toast.error("Please login first");
+                    return;
+                  }
+
                   if (!isConnected) {
-                    openConnectModal && openConnectModal();
+                    handleConnectWallet();
                   } else {
                     handleClaim(airdrop.id);
                   }
                 }}
+
                 className={`${styles.claimBtn} ${((isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id) ? styles.disabled : ""}`}
               >
                 {!isConnected && openConnectModal
