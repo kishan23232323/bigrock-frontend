@@ -24,6 +24,35 @@
   background: conic-gradient(from 0deg, #8a2be2, #06eef5, #8a2be2);
   animation: rotate 4s linear infinite;
 }
+@media only screen and (max-width: 700px) {
+  .mainImage {
+  position: relative;
+  width: 400px;
+  height: 250px;
+  border-radius: 1rem;
+  margin-bottom: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  padding: 3px;
+  z-index: 1;
+}
+}
+
+@media only screen and (max-width: 400px) {
+  .mainImage {
+  position: relative;
+  width: 200px;
+  height: 150px;
+  border-radius: 1rem;
+  margin-bottom: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  padding: 3px;
+  z-index: 1;
+}
+}
 
 .logoImage {
   width: 100%;

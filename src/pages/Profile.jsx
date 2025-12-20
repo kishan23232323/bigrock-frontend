@@ -18,7 +18,7 @@ export default function ProfilePage() {
     .catch((err)=>{
       console.log("Error fetching user trades:", err);
     });
-  })
+  }, [accessToken])
 
   
   const stats = [
@@ -65,12 +65,14 @@ export default function ProfilePage() {
 
         {/* PROFILE CARD */}
         <motion.div className={styles.profileCard} variants={cardVariants}>
+            
           <div className={styles.profileHeader}>
             <div className={styles.avatar}>
               <User size={32} className={styles.avatarIcon} />
             </div>
 
-            <div className={styles.profileInfo}>
+           
+              <div className={styles.profileInfo}>
               <div className={styles.userNameContainer}>
                 <h1 className={styles.userName}>
                   {accessToken ? user?.name : "User"}
@@ -78,19 +80,14 @@ export default function ProfilePage() {
                 {user?.isVerified && (
                   <ShieldCheck size={20} className={styles.verifiedBadge} />
                 )}
+              
               </div>
 
               {accessToken && (
                 <p className={styles.userUID}>UID: {user?.uid}</p>
               )}
             </div>
-            <Link to="/edit-profile">
-                <button
-                  className="lg:text-lg lg:w-24 lg:ml-[260px] ml-auto h-auto w-auto  lg:h-12 px-3 py-1 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition"
-                >
-                  Edit
-                </button>
-              </Link>
+                  <Link to="" className={styles.primaryButton}>Edit</Link>
           </div>
 
           <div className={styles.statsGrid}>

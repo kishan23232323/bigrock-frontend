@@ -12,6 +12,44 @@
     padding-bottom: 100px; /* Space for bottom nav */
 }
 
+.primaryButton {
+  padding: 1rem 2.8rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 1.02rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
+  color: #050b14;
+  box-shadow: 0 0 30px rgba(6, 238, 245, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left: 350px;
+
+  
+}
+@media only screen and (max-width: 700px) {
+    .primaryButton {
+        margin-left: 150px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .primaryButton {
+        margin-left: 200px;
+    }
+  
+}
+
+.primaryButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 50px rgba(6, 238, 245, 0.85);
+}
+
+.buttons {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
 .gridBackground {
     position: absolute;
     top: 0;
@@ -109,6 +147,8 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: #f8fafc;
+    text-transform: uppercase;
+    
 }
 
 .userUID {
