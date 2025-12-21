@@ -74,7 +74,7 @@ export default function ProfilePage() {
            
               <div className={styles.profileInfo}>
               <div className={styles.userNameContainer}>
-                <h1 className={styles.userName}>
+                <h1 className={`${styles.userName} whitespace-nowrap overflow-x-auto max-w-[200px] sm:max-w-[300px]`} style={{ scrollbarWidth: 'none' }}>
                   {accessToken ? user?.name : "User"}
                 </h1>
                 {user?.isVerified && (
@@ -87,7 +87,7 @@ export default function ProfilePage() {
                 <p className={styles.userUID}>UID: {user?.uid}</p>
               )}
             </div>
-                  <Link to="" className={styles.primaryButton}>Edit</Link>
+                  <Link to="/edit-profile" className={styles.primaryButton}>Edit</Link>
           </div>
 
           <div className={styles.statsGrid}>
