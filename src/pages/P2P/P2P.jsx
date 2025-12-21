@@ -535,9 +535,8 @@ const SellSection = ({ selectedCountry }) => {
       </div>
 
       {/* Buttons */}
-      <div className={styles.buttonGroup}>
-        <button className={styles.cancelButton}>Cancel</button>
- <button className={styles.confirmButton} onClick={()=>{
+      <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
+ <button className={`${styles.confirmButton} w-full`} onClick={()=>{
           if(!isLoggedIn){
             navigate("/login");
             return;
@@ -621,11 +620,11 @@ const SellSection = ({ selectedCountry }) => {
 
 
       {/* Buttons */}
-      <div className={styles.buttonGroup}>
-        <button className={styles.cancelButton} onClick={() => setStage("CREATE")}>
-          Back
+      <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
+        <button className={`${styles.cancelButton} w-full`} onClick={() => { setStage("CREATE"); setOrderData(null); }}>
+          Cancel Order
         </button>
-        <button className={styles.confirmButton} onClick={handleConfirmSell}>
+        <button className={`${styles.confirmButton} w-full`} onClick={handleConfirmSell}>
           Submit Proof
         </button>
       </div>
@@ -927,9 +926,8 @@ const BuySection = ({ selectedCountry }) => {
       </div>
 
       {/* Buttons */}
-      <div className={styles.buttonGroup}>
-        <button className={styles.cancelButton}>Cancel</button>
-        <button className={styles.confirmButton} onClick={()=>{
+      <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
+        <button className={`${styles.confirmButton} w-full`} onClick={()=>{
           if(!isLoggedIn){
             navigate("/login");
             return;
@@ -1030,11 +1028,11 @@ const BuySection = ({ selectedCountry }) => {
 
 
         {/* Buttons */}
-        <div className={styles.buttonGroup}>
-          <button className={styles.cancelButton} onClick={() => setStage("CREATE")}>
-            Back
+        <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
+          <button className={`${styles.cancelButton} w-full`} onClick={() => { setStage("CREATE"); setOrderData(null); }}>
+            Cancel Order
           </button>
-          <button className={styles.confirmButton} onClick={handleConfirmBuy}>
+          <button className={`${styles.confirmButton} w-full`} onClick={handleConfirmBuy}>
             Submit Proof
           </button>
         </div>

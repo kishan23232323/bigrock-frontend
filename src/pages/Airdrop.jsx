@@ -142,14 +142,6 @@ export default function AirdropPage({ onNavigate }) {
     }
   };
 
-  const handleConnectWallet = () => {
-    if (!token) {
-      toast.error("Please login first");
-      return;
-    }
-    openConnectModal();
-  };
-
 
   const Navigation = () => (
     <div className={styles.bottomNav}>
@@ -190,6 +182,14 @@ export default function AirdropPage({ onNavigate }) {
       {/* Content */}
       <div className={styles.contentWrapper}>
         {/* Header Card */}
+        {!isConnected && (
+          <button
+            onClick={openConnectModal}
+            className={`${styles.connectBtn} mb-6`}
+          >
+            Connect Wallet
+          </button>
+        )}
 
         <div className={styles.headerCard}>
           <div className={styles.headerContent}>
@@ -242,7 +242,7 @@ export default function AirdropPage({ onNavigate }) {
                   }
 
                   if (!isConnected) {
-                    handleConnectWallet();
+                    toast.error("Please connect your wallet first");
                   } else {
                     handleClaim(airdrop.id);
                   }
@@ -250,9 +250,7 @@ export default function AirdropPage({ onNavigate }) {
 
                 className={`${styles.claimBtn} ${((isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id) ? styles.disabled : ""}`}
               >
-                {!isConnected && openConnectModal
-                  ? "Connect Wallet"
-                  : loading === airdrop.id
+                {loading === airdrop.id
                     ? "Claiming..."
                     : airdrop.status === "CLAIMABLE"
                       ? "Claim Now"
