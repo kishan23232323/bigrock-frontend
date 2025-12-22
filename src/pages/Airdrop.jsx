@@ -24,9 +24,8 @@ import { useWeb3 } from "../../context/Web3Context.jsx";
 //   { id: 5, label: "Follow us on X", icon: <FaXTwitter />, status: "Follow" },
 // ];
 const initialAirdropData = [
-  { id: 1, name: "Sonic Launch", amount: "500 SONIC", status: "CLAIMABLE", icon: "✓" },
-  { id: 2, name: "Early Bird Bonus", amount: "0 SONIC", status: "LOCKED", icon: "🔒" },
-  { id: 3, name: "Referral Rewards", amount: "1250 SONIC", status: "PENDING", icon: "!" },
+  { id: 2, name: "Early Bird Bonus", amount: "500 BIGROCK", status: "CLAIMABLE", icon: "✓" },
+  { id: 3, name: "Referral Rewards", amount: "1250 BIGROCK", status: "PENDING", icon: "!" },
 ];
 
 export default function AirdropPage({ onNavigate }) {
@@ -109,8 +108,7 @@ export default function AirdropPage({ onNavigate }) {
 
       if (mounted) {
         setAirdropData([
-          { id: 1, name: "BIGROCK Launch", amount: "500 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
-          { id: 2, name: "Early Bird Bonus", amount: "0 BIGROCK", status: "LOCKED", icon: "🔒" },
+          { id: 2, name: "Early Bird Bonus", amount: "500 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
           { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : (user.referredCount > 0 ? "CLAIMED" : "PENDING"), icon: "!" },
         ]);
       }
@@ -128,7 +126,7 @@ export default function AirdropPage({ onNavigate }) {
     try {
       setLoading(id);
 
-      if (id === 1) {
+      if (id === 2) {
         await withdrawWalletReward({ address, token });
       } else if (id === 3) {
         await withdrawReferReward({ address, token });
@@ -140,14 +138,6 @@ export default function AirdropPage({ onNavigate }) {
     } finally {
       setLoading(null); // 👈 stop loading
     }
-  };
-
-  const handleConnectWallet = () => {
-    if (!token) {
-      toast.error("Please login first");
-      return;
-    }
-    openConnectModal();
   };
 
 
@@ -190,6 +180,14 @@ export default function AirdropPage({ onNavigate }) {
       {/* Content */}
       <div className={styles.contentWrapper}>
         {/* Header Card */}
+        {!isConnected && (
+          <button
+            onClick={openConnectModal}
+            className={`${styles.connectBtn} mb-6`}
+          >
+            Connect Wallet
+          </button>
+        )}
 
         <div className={styles.headerCard}>
           <div className={styles.headerContent}>
@@ -210,9 +208,9 @@ export default function AirdropPage({ onNavigate }) {
 
         {/* Airdrop Cards Grid */}
         {loading && <div className={styles.loadingRow}><p className={styles.loadingText}>Loading airdrops...</p></div>}
-        <div className="flex flex-wrap justify-center gap-6 my-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 w-full">
           {airdropData.map((airdrop) => (
-            <div key={airdrop.id} className={styles.airdropCard}>
+            <div key={airdrop.id} className={`${styles.airdropCard} flex flex-col`}>
               <div className={styles.cardHeader}>
                 <div
                   className={`${styles.statusIcon} ${styles[`status${airdrop.status.replace(" ", "")}`]
@@ -242,17 +240,15 @@ export default function AirdropPage({ onNavigate }) {
                   }
 
                   if (!isConnected) {
-                    handleConnectWallet();
+                    toast.error("Please connect your wallet first");
                   } else {
                     handleClaim(airdrop.id);
                   }
                 }}
 
-                className={`${styles.claimBtn} ${((isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id) ? styles.disabled : ""}`}
+                className={`${styles.claimBtn} ${((isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id) ? styles.disabled : ""} mt-auto`}
               >
-                {!isConnected && openConnectModal
-                  ? "Connect Wallet"
-                  : loading === airdrop.id
+                {loading === airdrop.id
                     ? "Claiming..."
                     : airdrop.status === "CLAIMABLE"
                       ? "Claim Now"

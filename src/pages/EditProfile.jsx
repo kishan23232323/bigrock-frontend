@@ -9,7 +9,7 @@ import { setCredentials } from "../store/authslice";
 const EditProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, accessToken } = useSelector((state) => state.auth);
+  const { user, accessToken, refreshToken } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -40,18 +40,22 @@ const EditProfile = () => {
       toast.error("Name is required");
       return;
     }
+    if (!formData.email.trim()) {
+      toast.error("Email is required");
+      return;
+    }
 
     setLoading(true);
     try {
-      const res = await updateUserProfile({ name: formData.name }, accessToken);
+      const res = await updateUserProfile({ name: formData.name, email: formData.email }, accessToken);
       
       // Assuming the API returns the updated user object directly or in a data property
-      const updatedUser = res.data?.user || res; 
+      const updatedUser = res?.data?.user || res; 
 
       dispatch(setCredentials({ 
         user: { ...user, ...updatedUser }, 
         accessToken, 
-        refreshToken: localStorage.getItem("refreshToken") 
+        refreshToken: refreshToken || localStorage.getItem("refreshToken") 
       }));
 
       toast.success("Profile updated successfully");
@@ -102,11 +106,11 @@ const EditProfile = () => {
                 type="email"
                 name="email"
                 value={formData.email}
-                disabled
-                className="w-full bg-gray-800/30 border border-gray-700 text-gray-400 text-sm rounded-lg block pl-10 p-2.5 cursor-not-allowed"
+                onChange={handleChange}
+                className="w-full bg-gray-800/50 border border-gray-600 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block pl-10 p-2.5 placeholder-gray-500 focus:outline-none transition-colors"
+                placeholder="Enter your email"
               />
             </div>
-            <p className="mt-1 text-xs text-gray-500">Email cannot be changed</p>
           </div>
 
           <button
@@ -120,7 +124,7 @@ const EditProfile = () => {
                 Updating...
               </>
             ) : (
-              "Save Changes"
+              "Update Profile"
             )}
           </button>
         </form>

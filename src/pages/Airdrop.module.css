@@ -187,20 +187,21 @@
 
 .claimBtn {
   width: 100%;
-  background: linear-gradient(135deg, #06eef5, #00d4ff);
-  color: #041018;
-  border: none;
   padding: 10px 12px;
   border-radius: 8px;
+  border: none;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
+  color: #050b14;
+  box-shadow: 0 0 30px rgba(6, 238, 245, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .claimBtn:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(6, 238, 245, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 0 50px rgba(6, 238, 245, 0.85);
 }
 
 .claimBtn.disabled {
@@ -520,7 +521,7 @@
 
 .connectBtn {
   width: 100%;
-  background: linear-gradient(135deg, #06eef5, #00d4ff);
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
   color: #041018;
   border: none;
   padding: 10px 12px;

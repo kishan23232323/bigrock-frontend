@@ -8,6 +8,7 @@ import {
 import { ShieldCheck, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function EditProfile() {
   const { user } = useSelector((state) => state.auth);
@@ -45,12 +46,12 @@ export default function EditProfile() {
     try {
       setLoading(true);
       await updateUserProfile({ name: data.name });
-      alert("Profile updated successfully");
-        navigate("/");
-        window.location.reload();
+      toast.success("Profile updated successfully");
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1500);
     } catch (err) {
       toast.error(err.message || "Profile update failed");
-    } finally {
       setLoading(false);
     }
   };
@@ -61,10 +62,11 @@ export default function EditProfile() {
       await changePassword(data);
       toast.success("Password changed successfully");
       resetPasswordForm();
-      navigate("/profile");
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1500);
     } catch (err) {
       toast.error(err.message || "Password change failed");
-    } finally {
       setLoading(false);
     }
   };
