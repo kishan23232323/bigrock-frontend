@@ -74,7 +74,7 @@ export default function ProfilePage() {
            
               <div className={`${styles.profileInfo} flex-1 min-w-0`}>
               <div className={`${styles.userNameContainer} flex items-center gap-2`}>
-                <h1 className={`${styles.userName} whitespace-nowrap overflow-x-auto`} style={{ scrollbarWidth: 'none' }}>
+                <h1 className={`${styles.userName} whitespace-nowrap overflow-hidden text-ellipsis`}>
                   {accessToken ? user?.name : "User"}
                 </h1>
                 {user?.isVerified && (
