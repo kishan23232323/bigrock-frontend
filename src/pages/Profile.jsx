@@ -87,7 +87,9 @@ export default function ProfilePage() {
                 <p className={styles.userUID}>UID: {user?.uid}</p>
               )}
             </div>
+              {accessToken && (
                   <Link to="/edit-profile" className={`${styles.primaryButton} `}>Edit</Link>
+              )}
           </div>
 
           <div className={styles.statsGrid}>
