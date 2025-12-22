@@ -66,19 +66,19 @@ export default function ProfilePage() {
         {/* PROFILE CARD */}
         <motion.div className={styles.profileCard} variants={cardVariants}>
             
-          <div className={`${styles.profileHeader} flex items-center gap-3`}>
-            <div className={`${styles.avatar} flex-shrink-0`}>
+          <div className={`${styles.profileHeader} `}>
+            <div className={`${styles.avatar} shrink-0`}>
               <User size={32} className={styles.avatarIcon} />
             </div>
 
            
               <div className={`${styles.profileInfo} flex-1 min-w-0`}>
               <div className={`${styles.userNameContainer} flex items-center gap-2`}>
-                <h1 className={`${styles.userName} whitespace-nowrap overflow-hidden text-ellipsis`}>
+                <h1 className={`${styles.userName} whitespace-nowrap`}>
                   {accessToken ? user?.name : "User"}
                 </h1>
                 {user?.isVerified && (
-                  <ShieldCheck size={20} className={`${styles.verifiedBadge} flex-shrink-0`} />
+                  <ShieldCheck size={20} className={`${styles.verifiedBadge} shrink-0`} />
                 )}
               
               </div>
@@ -87,7 +87,7 @@ export default function ProfilePage() {
                 <p className={styles.userUID}>UID: {user?.uid}</p>
               )}
             </div>
-                  <Link to="/edit-profile" className={`${styles.primaryButton} flex-shrink-0`}>Edit</Link>
+                  <Link to="/edit-profile" className={`${styles.primaryButton} `}>Edit</Link>
           </div>
 
           <div className={styles.statsGrid}>

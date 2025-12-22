@@ -9,7 +9,7 @@ import {
   IoAddCircleOutline,
 } from "react-icons/io5";
 
-import { confirmSellOrder, createSellOrder, getFiatPairs,createBuyOrder, confirmBuyOrder } from "../../services/P2Pservices/p2papi";
+import { confirmSellOrder, createSellOrder, getFiatPairs,createBuyOrder, confirmBuyOrder, cancelOrder } from "../../services/P2Pservices/p2papi";
 import useConvert from "../../Hooks/useAutoConversion";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -463,6 +463,17 @@ const SellSection = ({ selectedCountry }) => {
   }
 };
 
+const handleCancelOrder = async()=>{
+   if (!orderData?._id) return;
+   try{
+    await cancelOrder(orderData._id);
+    toast.success("Order cancelled");
+    navigate("/profile");
+   }catch(err){
+    toast.error("Failed to cancel order");
+   }
+}
+
 
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
@@ -732,9 +743,7 @@ const SellSection = ({ selectedCountry }) => {
       <ConfirmationModal
         isOpen={showCancelConfirm}
         onClose={() => setShowCancelConfirm(false)}
-        onConfirm={() => {
-          window.location.reload();
-        }}
+        onConfirm={handleCancelOrder}
         title="Confirm Cancellation"
         message="Are you sure you want to cancel this order?"
         confirmText="Yes, Cancel"
@@ -907,6 +916,17 @@ const BuySection = ({ selectedCountry }) => {
     toast.error("Failed to copy");
   }
 };
+
+const handleCancelOrder = async()=>{
+   if (!orderData?._id) return;
+   try{
+    await cancelOrder(orderData._id);
+    toast.success("Order cancelled");
+    navigate("/profile");
+   }catch(err){
+    toast.error("Failed to cancel order");
+   }
+}
 
 
   // ------------------------- Render Create UI -------------------------
@@ -1152,9 +1172,7 @@ const BuySection = ({ selectedCountry }) => {
       <ConfirmationModal
         isOpen={showCancelConfirm}
         onClose={() => setShowCancelConfirm(false)}
-        onConfirm={() => {
-          window.location.reload();
-        }}
+        onConfirm={handleCancelOrder}
         title="Confirm Cancellation"
         message="Are you sure you want to cancel this order?"
         confirmText="Yes, Cancel"

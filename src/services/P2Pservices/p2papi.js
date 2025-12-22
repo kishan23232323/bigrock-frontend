@@ -117,6 +117,15 @@ export const getMyOrders = async () => {
   }
 };
 
+export const cancelOrder = async (orderId) => {
+  try {
+    const response = await API.patch(`/api/v1/p2p/cancel-order/${orderId}`);
+    return response.data?.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
 //
 // -----------------------------------------------------
 // ADMIN APIs
