@@ -14,6 +14,68 @@ import useConvert from "../../Hooks/useAutoConversion";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
+const modalStyles = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+    backdropFilter: 'blur(5px)',
+  },
+  content: {
+    background: '#1a1a2e',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '16px',
+    padding: '24px',
+    width: '90%',
+    maxWidth: '400px',
+    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
+    textAlign: 'center',
+    color: '#fff',
+  },
+  title: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    marginBottom: '16px',
+  },
+  message: {
+    fontSize: '1rem',
+    color: '#e0e0e0',
+    marginBottom: '24px',
+    lineHeight: 1.5,
+  },
+  actions: {
+    display: 'flex',
+    gap: '16px',
+    marginTop: '24px',
+  },
+  button: {
+    padding: '12px 24px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease-in-out',
+    flex: 1,
+  },
+  confirmButton: {
+    background: 'linear-gradient(135deg, #06eef5, #00ffa3)',
+    color: '#050b14',
+    boxShadow: '0 0 30px rgba(6, 238, 245, 0.45)',
+  },
+  cancelModalButton: {
+    backgroundColor: '#333',
+    color: '#fff',
+    border: '1px solid #555',
+  }
+};
+
 // Helper validators
 const isValidTrc20Address = (addr) => {
   if (!addr || typeof addr !== 'string') return false;
@@ -34,6 +96,27 @@ const isValidProofFile = (file) => {
   const maxSize = 5 * 1024 * 1024; // 5MB
   const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
   return file.size <= maxSize && allowedTypes.includes(file.type);
+};
+
+const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message, confirmText = "Yes", cancelText = "No" }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div style={modalStyles.overlay} onClick={onClose}>
+      <div style={modalStyles.content} onClick={(e) => e.stopPropagation()}>
+        <h3 style={modalStyles.title}>{title}</h3>
+        <p style={modalStyles.message}>{message}</p>
+        <div style={modalStyles.actions}>
+          <button style={{ ...modalStyles.button, ...modalStyles.cancelModalButton }} onClick={onClose}>
+            {cancelText}
+          </button>
+          <button style={{ ...modalStyles.button, ...modalStyles.confirmButton }} onClick={onConfirm}>
+            {confirmText}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 
@@ -168,6 +251,7 @@ const SellSection = ({ selectedCountry }) => {
 
   const [stage, setStage] = useState("CREATE");
   const [orderData, setOrderData] = useState(null);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
  
   const [isPaymentExpanded, setIsPaymentExpanded] = useState(false);
@@ -621,7 +705,7 @@ const SellSection = ({ selectedCountry }) => {
 
       {/* Buttons */}
       <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
-        <button className={`${styles.cancelButton} w-full`} onClick={() => { setStage("CREATE"); setOrderData(null); }}>
+        <button className={`${styles.cancelButton} w-full`} onClick={() => setShowCancelConfirm(true)}>
           Cancel Order
         </button>
         <button className={`${styles.confirmButton} w-full`} onClick={handleConfirmSell}>
@@ -644,6 +728,18 @@ const SellSection = ({ selectedCountry }) => {
       </div>
 
       {stage === "CREATE" ? renderCreateUI() : renderConfirmUI()}
+
+      <ConfirmationModal
+        isOpen={showCancelConfirm}
+        onClose={() => setShowCancelConfirm(false)}
+        onConfirm={() => {
+          window.location.reload();
+        }}
+        title="Confirm Cancellation"
+        message="Are you sure you want to cancel this order?"
+        confirmText="Yes, Cancel"
+        cancelText="No, Go Back"
+      />
     </div>
   );
 };
@@ -654,6 +750,7 @@ const SellSection = ({ selectedCountry }) => {
 const BuySection = ({ selectedCountry }) => {
   const [stage, setStage] = useState("CREATE");
   const [orderData, setOrderData] = useState(null);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   // UI states
   const [isPaymentExpanded, setIsPaymentExpanded] = useState(false);
@@ -1029,7 +1126,7 @@ const BuySection = ({ selectedCountry }) => {
 
         {/* Buttons */}
         <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
-          <button className={`${styles.cancelButton} w-full`} onClick={() => { setStage("CREATE"); setOrderData(null); }}>
+          <button className={`${styles.cancelButton} w-full`} onClick={() => setShowCancelConfirm(true)}>
             Cancel Order
           </button>
           <button className={`${styles.confirmButton} w-full`} onClick={handleConfirmBuy}>
@@ -1051,6 +1148,18 @@ const BuySection = ({ selectedCountry }) => {
       </div>
 
       {stage === "CREATE" ? renderCreateUI() : renderConfirmUI()}
+
+      <ConfirmationModal
+        isOpen={showCancelConfirm}
+        onClose={() => setShowCancelConfirm(false)}
+        onConfirm={() => {
+          window.location.reload();
+        }}
+        title="Confirm Cancellation"
+        message="Are you sure you want to cancel this order?"
+        confirmText="Yes, Cancel"
+        cancelText="No, Go Back"
+      />
     </div>
   );
 };
