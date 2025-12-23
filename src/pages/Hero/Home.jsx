@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
-import RubicWidget from "../../components/Widget/RubicWidget";
+import { LiFiWidgetEventsListener } from "../../components/Widget/LifiWidgetEventListener.jsx";
+import LiFiWidgetComponent from "../../components/Widget/LifiWidget.jsx";
 
 const cardInfo = [
   {
@@ -45,7 +46,7 @@ const Home = () => {
               <br />
               The universal multi-chain decentralized exchange.
             </div>
-            
+
 
             <div className={styles.titleWrap}>
               <h1 className={styles.title}>
@@ -59,8 +60,11 @@ const Home = () => {
           {/* <div className={styles.titleWrap}>
             <RubicWidget />
           </div> */}
-          <div className={styles.titleWrap}>
-            <RubicWidget />
+          <div className={styles.WidgetSection}>
+            <div className={styles.WidgetWrap}>
+              <LiFiWidgetEventsListener />
+              <LiFiWidgetComponent />
+            </div>
           </div>
 
           <div className={styles.content}>
@@ -83,7 +87,7 @@ const Home = () => {
         </div>
 
         <div className={styles.cardsSection}>
-         
+
           <div className={styles.cardsGrid}>
             {cardInfo.map((card, index) => (
               <div key={index} className={styles.card}>
@@ -101,14 +105,14 @@ const Home = () => {
 
         </div>
         <div className={styles.mainImage}>
-            <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
-          </div>
-        
+          <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+        </div>
+
       </section>
-              
-            
-                  
-          
+
+
+
+
     </div>
   );
 };
