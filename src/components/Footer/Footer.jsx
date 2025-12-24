@@ -38,8 +38,7 @@ const Footer = () => {
             </Link>
           </h2>
           <p className={styles.tagline}>
-            Swap 100+ blockchains & 15,000+ tokens. Fast, secure, and
-            non-custodial trading.
+            Swap 60+ blockchains & 10,000+ tokens.Fast,secure,and non-custodial trading.
           </p>
           <div className={styles.socialRow}>
             <a

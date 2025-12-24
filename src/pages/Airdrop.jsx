@@ -25,7 +25,7 @@ import { useWeb3 } from "../../context/Web3Context.jsx";
 // ];
 const initialAirdropData = [
   { id: 2, name: "Early Bird Bonus", amount: "500 BIGROCK", status: "CLAIMABLE", icon: "✓" },
-  { id: 3, name: "Referral Rewards", amount: "1250 BIGROCK", status: "PENDING", icon: "!" },
+  { id: 3, name: "Referral Rewards", amount: "1250 BIGROCK", status: "LOCKED", icon: "!" },
 ];
 
 export default function AirdropPage({ onNavigate }) {
@@ -109,7 +109,7 @@ export default function AirdropPage({ onNavigate }) {
       if (mounted) {
         setAirdropData([
           { id: 2, name: "Early Bird Bonus", amount: "500 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
-          { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : (user.referredCount > 0 ? "CLAIMED" : "PENDING"), icon: "!" },
+          { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : (user.referredCount > 0 ? "CLAIMED" : "LOCKED"), icon: "!" },
         ]);
       }
     } catch (err) {
@@ -249,43 +249,50 @@ export default function AirdropPage({ onNavigate }) {
                 className={`${styles.claimBtn} ${((isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id) ? styles.disabled : ""} mt-auto`}
               >
                 {loading === airdrop.id
-                    ? "Claiming..."
-                    : airdrop.status === "CLAIMABLE"
-                      ? "Claim Now"
-                      : airdrop.status}
+                  ? "Claiming..."
+                  : airdrop.status === "CLAIMABLE"
+                    ? "Claim Now"
+                    : airdrop.status}
               </button>
             </div>
           ))}
         </div>
 
         {/* Referral Section */}
+
         <div className={styles.referralCard} >
           <h2 className={styles.sectionTitle}>Referral Program</h2>
           <p className={styles.referralDesc}>Earn BIGROCK for every friend you invite</p>
-
-          <div className={styles.referralLinkBox}>
-            <input
-              type="text"
-              value={referralLink}
-              readOnly
-              className={styles.referralInput}
-            />
-            <button onClick={handleCopy} className={styles.copyBtn}>
-              {copied ? <Check size={18} /> : <Copy size={18} />}
-            </button>
-          </div>
-
-          <div className="mt-8 flex justify-center w-full">
-            <div className="relative group w-full max-w-[280px]">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
-              <div className="relative px-6 py-6 bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 flex flex-col items-center justify-center hover:bg-black/50 transition duration-300">
-                <span className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Total Referrals</span>
-                <span className="text-4xl font-black text-white drop-shadow-md tracking-tight">
-                  {user?.referredCount ? user.referredCount : 0}
-                </span>
+          {token ?
+            <div>
+              <div className={styles.referralLinkBox}>
+                <input
+                  type="text"
+                  value={referralLink}
+                  readOnly
+                  className={styles.referralInput}
+                />
+                <button onClick={handleCopy} className={styles.copyBtn}>
+                  {copied ? <Check size={18} /> : <Copy size={18} />}
+                </button>
+              </div>
+              <div className="mt-8 flex justify-center w-full">
+                <div className="relative group w-full max-w-[280px]">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+                  <div className="relative px-6 py-6 bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 flex flex-col items-center justify-center hover:bg-black/50 transition duration-300">
+                    <span className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Total Referrals</span>
+                    <span className="text-4xl font-black text-white drop-shadow-md tracking-tight">
+                      {user?.referredCount ? user.referredCount : 0}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+            :
+            <div className="mt-4 text-sm text-red-500 font-medium">
+              Please login to get your referral link.
+            </div>
+          }
         </div>
 
         {/* Social Channels */}
@@ -335,6 +342,6 @@ export default function AirdropPage({ onNavigate }) {
       </div>
 
 
-    </div>
+    </div >
   );
 }
