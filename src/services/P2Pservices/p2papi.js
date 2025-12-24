@@ -15,7 +15,8 @@ export const createSellOrder = async ({
   fiatAmount,
   paymentMethod,
   receiverDetails,
-  country
+  country,
+  network
 }) => {
   try {
     const response = await API.post("/api/v1/p2p/sell", {
@@ -23,7 +24,8 @@ export const createSellOrder = async ({
       fiatAmount,
       paymentMethod,
       receiverDetails,
-      country
+      country,
+      network,
     });
 
     return response.data?.data;
@@ -62,7 +64,8 @@ export const createBuyOrder = async ({
   fiatAmount,
   paymentMethod,
   country,
-  usdtWalletAddress
+  usdtWalletAddress,
+  network
 }) => {
   try {
     const response = await API.post("/api/v1/p2p/buy", {
@@ -70,7 +73,8 @@ export const createBuyOrder = async ({
       fiatAmount,
       paymentMethod,
       country,
-      usdtWalletAddress
+      usdtWalletAddress,
+      network
     });
 
     return response.data?.data;
@@ -155,10 +159,11 @@ export const adminApproveOrder = async (orderId) => {
 };
 
 // Reject
-export const adminRejectOrder = async (orderId) => {
+export const adminRejectOrder = async (orderId, reason) => {
   try {
     const response = await API.patch(
-      `/api/v1/p2p/admin/reject/${orderId}`
+      `/api/v1/p2p/admin/reject/${orderId}`,
+      { reason }
     );
     return response.data?.data;
   } catch (error) {
