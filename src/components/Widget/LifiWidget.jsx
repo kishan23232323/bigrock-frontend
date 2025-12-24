@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { LiFiWidget } from "@lifi/widget";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 const basicFeeConfig = {
     name: "Bigrock-Exchange",
@@ -10,6 +11,8 @@ const basicFeeConfig = {
 };
 
 export default function LiFiWidgetComponent() {
+
+    const { openConnectModal } = useConnectModal();
 
     const widgetConfig = useMemo(() => ({
         variant: "compact",
@@ -24,8 +27,13 @@ export default function LiFiWidgetComponent() {
         toToken: "0x55d398326f99059fF775485246999027B3197955",
 
         feeConfig: basicFeeConfig,
+        walletConfig: {
+            onConnect() {
+                openConnectModal?.();
+            },
+        },
 
-    }), []);
+    }), [openConnectModal]);
 
     return (
         <>
