@@ -38,7 +38,7 @@ const Footer = () => {
             </Link>
           </h2>
           <p className={styles.tagline}>
-            Universal multi‑chain DEX • Non‑custodial • Fast swaps. 
+            Swap 60+ blockchains & 10,000+ tokens.Fast,secure,and non-custodial trading.
           </p>
           <div className={styles.socialRow}>
             <a

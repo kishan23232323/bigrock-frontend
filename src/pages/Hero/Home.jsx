@@ -9,7 +9,7 @@ const cardInfo = [
     imageSrc: "/heroCardImages/instantMultiChainSwaps.png",
     title: "Instant Multi-Chain Swaps",
     subtext:
-      "Execute cross‑chain trades in seconds with smart routing. No bridges, no waiting. Powered by LI.FI’s routing tech.",
+      "Execute cross‑chain trades in seconds with smart routing.No waiting. Powered by LI.FI’s routing tech.",
   },
   {
     imageSrc: "/heroCardImages/Over80Blockchains.png",
@@ -61,7 +61,7 @@ const Home = () => {
           {/* <div className={styles.titleWrap}>
             <RubicWidget />
           </div> */}
-          <div className={styles.WidgetSection}>
+          <div className={styles.WidgetSection} style={{ marginBottom: "4rem", minHeight: "520px", position: "relative", zIndex: 10 }}>
             <div className={styles.WidgetWrap}>
               <LiFiWidgetEventsListener />
               <LiFiWidgetComponent />
@@ -82,10 +82,7 @@ const Home = () => {
             <RubicWidget />
           </div> */}
         </div>
-        <div className={styles.buttons}>
-          <Link to="/presale" className={styles.primaryButton}>Presale</Link>
-
-        </div>
+        
 
         <div className={styles.cardsSection}>
 
@@ -105,9 +102,9 @@ const Home = () => {
           <Link to="" className={styles.primaryButton}>whitepaper</Link>
 
         </div>
-        <div className={styles.mainImage}>
+        <Link to="/presale" className={styles.mainImage}>
           <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
-        </div>
+        </Link>
 
       </section>
 
