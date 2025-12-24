@@ -1,7 +1,5 @@
 import '@rainbow-me/rainbowkit/styles.css';
-import {
-    RainbowKitProvider,
-} from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
 import {
     mainnet,
@@ -9,33 +7,48 @@ import {
     optimism,
     arbitrum,
     base,
-    sepolia
+    sepolia,
+    bsc
 } from 'wagmi/chains';
 import {
     QueryClientProvider,
     QueryClient,
 } from "@tanstack/react-query";
-
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { ReactNode } from 'react';
+
+import { useAvailableChains } from '@lifi/widget';
+import { useSyncWagmiConfig } from '@lifi/wallet-management';
+
 const config = getDefaultConfig({
-    appName: 'BigRock',
+    appName: 'BigRock Exchange',
     projectId: '9f028ef985d9cf1bacdfea0f961c9a85',
-    chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
-    ssr: true, // If your dApp uses server side rendering (SSR)
+    chains: [mainnet, polygon, optimism, arbitrum, base, sepolia, bsc],
+    ssr: false,
 });
 
 const queryClient = new QueryClient();
-const WalletConfig = ({ children }
-) => {
+
+/* 🔑 Inner component where hooks are SAFE */
+const WalletInner = ({ children }) => {
+    const { chains } = useAvailableChains();
+    useSyncWagmiConfig(config, [], chains);
+
     return (
         <WagmiProvider config={config}>
-            <QueryClientProvider client={queryClient}>
-                <RainbowKitProvider>
-                    {children}
-                </RainbowKitProvider>
-            </QueryClientProvider>
+            <RainbowKitProvider>
+                {children}
+            </RainbowKitProvider>
         </WagmiProvider>
+    );
+};
+
+const WalletConfig = ({ children }) => {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <WalletInner>
+                {children}
+            </WalletInner>
+        </QueryClientProvider>
     );
 };
 

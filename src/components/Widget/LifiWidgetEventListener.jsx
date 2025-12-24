@@ -1,49 +1,40 @@
 import { useEffect } from "react";
 import { useWidgetEvents, WidgetEvent } from "@lifi/widget";
+import { storeSwapTransaction } from "../../services/Swap/swapapi";
 
 export function LiFiWidgetEventsListener() {
     const widgetEvents = useWidgetEvents();
 
     useEffect(() => {
-        const onRouteCompleted = async (route) => {
+        const handler = async (route) => {
             try {
-                const step = route.steps?.[0];
-                if (!step) return;
+                if (!route?.steps?.length) return;
 
-                const payload = {
-                    routeId: route.id,
-                    userAddress: route.fromAddress,
+                for (const step of route.steps) {
+                    const processes = step.execution?.process ?? [];
 
-                    fromChain: step.action.fromChainId,
-                    toChain: step.action.toChainId,
+                    for (const process of processes) {
+                        if (
+                            process.status === "DONE" &&
+                            process.txHash
+                        ) {
+                            await storeSwapTransaction({
+                                userAddress: route.fromAddress,
+                                txHash: process.txHash,
+                            });
 
-                    fromToken: step.action.fromToken.address,
-                    toToken: step.action.toToken.address,
-
-                    fromAmount: step.action.fromAmount,
-                    toAmount: step.estimate?.toAmount,
-
-                    fromAmountUSD: step.estimate?.fromAmountUSD,
-                    toAmountUSD: step.estimate?.toAmountUSD,
-
-                    txHash: step.execution?.process?.find(p => p.txHash)?.txHash || null,
-                };
-
-                // await fetch("/api/lifi/swap-complete", {
-                //     method: "POST",
-                //     headers: { "Content-Type": "application/json" },
-                //     body: JSON.stringify(payload),
-                // });
-                console.log("LI.FI swap completed", payload);
-
+                            console.log("✅ Swap stored:", process.txHash);
+                        }
+                    }
+                }
             } catch (err) {
-                console.error("LI.FI swap store failed", err);
+                console.error("❌ LI.FI swap store failed", err);
             }
         };
 
         widgetEvents.on(
-            WidgetEvent.RouteExecutionCompleted,
-            onRouteCompleted
+            WidgetEvent.RouteExecutionUpdated,
+            handler
         );
 
         return () => widgetEvents.all.clear();
