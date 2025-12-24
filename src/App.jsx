@@ -27,6 +27,7 @@ import VerifyEmail from "./pages/Verify";
 import ResetPassword from "./pages/ResetPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
 import Terms from "./pages/Terms";
+import ScrollToTop from "./ScrollToTop";
 
 function App() {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ function App() {
   return (
     <div className="appWrapper">
       <NavBar />
-
+      <ScrollToTop />
       <div className="contentWrapper">
         {loading ? (
           <div

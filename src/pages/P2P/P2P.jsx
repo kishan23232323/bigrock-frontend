@@ -85,11 +85,20 @@ const isValidTrc20Address = (addr) => {
   return tronRegex.test(addr) || ethRegex.test(addr);
 };
 
-const isValidTxnHash = (h) => {
-  if (!h || typeof h !== 'string') return false;
-  const regex = /^[0-9a-fA-F]{64}$/;
-  return regex.test(h);
+const isValidTxnHash = (hash, network) => {
+  if (!hash || typeof hash !== "string") return false;
+
+  const patterns = {
+    TRC20: /^[0-9a-fA-F]{64}$/,          // 64 hex chars
+    BEP20: /^0x[0-9a-fA-F]{64}$/,        // 0x + 64 hex
+  };
+
+  const regex = patterns[network];
+  if (!regex) return false;
+
+  return regex.test(hash.trim());
 };
+
 
 const isValidProofFile = (file) => {
   if (!file) return true; // optional proof may be allowed
@@ -272,6 +281,9 @@ const SellSection = ({ selectedCountry }) => {
   const [upiId, setUpiId] = useState("");
   const [paypalId, setPaypalId] = useState("");
 
+  const [network, setNetwork] = useState("TRC20");
+  const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
+
   const navigate = useNavigate();
 
   const isIndia = selectedCountry?.country === "India";
@@ -395,6 +407,7 @@ const SellSection = ({ selectedCountry }) => {
           : "BANK",
       receiverDetails,
       country: selectedCountry?.country,
+      network,
     };
 
     try {
@@ -422,7 +435,7 @@ const SellSection = ({ selectedCountry }) => {
       return;
     }
 
-    if (!isValidTxnHash(txnHash)) {
+    if (!isValidTxnHash(txnHash, network)) {
       toast.error("Invalid transaction hash format");
       return;
     }
@@ -477,6 +490,61 @@ const handleCancelOrder = async()=>{
 
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
+
+            {/* Network Selection */}
+      <div className={styles.inputGroup}>
+        <label className={styles.label}>Network</label>
+
+        <div className={styles.paymentMethodContainer}>
+          <button
+            className={styles.paymentMethodButton}
+            onClick={() => setShowNetworkDropdown(!showNetworkDropdown)}
+          >
+            <span>{network}</span>
+            <IoChevronDownOutline size={25} />
+          </button>
+
+          {showNetworkDropdown && (
+            <div className={styles.paymentDropdown}>
+              
+              {/* TRC20 */}
+              <div
+                className={`${styles.paymentOption} ${
+                  network === "TRC20" ? styles.activeDropdown : ""
+                }`}
+              >
+                <button
+                  className={styles.paymentOptionHeader}
+                  onClick={() => {
+                    setNetwork("TRC20");
+                    setShowNetworkDropdown(false);
+                  }}
+                >
+                  <span>TRC20</span>
+                </button>
+              </div>
+
+              {/* BEP20 */}
+              <div
+                className={`${styles.paymentOption} ${
+                  network === "BEP20" ? styles.activeDropdown : ""
+                }`}
+              >
+                <button
+                  className={styles.paymentOptionHeader}
+                  onClick={() => {
+                    setNetwork("BEP20");
+                    setShowNetworkDropdown(false);
+                  }}
+                >
+                  <span>BEP20</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* USDT */}
       <div className={styles.inputGroup}>
         <label className={styles.label}>USDT to Sell</label>
@@ -652,7 +720,7 @@ const handleCancelOrder = async()=>{
 
       {/* Wallet Address */}
       <div className={styles.walletSection}>
-        <h3 className={styles.walletTitle}>Send USDT to this Address ( TRC20 ONLY ) </h3>
+        <h3 className={styles.walletTitle}>Send USDT to this Address ( {network} ONLY ) </h3>
         <div className={styles.addressContainer}>
           <span className={styles.address}>{orderData?.usdtWalletAddress}</span>
           <button className={styles.copyButton}
@@ -780,6 +848,12 @@ const BuySection = ({ selectedCountry }) => {
   // Proof file for confirmation
   const [proofFile, setProofFile] = useState(null);
 
+  // Network selection (default TRC20) 
+  const [network, setNetwork] = useState("TRC20");
+const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
+
+
+
   const navigate = useNavigate();
   const isIndia = selectedCountry?.country === "India";
 
@@ -865,6 +939,7 @@ const BuySection = ({ selectedCountry }) => {
           : "BANK",
       country: selectedCountry?.country,
       usdtWalletAddress: userUsdtWallet.trim(), // user's wallet
+      network
     };
 
     try {
@@ -932,7 +1007,62 @@ const handleCancelOrder = async()=>{
   // ------------------------- Render Create UI -------------------------
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
-     
+
+  
+      {/* Network Selection */}
+      <div className={styles.inputGroup}>
+        <label className={styles.label}>Network</label>
+
+        <div className={styles.paymentMethodContainer}>
+          <button
+            className={styles.paymentMethodButton}
+            onClick={() => setShowNetworkDropdown(!showNetworkDropdown)}
+          >
+            <span>{network}</span>
+            <IoChevronDownOutline size={25} />
+          </button>
+
+          {showNetworkDropdown && (
+            <div className={styles.paymentDropdown}>
+              
+              {/* TRC20 */}
+              <div
+                className={`${styles.paymentOption} ${
+                  network === "TRC20" ? styles.activeDropdown : ""
+                }`}
+              >
+                <button
+                  className={styles.paymentOptionHeader}
+                  onClick={() => {
+                    setNetwork("TRC20");
+                    setShowNetworkDropdown(false);
+                  }}
+                >
+                  <span>TRC20</span>
+                </button>
+              </div>
+
+              {/* BEP20 */}
+              <div
+                className={`${styles.paymentOption} ${
+                  network === "BEP20" ? styles.activeDropdown : ""
+                }`}
+              >
+                <button
+                  className={styles.paymentOptionHeader}
+                  onClick={() => {
+                    setNetwork("BEP20");
+                    setShowNetworkDropdown(false);
+                  }}
+                >
+                  <span>BEP20</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
           {/* USDT amount */}
       <div className={styles.inputGroup}>
         <label className={styles.label}>USDT to Buy </label>
@@ -967,11 +1097,11 @@ const handleCancelOrder = async()=>{
 
       {/* User TRC20 wallet address (user must provide for buy) */}
       <div className={styles.inputGroup}>
-        <label className={styles.label}>Your TRC20 USDT Wallet Address</label>
+        <label className={styles.label}>Your {network} USDT Wallet Address</label>
         <input
           type="text"
           className={styles.input}
-          placeholder="Enter your TRC20 address"
+          placeholder={`Enter your ${network} address`}
           value={userUsdtWallet}
           onChange={(e) => setUserUsdtWallet(e.target.value)}
         />
@@ -1001,7 +1131,6 @@ const handleCancelOrder = async()=>{
                     onClick={() => selectPaymentMethod("upi", "UPI")}
                   >
                     <span>UPI</span>
-                    <IoChevronDownOutline size={20} />
                   </button>
                 </div>
               )}
@@ -1018,7 +1147,6 @@ const handleCancelOrder = async()=>{
                     onClick={() => selectPaymentMethod("paypal", "PayPal")}
                   >
                     <span>PayPal</span>
-                    <IoChevronDownOutline size={20} />
                   </button>
                 </div>
               )}
@@ -1034,7 +1162,6 @@ const handleCancelOrder = async()=>{
                   onClick={() => selectPaymentMethod("bank", "Bank Transfer")}
                 >
                   <span>Bank Transfer</span>
-                  <IoChevronDownOutline size={20} />
                 </button>
               </div>
             </div>
