@@ -9,25 +9,26 @@ const cardInfo = [
     imageSrc: "/heroCardImages/instantMultiChainSwaps.png",
     title: "Instant Multi-Chain Swaps",
     subtext:
-      "Execute cross-chain swaps in seconds. No bridges, no waiting. Powered by Rubic routing.",
+      "Execute cross‑chain trades in seconds with smart routing. No bridges, no waiting. Powered by LI.FI’s routing tech.",
   },
   {
     imageSrc: "/heroCardImages/Over80Blockchains.png",
-    title: "80+ Blockchains Supported",
+    title: "60+ Blockchains Supported",
     subtext:
-      "From Ethereum to Solana, Polygon to Avalanche. Trade any token on any chain from one interface.",
+      "Trade assets across a huge range of networks from a single interface, covering 10,000+ tokens.",
   },
   {
     imageSrc: "/heroCardImages/earnAirdrops.png",
-    title: "Earn Airdrops for Swaps",
+    title: "Earn BigRock tokens",
     subtext:
-      "Every swap earns you points. Climb tiers to unlock airdrops, boost rewards, and perks.",
+      "Swap rewards: earn BigRock tokens as a gas-fee reward for using the platform (Coming soon). " +
+      "Referral rewards: invite friends, earn tokens directly when they join and trade.",
   },
   {
     imageSrc: "/heroCardImages/secure.png",
     title: "Secure & Non-Custodial",
     subtext:
-      "Your keys, your crypto. Swaps execute directly from your wallet with battle-tested security.",
+      "Your keys, your crypto — trades execute directly from users’ wallets. Built for safety with a user‑first, non‑custodial flow.",
   },
 ];
 
@@ -50,7 +51,7 @@ const Home = () => {
 
             <div className={styles.titleWrap}>
               <h1 className={styles.title}>
-                Swap across <span className={styles.highlight}>100+</span> blockchains & <span className={styles.highlight}>15,000+</span> tokens
+                Swap across <span className={styles.highlight}>60+</span> blockchains & <span className={styles.highlight}>10,000+</span> tokens
               </h1>
               <p className={styles.titleSub}>
                 Fast, secure, and non-custodial trading.

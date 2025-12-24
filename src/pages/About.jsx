@@ -20,34 +20,79 @@ import styles from './About.module.css';
 
         </div>
 
-        <div className={`${styles.contentGrid} grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8`}>
-          <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
-            <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><Target size={28} className={styles.icon} /></div>
-            <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>Our Mission</h2>
-            <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
-              To empower users with robust, intuitive, and accessible decentralized tools. We foster a community where innovation and user-centric design create unparalleled value and opportunity for everyone.
-            </p>
+        <div className="w-full flex flex-col gap-8 md:gap-12">
+          {/* What we do Card */}
+          <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8`}>
+            <div className="flex items-center gap-4 mb-6">
+              <div className={`${styles.iconWrapper} text-[#06eef5]`}><Zap size={32} className={styles.icon} /></div>
+              <h2 className={`${styles.cardTitle} text-2xl md:text-3xl font-bold text-cyan-400`}>What we do</h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+              <div className="space-y-2">
+                <h3 className="font-semibold text-lg text-cyan-300">One place for many chains and tokens</h3>
+                <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
+                  Trade across dozens of blockchains and thousands of tokens without juggling multiple apps or bridges. Our platform uses smart routing technology to find fast, cost‑efficient paths for swaps, so users can move value between chains with minimal friction. We integrate with advanced routing tools designed for multi‑chain swaps, giving us access to broad liquidity and optimized routes.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-semibold text-lg text-cyan-300">P2P you’ll actually want to use</h3>
+                <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
+                  A friendly, straightforward peer‑to‑peer section lets users buy, sell, and transfer with real people, using familiar payment methods — designed to feel clear and trustworthy even for first‑time P2P users.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-semibold text-lg text-cyan-300">Earn while you participate</h3>
+                <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
+                  Community growth is rewarded. Users earn BigRock tokens through referrals and by swapping — turning everyday activity into long‑term upside.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-semibold text-lg text-cyan-300">True non‑custodial security</h3>
+                <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
+                  Users keep full control of their keys and funds. Transactions execute directly from users’ wallets, aligning with the core ethos of decentralized finance.
+                </p>
+              </div>
+            </div>
           </div>
-          <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
-            <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><Zap size={28} className={styles.icon} /></div>
-            <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>Cutting-Edge Tech</h2>
-            <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
-              Our platform is built with a focus on performance, security, and scalability. We leverage the latest advancements to ensure you have a fast, reliable, and future-proof experience every time.
-            </p>
-          </div>
-          <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
-            <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><ShieldCheck size={28} className={styles.icon} /></div>
-            <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>Security First</h2>
-            <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
-              Your security is our top priority. We employ multi-layered security protocols and continuous auditing to protect your assets and data, giving you peace of mind in the decentralized world.
-            </p>
-          </div>
-          <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
-            <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><Users size={28} className={styles.icon} /></div>
-            <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>Community Driven</h2>
-            <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
-              Sonic is built for and by its community. We are committed to transparency and actively listen to user feedback to guide our development and shape the future of the ecosystem together.
-            </p>
+
+          {/* Other Cards Grid */}
+          <div className={`${styles.contentGrid} grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8`}>
+            <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
+              <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><Target size={28} className={styles.icon} /></div>
+              <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>Why it matters</h2>
+              <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
+                Today’s crypto ecosystem spans many chains, each with its own communities and liquidity. But switching between them often means confusing bridges, delays, or hidden fees. BigRock Exchange removes those barriers. Whether someone wants to swap quickly, help a friend buy or sell in P2P, or build value over time through rewards and referrals, the platform brings all of that together — without giving up control of funds or adding unnecessary steps.
+              </p>
+            </div>
+            <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
+              <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><Rocket size={28} className={styles.icon} /></div>
+              <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>Our Vision</h2>
+              <p className={`${styles.cardText} text-gray-400 leading-relaxed mb-3`}>
+                We’re building a universal gateway for decentralized trading, where users can:
+              </p>
+              <ul className="list-disc list-inside text-gray-400 leading-relaxed space-y-2">
+                <li>Seamlessly explore and access opportunities across the crypto world,</li>
+                <li>Grow with the platform through rewards and community participation,</li>
+                <li>Trust that their funds remain under their control.</li>
+              </ul>
+              <p className={`${styles.cardText} text-gray-400 leading-relaxed mt-4`}>
+                By combining broad chain support, smart routing, a friendly P2P experience, and token-based incentives, BigRock Exchange aims to be the default hub for multi-chain DeFi activity — not just for advanced traders, but for anyone ready to join the crypto economy on their own terms.
+              </p>
+            </div>
+            <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
+              <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><Users size={28} className={styles.icon} /></div>
+              <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>Presale Note</h2>
+              <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
+                A limited premium presale is available for the first 2,000 users, with a fixed launch price and a 12-month vesting period. It’s a special opportunity to join early, support the platform, and participate in its growth from day one.
+              </p>
+            </div>
+            <div className={`${styles.featureCard} bg-gray-900/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 md:p-8 hover:-translate-y-1 transition-transform duration-300`}>
+              <div className={`${styles.iconWrapper} mb-4 text-[#06eef5]`}><ShieldCheck size={28} className={styles.icon} /></div>
+              <h2 className={`${styles.cardTitle} text-xl md:text-2xl font-bold mb-2 text-cyan-400`}>A Quick Reminder</h2>
+              <p className={`${styles.cardText} text-gray-400 leading-relaxed`}>
+                Crypto and DeFi carry risks, including market volatility and technical risks. We encourage users to review the platform’s documentation, terms, and risk disclosures, and to trade responsibly.
+              </p>
+            </div>
           </div>
         </div>
 
