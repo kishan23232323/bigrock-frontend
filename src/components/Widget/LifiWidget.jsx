@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { LiFiWidget } from "@lifi/widget";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
-import { useAccount } from "wagmi";
+
 
 const basicFeeConfig = {
     name: "Bigrock-Exchange",
@@ -13,8 +12,6 @@ const basicFeeConfig = {
 
 export default function LiFiWidgetComponent() {
 
-    const { openConnectModal } = useConnectModal();
-    const { isConnected } = useAccount();
 
 
     const widgetConfig = useMemo(() => ({
@@ -30,22 +27,11 @@ export default function LiFiWidgetComponent() {
         toToken: "0x55d398326f99059fF775485246999027B3197955",
 
         feeConfig: basicFeeConfig,
-        walletConfig: {
-            async onConnect() {
-                // Add error handling and async support
-                try {
-                    if (openConnectModal && !isConnected) {
-                        // Small delay can help with mobile rendering
-                        await new Promise(resolve => setTimeout(resolve, 100));
-                        openConnectModal();
-                    }
-                } catch (error) {
-                    console.error("Failed to open connect modal:", error);
-                }
-            },
-        },
-
-    }), [openConnectModal]);
+    walletConfig: {
+      forceWalletConnect: true,   // ✅ REQUIRED
+      disableSolana: true,        // ✅ REQUIRED (you installed solana adapter)
+    },
+  }), []);
 
     return (
         <>
