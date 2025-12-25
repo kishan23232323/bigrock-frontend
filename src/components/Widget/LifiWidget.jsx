@@ -22,7 +22,7 @@ export default function LiFiWidgetComponent() {
         feeConfig: basicFeeConfig,
 
         walletConfig: {
-        useRecommended: true,
+        forceWalletConnect: true
         }
             }), []);
 
