@@ -11,7 +11,6 @@ const basicFeeConfig = {
 };
 
 export default function LiFiWidgetComponent() {
-    const { openConnectModal } = useConnectModal();
 
     const widgetConfig = useMemo(() => ({
         variant: "compact",
@@ -22,13 +21,11 @@ export default function LiFiWidgetComponent() {
 
         feeConfig: basicFeeConfig,
 
-        // 🔑 EXACTLY like LI.FI GitHub
         walletConfig: {
-            onConnect() {
-                openConnectModal?.();
-            },
-        },
-    }), [openConnectModal]);
+        useRecommended: true,
+        }
+            }), []);
+
 
     return (
         <LiFiWidget

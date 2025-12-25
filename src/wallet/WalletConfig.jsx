@@ -21,11 +21,15 @@ import { useAvailableChains } from '@lifi/widget';
 import { useSyncWagmiConfig } from '@lifi/wallet-management';
 
 const config = getDefaultConfig({
-    appName: 'BigRock Exchange',
+  appName: 'BigRock Exchange',
+  projectId: '6dd15a3684137adf8eb5ed126f061236',
+  chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
+  ssr: false,
+  walletConnectOptions: {
     projectId: '6dd15a3684137adf8eb5ed126f061236',
-    chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
-    ssr: false, // ⚠️ MUST be false for LI.FI
+  },
 });
+
 
 const queryClient = new QueryClient();
 
@@ -37,7 +41,13 @@ const WalletInner = ({ children }) => {
 
     return (
         <WagmiProvider config={config}>
-            <RainbowKitProvider>
+            <RainbowKitProvider
+            appInfo={{
+                appName: 'BigRock Exchange',
+                learnMoreUrl: 'https://bigrock.exchange',
+            }}
+>
+
                 {children}
             </RainbowKitProvider>
         </WagmiProvider>
