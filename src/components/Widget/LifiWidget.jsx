@@ -43,6 +43,8 @@ export default function LiFiWidgetComponent() {
                     console.error("Failed to open connect modal:", error);
                 }
             },
+            forceWalletConnect: true,
+            disableSolana: true, // because you installed solana adapter
         },
 
     }), [openConnectModal]);
