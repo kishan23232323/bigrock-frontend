@@ -27,7 +27,6 @@
     "@mysten/dapp-kit": "^0.19.11",
     "@rainbow-me/rainbowkit": "^2.2.10",
     "@reduxjs/toolkit": "^2.11.0",
-    "@solana/wallet-adapter-react": "^0.15.39",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-query": "^5.90.12",
     "axios": "^1.13.2",

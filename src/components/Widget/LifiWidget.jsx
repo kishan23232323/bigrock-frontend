@@ -29,7 +29,7 @@ export default function LiFiWidgetComponent() {
         feeConfig: basicFeeConfig,
     walletConfig: {
       forceWalletConnect: true,   // ✅ REQUIRED
-      disableSolana: true,        // ✅ REQUIRED (you installed solana adapter)
+      
     },
   }), []);
 
