@@ -8,7 +8,7 @@ import API from "../../config/axios";
  */
 export const storeSwapTransaction = async ({ userAddress, txHash }) => {
     try {
-        const response = await API.post("/api/v1/swap/swap-complete", {
+        const response = await API.post("/api/v1/users/swap-complete", {
             userAddress,
             txHash,
         });
