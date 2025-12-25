@@ -11,6 +11,7 @@ import {
     arbitrum,
     base,
     sepolia,
+    bsc
 } from 'wagmi/chains';
 import {
     QueryClientProvider,
@@ -30,7 +31,7 @@ const config = getDefaultConfig({
     arbitrum,
     base,
     sepolia,
-    bsc,          // 🔥 REQUIRED
+    bsc         // 🔥 REQUIRED
   ],
   ssr: false,
 });
