@@ -1,23 +1,42 @@
-import { WagmiProvider, createConfig, http } from 'wagmi';
-import { bsc } from 'wagmi/chains';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+    RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { WagmiProvider } from 'wagmi';
+import {
+    mainnet,
+    polygon,
+    optimism,
+    arbitrum,
+    base,
+    sepolia
+} from 'wagmi/chains';
+import {
+    QueryClientProvider,
+    QueryClient,
+} from "@tanstack/react-query";
 
-const config = createConfig({
-  chains: [bsc],
-  transports: {
-    [bsc.id]: http(),
-  },
-  ssr: false,
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { ReactNode } from 'react';
+const config = getDefaultConfig({
+    appName: 'BigRock',
+    projectId: '9f028ef985d9cf1bacdfea0f961c9a85',
+    chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
+    ssr: true, // If your dApp uses server side rendering (SSR)
 });
 
 const queryClient = new QueryClient();
+const WalletConfig = ({ children }
+) => {
+    return (
+        <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+                <RainbowKitProvider>
+                    {children}
+                </RainbowKitProvider>
+            </QueryClientProvider>
+        </WagmiProvider>
+    );
+};
 
-export default function WalletConfig({ children }) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiProvider config={config}>
-        {children}
-      </WagmiProvider>
-    </QueryClientProvider>
-  );
-}
+export default WalletConfig;
