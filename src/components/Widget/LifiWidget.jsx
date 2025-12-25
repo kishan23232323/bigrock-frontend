@@ -21,6 +21,9 @@ export default function LiFiWidgetComponent() {
 
     walletConfig: {
       forceWalletConnect: true,
+
+      // 🔥 THIS IS THE FIX
+      disableSolana: true,
     },
   }), []);
 
