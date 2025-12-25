@@ -130,6 +130,17 @@ export const cancelOrder = async (orderId) => {
   }
 };
 
+export const requestCancelOrder = async (orderId) => {
+  try {
+    const response = await API.patch(
+      `/api/v1/p2p/request-cancel/${orderId}`
+    );
+    return response.data?.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
 //
 // -----------------------------------------------------
 // ADMIN APIs
@@ -172,9 +183,9 @@ export const adminRejectOrder = async (orderId, reason) => {
 };
 
 // Get all orders (admin)
-export const adminGetAllOrders = async () => {
+export const adminGetAllOrders = async ({ page = 1, search = "" }) => {
   try {
-    const response = await API.get("/api/v1/p2p/admin/all-orders");
+    const response = await API.get(`/api/v1/p2p/admin/all-orders?page=${page}&limit=20&search=${encodeURIComponent(search)}`);
     return response.data?.data;
   } catch (error) {
     throw error.response ? error.response.data : error;
@@ -186,6 +197,18 @@ export const adminGetOrdersByUserId = async (userId) => {
   try {
     const response = await API.get(
       `/api/v1/p2p/admin/user-orders/${userId}`
+    );
+    return response.data?.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const adminOrderStatusUpdate = async (orderId, status) => {
+  try {
+    const response = await API.patch(
+      `/api/v1/p2p/admin/status-update/${orderId}`,
+      { status }
     );
     return response.data?.data;
   } catch (error) {
