@@ -5,7 +5,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 import { useAvailableChains } from '@lifi/widget';
 import { useSyncWagmiConfig } from '@lifi/wallet-management';
-import { wagmiConfig } from './wallet/wagmiConfig'; // <- new file
+import { wagmiConfig } from './WagmiConfig';
 
 const queryClient = new QueryClient();
 
