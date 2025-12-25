@@ -12,18 +12,19 @@ const basicFeeConfig = {
 
 export default function LiFiWidgetComponent() {
 
-const widgetConfig = {
-  variant: "compact",
-  appearance: "dark",
-  fromChain: 56,
-  toChain: 56,
-  feeConfig: basicFeeConfig,
+    const widgetConfig = useMemo(() => ({
+        variant: "compact",
+        appearance: "dark",
 
-  walletConfig: {
-    forceWalletConnect: true,
-  },
-};
+        fromChain: 56,
+        toChain: 56,
 
+        feeConfig: basicFeeConfig,
+
+        walletConfig: {
+        forceWalletConnect: true
+        }
+            }), []);
 
 
     return (
