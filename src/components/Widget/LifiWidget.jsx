@@ -2,35 +2,37 @@ import { useMemo } from "react";
 import { LiFiWidget } from "@lifi/widget";
 
 const basicFeeConfig = {
-  name: "Bigrock-Exchange",
-  logoURI: "https://yourdapp.com/logo.png",
-  fee: 0.005,
-  showFeePercentage: true,
-  showFeeTooltip: true,
+    name: "Bigrock-Exchange",
+    logoURI: "https://yourdapp.com/logo.png",
+    fee: 0.005, // 0.5% fee
+    showFeePercentage: true,
+    showFeeTooltip: true
 };
 
 export default function LiFiWidgetComponent() {
-  const widgetConfig = useMemo(() => ({
-    variant: "compact",
-    appearance: "dark",
 
-    fromChain: 56,
-    toChain: 56,
+    const widgetConfig = useMemo(() => ({
+        variant: "wide",
+        appearance: "dark",
 
-    feeConfig: basicFeeConfig,
+        theme: { container: { border: "1px solid #EAEAEA", borderRadius: "16px", padding: "10px", }, },
 
-    walletConfig: {
-      forceWalletConnect: true,
+        fromChain: 56,
+        toChain: 56,
 
-      // 🔥 THIS IS THE FIX
-      disableSolana: true,
-    },
-  }), []);
+        fromToken: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        toToken: "0x55d398326f99059fF775485246999027B3197955",
 
-  return (
-    <LiFiWidget
-      integrator="Bigrock-Exchange"
-      config={widgetConfig}
-    />
-  );
+        fromAmount: "0.01",
+        feeConfig: basicFeeConfig,
+    }), []);
+
+    return (
+        <>
+            <LiFiWidget
+                integrator="Bigrock-Exchange"
+                config={widgetConfig}
+            />
+        </>
+    );
 }
