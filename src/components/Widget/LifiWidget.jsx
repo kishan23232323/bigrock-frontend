@@ -1,36 +1,33 @@
 import { useMemo } from "react";
 import { LiFiWidget } from "@lifi/widget";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 const basicFeeConfig = {
-    name: "Bigrock-Exchange",
-    logoURI: "https://yourdapp.com/logo.png",
-    fee: 0.005,
-    showFeePercentage: true,
-    showFeeTooltip: true,
+  name: "Bigrock-Exchange",
+  logoURI: "https://yourdapp.com/logo.png",
+  fee: 0.005,
+  showFeePercentage: true,
+  showFeeTooltip: true,
 };
 
 export default function LiFiWidgetComponent() {
+  const widgetConfig = useMemo(() => ({
+    variant: "compact",
+    appearance: "dark",
 
-    const widgetConfig = useMemo(() => ({
-        variant: "compact",
-        appearance: "dark",
+    fromChain: 56,
+    toChain: 56,
 
-        fromChain: 56,
-        toChain: 56,
+    feeConfig: basicFeeConfig,
 
-        feeConfig: basicFeeConfig,
+    walletConfig: {
+      forceWalletConnect: true,
+    },
+  }), []);
 
-        walletConfig: {
-        forceWalletConnect: true
-        }
-            }), []);
-
-
-    return (
-        <LiFiWidget
-            integrator="Bigrock-Exchange"
-            config={widgetConfig}
-        />
-    );
+  return (
+    <LiFiWidget
+      integrator="Bigrock-Exchange"
+      config={widgetConfig}
+    />
+  );
 }
