@@ -23,16 +23,11 @@ import { useSyncWagmiConfig } from '@lifi/wallet-management';
 const config = getDefaultConfig({
   appName: 'BigRock Exchange',
   projectId: '6dd15a3684137adf8eb5ed126f061236',
-  chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    sepolia,
-    bsc,          // 🔥 REQUIRED
-  ],
+  chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
   ssr: false,
+  walletConnectOptions: {
+    projectId: '6dd15a3684137adf8eb5ed126f061236',
+  },
 });
 
 
