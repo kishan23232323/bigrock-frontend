@@ -14,6 +14,7 @@ import {
   adminGetAllOrders,
 } from "../../services/P2Pservices/p2papi";
 
+
 const ImagePreviewModal = ({ src, onClose }) => {
   if (!src) return null;
   return (
@@ -45,9 +46,68 @@ const PaymentDetails = ({ order }) => {
 };
 
 const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
+
   return (
     <div >
       <div className={styles.detailsBox}>
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>Order ID</span>
+  <span className={styles.detailValueGray}>{order._id}</span>
+</div>
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>User Name</span>
+  <span className={styles.detailValue}>{order.userId.name.toUpperCase() || "Unknown User"}</span>
+</div>
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>User UID</span>
+  <span className={styles.detailValueGray}>{order.userId.uid}</span>
+</div>
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>Created On</span>
+  <span className={styles.detailValue}>
+    {new Date(order.createdAt).toLocaleString()}
+  </span>
+</div>
+
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>Cancel Request</span>
+  <span className={styles.detailValue} style={{ color: order.cancelRequest ? "#f87171" : "#4ade80" }}>
+    {order.cancelRequest ? "Requested" : "No Request"}
+  </span>
+</div>
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>Country</span>
+  <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>
+    {order.country} 
+  </span>
+</div>
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>USDT Amount</span>
+  <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>
+    {order.usdtAmount} USDT
+  </span>
+</div>
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>Fiat Amount</span>
+  <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>
+    {order.fiatAmount} 
+  </span>
+</div>
+
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>Network</span>
+  <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>
+    {order.network} 
+  </span>
+</div>
+
       <div className={styles.detailRow}>
         <span className={styles.detailLabel}>Payment Method</span>
         <span className={styles.detailValue}>{order.paymentMethod}</span>
@@ -90,7 +150,7 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
           <button className={styles.approveBtn} onClick={() => onApprove(order._id)}>
             <IoCheckmarkCircleOutline size={22} /> Approve
           </button>
-          <button className={styles.rejectBtn} onClick={() => onReject(order._id)}>
+             <button className={styles.rejectBtn} onClick={onReject}>
             <IoCloseCircleOutline size={22} /> Reject
           </button>
         </div>
@@ -111,12 +171,29 @@ const OrderRow = ({ order, expanded, onToggle }) => {
       <button className={styles.expandBtn}>
         {expanded ? <IoChevronUp size={22} /> : <IoChevronDown size={22} />}
       </button>
+      {order.cancelRequest && (
+  <span style={{
+    marginLeft: "10px",
+    padding: "4px 8px",
+    background: "rgba(239,68,68,0.25)",
+    border: "1px solid rgba(239,68,68,0.5)",
+    borderRadius: "6px",
+    fontSize: "12px",
+    color: "#f87171"
+  }}>
+    Cancel Requested
+  </span>
+)}
+
     </div>
   );
 };
 
 const OrderCard = ({ order, onUpdate, onPreviewImage }) => {
   const [expanded, setExpanded] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false);
+const [rejectReason, setRejectReason] = useState("");
+
 
   const handleApprove = async (id) => {
     await adminApproveOrder(id);
@@ -127,11 +204,73 @@ const OrderCard = ({ order, onUpdate, onPreviewImage }) => {
     await adminRejectOrder(id);
     onUpdate(id, { status: "REJECTED" });
   };
+  
+  useEffect(() => {
+  if (showRejectModal) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [showRejectModal]);
 
   return (
     <div className={styles.orderCard}>
       <OrderRow order={order} expanded={expanded} onToggle={() => setExpanded(!expanded)} />
-      {expanded && <OrderDetails order={order} onApprove={handleApprove} onReject={handleReject} onPreviewImage={onPreviewImage} />}
+      {expanded && (
+  <OrderDetails
+    order={order}
+    onApprove={handleApprove}
+    onReject={() => setShowRejectModal(true)}
+    onPreviewImage={onPreviewImage}
+  />
+)}
+{showRejectModal && (
+  <div className={styles.modalOverlay}>
+    <div className={styles.modalBox}>
+      <h3 className={styles.modalTitle}>Reject Order</h3>
+
+      <textarea
+        placeholder="Enter reason for rejection (optional)"
+        value={rejectReason}
+        onChange={(e) => setRejectReason(e.target.value)}
+        className={styles.rejectTextarea}
+      />
+
+      <div className={styles.modalActions}>
+        <button
+          className={styles.rejectBtn}
+          onClick={async () => {
+            await adminRejectOrder(order._id, rejectReason || undefined);
+            onUpdate(order._id, {
+              status: "REJECTED",
+              rejectReason,
+            });
+            setShowRejectModal(false);
+            setRejectReason("");
+          }}
+        >
+          Confirm Reject
+        </button>
+
+        <button
+          className={styles.approveBtn}
+          onClick={() => {
+            setShowRejectModal(false);
+            setRejectReason("");
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };
@@ -141,28 +280,32 @@ const AdminOrders = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState("");
 
-  const loadOrders = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await adminGetAllOrders();
-      setOrders(data || []);
-    } catch (err) {
-      console.error("Failed to load orders", err);
-      if (err.message === 'Network Error') {
-        setError("Failed to connect to the server. Please ensure the backend is running and accessible.");
-      } else {
-        setError("Failed to load orders. Please try again later.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+const loadOrders = async () => {
+  try {
+    setLoading(true);
+     console.log("Fetching orders:", { page, search }); 
+    const data = await adminGetAllOrders({ page, search });
+    setOrders(data.orders);
+    setTotalPages(data.pagination.totalPages);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
-  useEffect(() => {
+useEffect(() => {
+  const timer = setTimeout(() => {
     loadOrders();
-  }, [loadOrders]);
+  }, 400); // debounce delay
+
+  return () => clearTimeout(timer);
+}, [page, search]);
+
 
   const handleUpdateOrder = (orderId, updatedData) => {
     setOrders(prevOrders =>
@@ -172,13 +315,17 @@ const AdminOrders = () => {
     );
   };
 
+  
+
   const renderContent = () => {
     if (loading) return <p>Loading orders...</p>;
     if (error) return <p className={styles.errorText}>{error}</p>;
     if (orders.length === 0) return <p>No orders found.</p>;
 
     return (
+      
       <div className={styles.tableWrapper}>
+
         {orders.map((order) => (
           <OrderCard
             key={order._id}
@@ -187,6 +334,29 @@ const AdminOrders = () => {
             onPreviewImage={setPreviewImg}
           />
         ))}
+
+        <div style={{ display: "flex", justifyContent: "center", gap: "12px", marginTop: "20px" }}>
+  <button
+    disabled={page === 1}
+    onClick={() => setPage((p) => p - 1)}
+    className={styles.paginationBtn}
+  >
+    Prev
+  </button>
+
+  <span style={{ color: "#9ca3af" }}>
+    Page {page} of {totalPages}
+  </span>
+
+  <button
+    disabled={page === totalPages}
+    onClick={() => setPage((p) => p + 1)}
+    className={styles.paginationBtn}
+  >
+    Next
+  </button>
+</div>
+ 
       </div>
     );
   };
@@ -194,10 +364,37 @@ const AdminOrders = () => {
   return (
     <div className={styles.pageWrapper}>
       <h1 className={styles.heading}>P2P Admin Panel</h1>
+      <div style={{ marginBottom: "16px", display: "flex", gap: "10px" }}>
+  <input
+    type="text"
+    placeholder="Search by Order ID / User UID / Email"
+    value={search}
+    onChange={(e) => {
+      setPage(1);
+      setSearch(e.target.value);
+    }}
+    style={{
+      flex: 1,
+      padding: "10px 14px",
+      borderRadius: "10px",
+      background: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.15)",
+      color: "white",
+    }}
+  />
+</div>
+
+
       {renderContent()}
       <ImagePreviewModal src={previewImg} onClose={() => setPreviewImg(null)} />
     </div>
   );
 };
+
+
+
+
+
+
 
 export default AdminOrders;
