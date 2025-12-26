@@ -44,7 +44,7 @@ export default function LiFiWidgetComponent() {
                 }
             },
             forceWalletConnect: true,
-            disableSolana: true, // because you installed solana adapter
+            //disableSolana: true, // because you installed solana adapter
         },
 
     }), [openConnectModal]);

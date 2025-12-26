@@ -32,7 +32,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
+
 
 .orderType {
   font-size: 18px;
@@ -256,4 +259,54 @@
     opacity: 1;
   }
 }
+
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* allows badge to move below text */
+}
+
+.rightGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* Cancel badge near BUY/SELL */
+.cancelBadge {
+  padding: 4px 10px;
+  background: rgba(239, 68, 68, 0.25);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #f87171;
+  white-space: nowrap;
+  margin-left: 0.1rem;
+}
+
+@media (max-width: 640px) {
+  .orderRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rightGroup {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .statusBadge {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .cancelBadge {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
 
