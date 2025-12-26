@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Zap, Award, Trophy, Rocket, ChevronDown, Star } from 'lucide-react';
+import { Zap, Award, Trophy, Rocket, ChevronDown, Star, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import styles from './Presale.module.css';
  
  function Presale() {
@@ -52,39 +53,19 @@ import styles from './Presale.module.css';
   const presaleProgress = 75; // 75%
 
   const tokenomicsData = [
-    { name: 'MARKETING', percentage: 40 },
-    { name: 'MAXI FUND', percentage: 25 },
-    { name: 'DEV', percentage: 15 },
-    { name: 'LIQUIDITY', percentage: 15 },
-    { name: 'STAKING', percentage: 5 },
+    { name: 'Marketing', percentage: 40, color: '#06eef5' },
+    { name: 'Maxi Fund', percentage: 25, color: '#a855f7' },
+    { name: 'Dev Team', percentage: 15, color: '#ec4899' },
+    { name: 'Liquidity', percentage: 15, color: '#f59e0b' },
+    { name: 'Staking', percentage: 5, color: '#10b981' },
   ];
-
-  const utilityData = [
-    {
-      icon: <Award size={24} className={styles.utilityIcon} />,
-      title: 'Staking Rewards',
-      description: '$MAXI rewards pool with daily smart contract distribution.',
-    },
-    {
-      icon: <Trophy size={24} className={styles.utilityIcon} />,
-      title: '$MAXI Contests',
-      description: 'Community activations & rewards for top ROI hunters.',
-    },
-    {
-      icon: <Zap size={24} className={styles.utilityIcon} />,
-      title: 'Partner Events',
-      description: 'Futures platform integrations & gamified tournaments.',
-    },
-  ];
-
-  const pieChartColors = ['#4f46e5', '#7c3aed', '#db2777', '#f59e0b', '#10b981'];
 
   let cumulativePercentage = 0;
-  const gradientParts = tokenomicsData.map((item, index) => {
+  const gradientParts = tokenomicsData.map((item) => {
     const start = cumulativePercentage;
     const end = cumulativePercentage + item.percentage;
     cumulativePercentage = end;
-    return `${pieChartColors[index % pieChartColors.length]} ${start}% ${end}%`;
+    return `${item.color} ${start}% ${end}%`;
   });
   const conicGradient = `conic-gradient(${gradientParts.join(', ')})`;
 const roadmapData = [
@@ -217,7 +198,7 @@ const roadmapData = [
     <div className={styles.pageWrapper}>
       <div className={styles.container}>
         <header className={styles.header}>
-          <h1 className={styles.title}>BigRock Token Presale</h1>
+          <h1 className={styles.title}>BIGROCK Token Presale</h1>
           <div className={styles.premium}>
             <Star size={18} className={styles.premiumIcon} />
             <span>Early Access: Limited to First <b>2,000</b> Members</span>
@@ -227,8 +208,17 @@ const roadmapData = [
 
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Stage 2 is Live!</h2>
-            <span className={styles.priceBadge}>1 BIGROCK = $0.12</span>
+            <h2 className={styles.cardTitle}>Presale is Live!</h2>
+            <div className="flex flex-wrap justify-center gap-4 mt-4 w-full">
+              <div className="flex flex-col items-center px-6 py-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,238,245,0.15)]">
+                <span className="text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">Current Price</span>
+                <span className="text-2xl font-bold text-white">$0.12</span>
+              </div>
+              <div className="flex flex-col items-center px-6 py-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                <div className="flex items-center gap-2 mb-1"><TrendingUp size={14} className="text-emerald-400" /><span className="text-xs text-emerald-400 font-bold uppercase tracking-widest">Launch Price</span></div>
+                <span className="text-2xl font-bold text-white">$0.45</span>
+              </div>
+            </div>
           </div>
 
           {timeLeft && (
@@ -303,42 +293,47 @@ const roadmapData = [
           </button>
         </div>
 
+        <div className="w-full mt-12">
+          <div className="relative bg-gray-900/60 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8 md:p-12 overflow-hidden shadow-2xl">
+            {/* Background decorative elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+              Tokenomics
+            </h2>
 
-        <div className={styles.mainImage}>
-                    <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+              {/* Chart */}
+              <div className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0">
+                <div className="absolute inset-0 rounded-full opacity-75 blur-lg" style={{ background: conicGradient }}></div>
+                <div className="relative w-full h-full rounded-full shadow-2xl" style={{ background: conicGradient }}>
+                  <div className="absolute inset-4 bg-gray-900 rounded-full flex flex-col items-center justify-center z-10 shadow-inner">
+                    <span className="text-gray-400 text-sm font-bold tracking-widest uppercase mb-1">Total Supply</span>
+                    <span className="text-2xl md:text-3xl font-black text-white">1,000,000,000</span>
+                    <span className="text-cyan-400 text-sm font-bold mt-1">$BIGROCK</span>
                   </div>
-
-
-
-        <div className={styles.infoGrid}>
-          {/* Tokenomics Card */}
-          <div className={styles.card}>
-            <h2 className={styles.sectionTitle}>Tokenomics</h2>
-            <div className={styles.pieChartContainer}>
-              <div className={styles.pieChart} style={{ background: conicGradient }}>
-                <div className={styles.pieChartCenter}></div>
+                </div>
               </div>
-              <div className={styles.legend}>
-                {tokenomicsData.map((item, index) => (
-                  <div key={item.name} className={styles.legendItem}>
-                    <div
-                      className={styles.legendColorBox}
-                      style={{ backgroundColor: pieChartColors[index % pieChartColors.length] }}
-                    ></div>
-                    <span>{item.name}</span>
-                    <span className={styles.legendPercentage}>{item.percentage}%</span>
+
+              {/* Legend Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                {tokenomicsData.map((item) => (
+                  <div key={item.name} className="group relative bg-gray-800/40 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/60 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor]" style={{ backgroundColor: item.color, color: item.color }}></div>
+                        <span className="font-semibold text-gray-200">{item.name}</span>
+                      </div>
+                      <span className="font-bold text-xl" style={{ color: item.color }}>{item.percentage}%</span>
+                    </div>
+                    <div className="w-full bg-gray-700/50 rounded-full h-1.5 mt-2 overflow-hidden">
+                      <div className="h-full rounded-full transition-all duration-1000 ease-out group-hover:brightness-125" style={{ width: `${item.percentage}%`, backgroundColor: item.color }}></div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* Utility Card */}
-          <div className={styles.card}>
-            <h2 className={styles.sectionTitle}>$MAXI Utility</h2>
-            {utilityData.map((item) => (
-              <div key={item.title} className={styles.utilityItem}>{item.icon}<div><h3 className={styles.utilityTitle}>{item.title}</h3><p className={styles.utilityDescription}>{item.description}</p></div></div>
-            ))}
           </div>
         </div>
           <div className={styles.roadmapSection}>
@@ -367,6 +362,10 @@ const roadmapData = [
             ))}
           </div>
         </div>
+       <div className={styles.buttons}>
+          <Link to="" className={styles.primaryButton}>Whitepaper</Link>
+        </div>
+        
 
 
         <div className={styles.faqSection}>
