@@ -752,3 +752,28 @@
   25% { left: 120%; }
   100% { left: 120%; }
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
+  color: #08111b;
+  font-weight: 700;
+  padding: 1rem 3rem;
+  border-radius: 9999px;
+  
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(6, 238, 245, 0.4);
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(6, 238, 245, 0.6);
+}

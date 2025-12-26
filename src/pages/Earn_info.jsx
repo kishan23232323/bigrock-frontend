@@ -81,11 +81,14 @@ function Earn_info() {
 
     return (
         <div className={styles['info-page-container']}>
-            <div className={styles['page-header']}>
-                <Link to="/airdrop" className={styles['back-button']}>
+            <div className={`${styles['page-header']} flex flex-col md:flex-row items-center justify-center relative w-full mb-8 md:mb-12`}>
+                <Link to="/airdrop" className={`${styles['back-button']} self-start md:absolute md:left-0 md:top-1/2 md:-translate-y-1/2 mb-4 md:mb-0`}>
                     <IoArrowBackCircleOutline size={40} />
                 </Link>
-                <h1 className={styles['info-header']}>BigRock Airdrop Is Live!</h1>
+                <h1 className={`${styles['info-header']} text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#06eef5] via-cyan-400 to-purple-500 
+                drop-shadow-[0_0_25px_rgba(6,238,245,0.4)] tracking-tight leading-tight text-center`}>
+                    Earn Guide
+                </h1>
             </div>
             <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#ccc' }}>Complete tasks to earn your share of BIGROCK tokens.</p>
 

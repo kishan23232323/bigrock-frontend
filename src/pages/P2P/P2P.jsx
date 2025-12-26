@@ -157,10 +157,11 @@ const P2P = ({ mode = "sell" }) => {
 const P2PHeader = () => (
   <div className={styles.header}>
     <h1 className={styles.title}>P2P Trading</h1>
-    <Link  to="/info"  >
-    <button className={styles.infoButton}>
-      <GrCircleInformation size={20} />
-    </button></Link>
+    <Link to="/info">
+                <button className="group flex items-center justify-center p-3 rounded-full bg-gray-900/50 backdrop-blur-md border border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,238,245,0.25)] transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-[0_0_25px_rgba(6,238,245,0.6)] hover:scale-110">
+                  <GrCircleInformation size={24} className="group-hover:rotate-12 transition-transform" />
+                </button>
+              </Link>
   </div>
 );
 

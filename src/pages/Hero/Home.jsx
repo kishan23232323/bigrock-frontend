@@ -70,7 +70,7 @@ const Home = () => {
 
           <div className={styles.content}>
             <p className={styles.subtext}>
-              Built for traders. Powered by DeFi. Driven by Bigrock.
+              Built for traders. Powered by LI.FI. Driven by BIGROCK.
             </p>
 
 
@@ -98,13 +98,14 @@ const Home = () => {
             ))}
           </div>
         </div>
+         <Link to="/presale" className={styles.mainImage}>
+          <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
+        </Link>
         <div className={styles.buttons}>
           <Link to="" className={styles.primaryButton}>whitepaper</Link>
 
         </div>
-        <Link to="/presale" className={styles.mainImage}>
-          <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
-        </Link>
+       
 
       </section>
 

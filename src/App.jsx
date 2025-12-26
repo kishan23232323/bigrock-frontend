@@ -28,6 +28,8 @@ import ResetPassword from "./pages/ResetPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
 import Terms from "./pages/Terms";
 import ScrollToTop from "./ScrollToTop";
+import JobApplication from "./pages/JobApplication";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -124,6 +126,7 @@ function App() {
             <Route path="/admin" element={<AdminOrders />} />
             <Route path="/about" element={<About />} />
             <Route path="/career" element={<Career />} />
+            <Route path="/apply" element={<JobApplication />} />
             <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
             <Route path="/agent" element={<Agent />} />
             <Route path="/presale" element={<Presale />} />
