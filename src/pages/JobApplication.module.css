@@ -1,0 +1,137 @@
+.pageWrapper {
+  min-height: 100vh;
+  background-color: #08111b;
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  background-image: radial-gradient(circle at 10% 10%, rgba(6, 238, 245, 0.05) 0%, transparent 30%),
+                    radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #9ca3af;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.backLink:hover {
+  color: #06eef5;
+}
+
+.formCard {
+  background-color: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .formCard {
+    padding: 3rem;
+  }
+}
+
+.header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(75, 85, 99, 0.4);
+  padding-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #d1d5db;
+  margin-left: 0.25rem;
+}
+
+.input, .textarea {
+  width: 100%;
+  background-color: rgba(31, 41, 55, 0.5);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: #06eef5;
+  box-shadow: 0 0 0 2px rgba(6, 238, 245, 0.2);
+  background-color: rgba(31, 41, 55, 0.8);
+}
+
+.fileUpload {
+  position: relative;
+  border: 2px dashed rgba(75, 85, 99, 0.5);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(31, 41, 55, 0.3);
+  transition: all 0.2s;
+}
+
+.fileUpload:hover {
+  border-color: #06eef5;
+  background-color: rgba(6, 238, 245, 0.05);
+}
+
+.submitButton {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
+  color: #08111b;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s;
+  box-shadow: 0 0 20px rgba(6, 238, 245, 0.3);
+}
+
+.submitButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(6, 238, 245, 0.5);
+}
+
+.primaryButton {
+  /* Reusing the same style for consistency */
+  composes: submitButton;
+  width: auto;
+  display: inline-flex;
+  padding: 0.75rem 2rem;
+}

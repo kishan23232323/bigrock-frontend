@@ -12,6 +12,7 @@ import {
   adminApproveOrder,
   adminRejectOrder,
   adminGetAllOrders,
+  adminOrderStatusUpdate
 } from "../../services/P2Pservices/p2papi";
 
 
@@ -45,7 +46,9 @@ const PaymentDetails = ({ order }) => {
   return null;
 };
 
-const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
+const OrderDetails = ({ order, onApprove, onReject, onPreviewImage, onStatusUpdate }) => {
+  const [newStatus, setNewStatus] = useState(order.status);
+  const [updating, setUpdating] = useState(false);
 
   return (
     <div >
@@ -145,16 +148,82 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
         )}
       </div>
 
-      {order.status === "AWAITING_CONFIRMATION" && (
-        <div className={styles.actionRow}>
-          <button className={styles.approveBtn} onClick={() => onApprove(order._id)}>
-            <IoCheckmarkCircleOutline size={22} /> Approve
-          </button>
-             <button className={styles.rejectBtn} onClick={onReject}>
-            <IoCloseCircleOutline size={22} /> Reject
-          </button>
-        </div>
-      )}
+{/* ADMIN STATUS UPDATE */}
+<div className={styles.detailRow}>
+  <span className={styles.detailLabel}>Update Status</span>
+
+  <div className="flex flex-col sm:flex-row gap-3 sm:items-center w-full">
+    {/* STATUS SELECT */}
+    <select
+      value={newStatus}
+      onChange={(e) => setNewStatus(e.target.value)}
+      className="
+        w-full sm:w-55
+        rounded-lg
+        bg-black
+        border border-white/20
+        px-3 py-2
+        text-sm text-slate-400
+        outline-none
+        focus:border-blue-400
+        focus:ring-1 focus:ring-blue-400
+        transition
+      "
+    >
+      <option className="bg-black" value="PENDING">PENDING</option>
+      <option className="bg-black" value="AWAITING_CONFIRMATION">AWAITING_CONFIRMATION</option>
+      <option className="bg-black" value="COMPLETED">COMPLETED</option>
+      <option className="bg-black" value="CANCELLED">CANCELLED</option>
+    </select>
+
+    {/* APPLY BUTTON */}
+    <button
+      disabled={updating || newStatus === order.status}
+      onClick={async () => {
+        setUpdating(true);
+        await onStatusUpdate(order._id, newStatus);
+        setUpdating(false);
+      }}
+      className={`
+        px-4 py-2
+        rounded-lg
+        font-semibold
+        text-sm
+        transition
+        ${
+          updating || newStatus === order.status
+            ? "bg-white/10 border border-white/10 text-gray-400 cursor-not-allowed"
+            : "bg-green-500/20 border border-green-400/40 text-green-300 hover:bg-green-500/30"
+        }
+      `}
+    >
+      {updating ? "Updating..." : "Apply"}
+    </button>
+  </div>
+</div>
+
+
+
+{order.status === "AWAITING_CONFIRMATION" && (
+  <div className={styles.actionRow}>
+    <button
+      className={styles.approveBtn}
+      onClick={() => {
+        onApprove(order._id);
+      }}
+    >
+      <IoCheckmarkCircleOutline size={22} /> Approve
+    </button>
+
+    <button
+      className={styles.rejectBtn}
+      onClick={onReject}
+    >
+      <IoCloseCircleOutline size={22} /> Reject
+    </button>
+  </div>
+)}
+
     </div>
     </div>
   );
@@ -163,29 +232,38 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage }) => {
 const OrderRow = ({ order, expanded, onToggle }) => {
   return (
     <div className={styles.orderRow} onClick={onToggle}>
-      <div>
-        <p className={styles.orderType}>{order.type === "BUY" ? "🟢 BUY ORDER" : "🔴 SELL ORDER"}</p>
-        <p className={styles.orderSub}>{order.usdtAmount} USDT • {order.fiatAmount} {order.currency || ""}</p>
+
+      {/* LEFT SIDE */}
+      <div className={styles.leftGroup}>
+        <div>
+          <p className={styles.orderType}>
+            {order.type === "BUY" ? "🟢 BUY ORDER" : "🔴 SELL ORDER"}
+          </p>
+          <p className={styles.orderSub}>
+            {order.usdtAmount} USDT • {order.fiatAmount}
+          </p>
+        </div>
+
+        {order.cancelRequest && (
+          <span className={styles.cancelBadge}>
+            Cancel Requested
+          </span>
+        )}
       </div>
-      <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>{order.status}</span>
-      <button className={styles.expandBtn}>
-        {expanded ? <IoChevronUp size={22} /> : <IoChevronDown size={22} />}
-      </button>
-      {order.cancelRequest && (
-  <span style={{
-    marginLeft: "10px",
-    padding: "4px 8px",
-    background: "rgba(239,68,68,0.25)",
-    border: "1px solid rgba(239,68,68,0.5)",
-    borderRadius: "6px",
-    fontSize: "12px",
-    color: "#f87171"
-  }}>
-    Cancel Requested
-  </span>
-)}
+
+      {/* RIGHT SIDE (UNCHANGED) */}
+      <div className={styles.rightGroup}>
+        <span className={`${styles.statusBadge} ${styles[order.status.toLowerCase()]}`}>
+          {order.status}
+        </span>
+
+        <button className={styles.expandBtn}>
+          {expanded ? <IoChevronUp size={22} /> : <IoChevronDown size={22} />}
+        </button>
+      </div>
 
     </div>
+
   );
 };
 
@@ -195,15 +273,21 @@ const OrderCard = ({ order, onUpdate, onPreviewImage }) => {
 const [rejectReason, setRejectReason] = useState("");
 
 
-  const handleApprove = async (id) => {
-    await adminApproveOrder(id);
-    onUpdate(id, { status: "COMPLETED" });
-  };
+const handleApprove = async (id) => {
+  await adminApproveOrder(id);
+  onUpdate(id, { status: "COMPLETED" });
+};
 
-  const handleReject = async (id) => {
-    await adminRejectOrder(id);
-    onUpdate(id, { status: "REJECTED" });
-  };
+const handleStatusUpdate = async (id, status) => {
+  await adminOrderStatusUpdate(id, status);
+  onUpdate(id, { status });
+};
+
+const handleReject = async (id) => {
+  await adminRejectOrder(id);
+  onUpdate(id, { status: "REJECTED" });
+};
+
   
   useEffect(() => {
   if (showRejectModal) {
@@ -221,12 +305,14 @@ const [rejectReason, setRejectReason] = useState("");
     <div className={styles.orderCard}>
       <OrderRow order={order} expanded={expanded} onToggle={() => setExpanded(!expanded)} />
       {expanded && (
-  <OrderDetails
-    order={order}
-    onApprove={handleApprove}
-    onReject={() => setShowRejectModal(true)}
-    onPreviewImage={onPreviewImage}
-  />
+    <OrderDetails
+      order={order}
+      onApprove={handleApprove}
+      onReject={() => setShowRejectModal(true)}
+      onPreviewImage={onPreviewImage}
+      onStatusUpdate={handleStatusUpdate}
+    />
+
 )}
 {showRejectModal && (
   <div className={styles.modalOverlay}>

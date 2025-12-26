@@ -199,10 +199,11 @@ export default function AirdropPage({ onNavigate }) {
             <p className={styles.rewardsLabel}>Total Claimable</p>
             <p className={styles.rewardsAmount}>{(user?.referralPoints || 0) + (!user?.walletPointsClaimed ? 500 : 0)} BIGROCK</p>
           </div>
-          <Link to="/earninfo"  >
-            <button className={styles.infoButton}>
-              <GrCircleInformation size={20} />
-            </button></Link>
+          <Link to="/earninfo">
+            <button className="group flex items-center justify-center p-3 rounded-full bg-gray-900/50 backdrop-blur-md border border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,238,245,0.25)] transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-[0_0_25px_rgba(6,238,245,0.6)] hover:scale-110">
+              <GrCircleInformation size={24} className="group-hover:rotate-12 transition-transform" />
+            </button>
+          </Link>
         </div>
 
 

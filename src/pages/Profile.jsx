@@ -3,8 +3,152 @@ import styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { getMyOrders } from "../services/P2Pservices/p2papi";
+import { getMyOrders, requestCancelOrder } from "../services/P2Pservices/p2papi";
 import { useEffect, useState } from "react";
+import {  IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
+
+const TradeItem = ({ trade, getTradeIcon, setTrades }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const Icon = getTradeIcon(trade.status);
+
+  const handleCancelRequest = async () => {
+    try {
+      setLoading(true);
+      await requestCancelOrder(trade._id);
+      setTrades((prev) =>
+        prev.map((t) =>
+          t._id === trade._id ? { ...t, cancelRequest: true } : t
+        )
+      );
+      setShowConfirm(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+  if (showConfirm) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [showConfirm]);
+
+  return (
+    <motion.div>
+      {/* MAIN ROW (UNCHANGED) */}
+      <motion.div
+        className={styles.tradeItem}
+        whileHover={{ scale: 1.05 }}
+      >
+        <Icon size={20} />
+
+        <div className={styles.tradeDetails}>
+          <div className={styles.tradeAmount}>
+            {trade.type} — {trade.usdtAmount} USDT
+          </div>
+
+          <div
+            className={`${styles.tradeStatus} ${
+              styles[`status${trade.status}`]
+            }`}
+          >
+            {trade.status}
+          </div>
+        </div>
+
+        <button
+          onClick={() => setExpanded((p) => !p)}
+          className="text-slate-400 hover:text-white transition"
+        >
+          {expanded ? <IoChevronUpOutline size={20} /> : <IoChevronDownOutline size={20} />}
+        </button>
+      </motion.div>
+
+      {/* EXPANDED DETAILS */}
+      {expanded && (
+        <motion.div
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-3 rounded-xl border border-slate-700/50 bg-slate-900/60 backdrop-blur p-4 text-sm"
+        >
+          {/* DETAILS GRID */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-300">
+            <div><span className="text-slate-400">Order ID:</span> {trade._id}</div>
+            <div><span className="text-slate-400">Country:</span> {trade.country}</div>
+            <div><span className="text-slate-400">Network:</span> {trade.network}</div>
+            <div><span className="text-slate-400">Payment:</span> {trade.paymentMethod}</div>
+            <div><span className="text-slate-400">Fiat:</span> {trade.fiatAmount}</div>
+            <div>
+              <span className="text-slate-400">Created:</span>{" "}
+              {new Date(trade.createdAt).toLocaleString()}
+            </div>
+          </div>
+
+          {/* ACTION AREA */}
+          <div className="mt-4 flex items-center justify-between">
+            {trade.cancelRequest && (
+              <span className="text-amber-400 font-medium">
+                Cancel request already sent
+              </span>
+            )}
+
+            {trade.status === "AWAITING_CONFIRMATION" && !trade.cancelRequest && (
+              <button
+                onClick={() => setShowConfirm(true)}
+                className="ml-auto rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 text-red-400 hover:bg-red-500/20 transition font-semibold"
+              >
+                Request Cancel
+              </button>
+            )}
+          </div>
+        </motion.div>
+      )}
+
+      {/* CONFIRM MODAL */}
+{showConfirm && (
+  <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm">
+    <div className="w-full max-w-sm rounded-xl bg-black border border-slate-700 p-6 m-6">
+      <h3 className="text-lg font-semibold text-red-500">
+        Confirm Cancel Request
+      </h3>
+
+      <p className="mt-2 text-sm text-slate-400">
+        Are you sure you want to send a cancel request for this trade?
+        This action cannot be undone.
+      </p>
+
+      <div className="mt-5 flex justify-end gap-3">
+        <button
+          onClick={() => setShowConfirm(false)}
+          className="px-4 py-2 rounded-lg cursor-pointer text-green-500 hover:bg-slate-800"
+        >
+          No
+        </button>
+
+        <button
+          disabled={loading}
+          onClick={handleCancelRequest}
+          className="px-4 py-2 rounded-lg bg-red-600 cursor-pointer text-red-500 hover:bg-red-700 disabled:opacity-50"
+        >
+          {loading ? "Sending..." : "Yes, Cancel"}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+    </motion.div>
+  );
+};
+
+
 
 export default function ProfilePage() {
   const { accessToken, user } = useSelector((state) => state.auth || {});
@@ -114,30 +258,15 @@ export default function ProfilePage() {
             </p>
           ) : (
             <div className={styles.tradeList}>
-              {trades.map((trade) => {
-                const Icon = getTradeIcon(trade.status);
-                return (
-                  <motion.div
-                    key={trade._id}
-                    className={styles.tradeItem}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Icon size={20} />
-                    <div className={styles.tradeDetails}>
-                      <div className={styles.tradeAmount}>
-                        {trade.type} — {trade.usdtAmount} USDT
-                      </div>
-                      <div
-                        className={`${styles.tradeStatus} ${
-                          styles[`status${trade.status}`]
-                        }`}
-                      >
-                        {trade.status}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+            {trades.map((trade) => (
+              <TradeItem
+                key={trade._id}
+                trade={trade}
+                getTradeIcon={getTradeIcon}
+                setTrades={setTrades}
+              />
+            ))}
+
             </div>
           )}
         </motion.div>
