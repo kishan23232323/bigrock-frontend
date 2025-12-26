@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
-import { LiFiWidgetEventsListener } from "../../components/Widget/LifiWidgetEventListener.jsx";
+import { LifiWidgetEventListener } from "../../components/Widget/LifiWidgetEventListener.jsx";
 import LiFiWidgetComponent from "../../components/Widget/LifiWidget.jsx";
 
 const cardInfo = [
@@ -63,7 +63,7 @@ const Home = () => {
           </div> */}
           <div className={styles.WidgetSection} style={{ marginBottom: "4rem", minHeight: "520px", position: "relative", zIndex: 10 }}>
             <div className={styles.WidgetWrap}>
-              <LiFiWidgetEventsListener />
+              <LifiWidgetEventListener />
               <LiFiWidgetComponent />
             </div>
           </div>
@@ -82,7 +82,7 @@ const Home = () => {
             <RubicWidget />
           </div> */}
         </div>
-        
+
 
         <div className={styles.cardsSection}>
 

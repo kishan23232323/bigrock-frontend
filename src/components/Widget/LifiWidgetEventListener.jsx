@@ -1,44 +1,39 @@
-import { useEffect } from "react";
-import { useWidgetEvents, WidgetEvent } from "@lifi/widget";
-import { storeSwapTransaction } from "../../services/Swap/swapapi";
+import { useWidgetEvents, WidgetEvent } from '@lifi/widget';
+import { useEffect } from 'react';
+import { storeSwapTransaction } from '../../services/Swap/swapapi';
+import { useAccount } from 'wagmi';
 
-export function LiFiWidgetEventsListener() {
+export const LifiWidgetEventListener = () => {
     const widgetEvents = useWidgetEvents();
 
+    const { address } = useAccount();
+
     useEffect(() => {
-        const handler = async (route) => {
+
+        const onRouteExecutionCompleted = async (route) => {
             try {
-                if (!route?.steps?.length) return;
+                const internalTxnHash = route.steps?.[0]?.execution?.internalTxLink
 
-                for (const step of route.steps) {
-                    const processes = step.execution?.process ?? [];
-
-                    for (const process of processes) {
-                        if (
-                            process.status === "DONE" &&
-                            process.txHash
-                        ) {
-                            await storeSwapTransaction({
-                                userAddress: route.fromAddress,
-                                txHash: process.txHash,
-                            });
-
-                            console.log("✅ Swap stored:", process.txHash);
-                        }
-                    }
-                }
-            } catch (err) {
-                console.error("❌ LI.FI swap store failed", err);
+                console.log('onRouteExecution_Completed fired.', route);
+                console.log('internalTxnHash:', internalTxnHash);
+                await storeSwapTransaction({
+                    userAddress: address,
+                    internalTxnHash,
+                });
+            }
+            catch (err) {
+                console.error('Failed to store swap:', err);
             }
         };
 
-        widgetEvents.on(
-            WidgetEvent.RouteExecutionUpdated,
-            handler
-        );
 
-        return () => widgetEvents.all.clear();
+        widgetEvents.on(WidgetEvent.RouteExecutionCompleted, onRouteExecutionCompleted);
+
+
+        return () => {
+            widgetEvents.all.clear();
+        };
     }, [widgetEvents]);
 
     return null;
-}
+};
