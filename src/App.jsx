@@ -118,6 +118,13 @@ function App() {
                 </Protected>
               }
             />
+             <Route path="/agent" element={
+              <Protected>
+                <Agent />
+              </Protected>
+              } 
+              />
+
             <Route path="/airdrop" element={<Airdrop />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/p2p" element={<P2P />} />
@@ -128,7 +135,6 @@ function App() {
             <Route path="/career" element={<Career />} />
             <Route path="/apply" element={<JobApplication />} />
             <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
-            <Route path="/agent" element={<Agent />} />
             <Route path="/presale" element={<Presale />} />
             <Route path="/info" element={<Info />} />
             <Route path="/earninfo" element={<Earn_info />} />

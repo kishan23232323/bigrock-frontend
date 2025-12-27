@@ -1,16 +1,19 @@
  import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { applyForAgent } from '../services/Agent/agentapi';
+import { useNavigate } from 'react-router-dom';
  
  function Agent() {
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
+    phoneNumber: '',
     dob: '',
-    telegramId: '',
+    socialId: '',
   });
   const [addressProof, setAddressProof] = useState(null);
   const [identityProof, setIdentityProof] = useState(null);
+
+  const user = useSelector((state) => state.auth.user);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,15 +32,41 @@ import { toast } from 'react-toastify';
     }
   };
 
-  const handleSubmit = (e) => {
+  const[loading, setLoading]= useState(false);
+  const Navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log({
-      ...formData,
+     if (!addressProof || !identityProof) {
+    toast.error("Please upload both address and identity proof");
+    return;
+  }
+  try {
+    setLoading(true);
+    await applyForAgent({
+      phoneNumber: formData.phoneNumber,
+      dob: formData.dob,
+      socialId: formData.socialId,
       addressProof,
       identityProof,
+    })
+    toast.success('Agent application submitted successfully!');
+    setFormData({
+      phoneNumber: "",
+      dob: "",
+      socialId: "",
     });
-    toast.success('Agent application submitted!');
+    setAddressProof(null);
+    setIdentityProof(null);
+    Navigate('/profile');
+
+  } catch (error) {
+    toast.error(error.message || 'Failed to submit agent application');
+    return;
+  } finally {
+    setLoading(false);  
+  }
+
   };
 
   return (
@@ -51,19 +80,19 @@ import { toast } from 'react-toastify';
           {/* Name */}
           <div>
             <label className="block text-sm font-medium text-gray-400">Full Name</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your full name" />
+            <input type="text" name="name" value={user.name.toUpperCase()} disabled onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your full name" />
           </div>
 
-          {/* Phone */}
+          {/* phoneNumber */}
           <div>
             <label className="block text-sm font-medium text-gray-400">Phone Number</label>
-            <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your phone number" />
+            <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your Phone number" />
           </div>
 
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-400">Email Address</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your email" />
+            <input type="email" name="email" value={user.email} disabled onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your email" />
           </div>
 
           {/* Date of Birth */}
@@ -75,7 +104,7 @@ import { toast } from 'react-toastify';
           {/* Telegram/Social ID */}
           <div>
             <label className="block text-sm font-medium text-gray-400">Telegram / Social ID</label>
-            <input type="text" name="telegramId" value={formData.telegramId} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your Telegram or other social ID" />
+            <input type="text" name="socialId" value={formData.socialId} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your Telegram or other social ID" />
           </div>
 
           {/* Proof of Address */}
