@@ -15,7 +15,7 @@ export default function LiFiWidgetComponent() {
 
     const { openConnectModal } = useConnectModal();
     const { isConnected } = useAccount();
-
+     const isMobile = /Android|iPhone/i.test(navigator.userAgent);
 
     const widgetConfig = useMemo(() => ({
         variant: "compact",
@@ -53,12 +53,20 @@ export default function LiFiWidgetComponent() {
             executionOptions: {
             disableMessageSigning: true,
             },
+            bridgeAndSwap: {
+                autoApproveDelay: 800,
+            },
         },
 
     }), [openConnectModal]);
 
     return (
         <>
+         {isMobile && (
+        <div className="mb-3 rounded-md bg-yellow-900/30 p-3 text-sm text-yellow-200">
+          If you don’t see the confirmation request, please reopen your wallet app.
+        </div>
+      )}
             <LiFiWidget
                 integrator="Bigrock-Exchange"
                 config={widgetConfig}
