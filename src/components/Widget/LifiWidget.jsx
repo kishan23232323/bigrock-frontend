@@ -44,7 +44,15 @@ export default function LiFiWidgetComponent() {
                 }
             },
             forceWalletConnect: true,
-            //disableSolana: true, // because you installed solana adapter
+            usePartialWalletManagement: true,
+            walletConnect:{
+                projectId: '9f028ef985d9cf1bacdfea0f961c9a85',
+            }
+        },
+         sdkConfig: {
+            executionOptions: {
+            disableMessageSigning: true,
+            },
         },
 
     }), [openConnectModal]);
