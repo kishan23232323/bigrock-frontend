@@ -59,7 +59,7 @@ export default function LiFiWidgetComponent() {
 
     return (
        <div className="mx-auto max-w-md p-4">
-  {!isMobile && (
+  {isMobile && (
     <div className="mb-3 rounded-md bg-yellow-900/30 p-3 text-center text-sm wrap-break-word text-yellow-200">
       If you don’t see the confirmation request, please reopen your wallet app.
     </div>
