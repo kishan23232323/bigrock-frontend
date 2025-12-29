@@ -309,4 +309,31 @@
   }
 }
 
+.suspended {
+  background: rgba(15, 2, 248, 0.871);
+  color: #088be3;
+}
+.approved {
+  background: rgba(16, 185, 129, 0.2);
+  color: #4ade80;
+}
+.rejected {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.pending {
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+}
 
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: #000; /* PURE BLACK */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000; /* force top */
+  padding: 10px;
+}

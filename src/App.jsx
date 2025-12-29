@@ -29,6 +29,8 @@ import EditProfile from "./components/EditProfile/EditProfile";
 import Terms from "./pages/Terms";
 import ScrollToTop from "./ScrollToTop";
 import JobApplication from "./pages/JobApplication";
+import AdminAgentApplications from "./pages/AdminPanel/AdminAgent";
+import AdminDashboard from "./pages/AdminPanel/AdminDashboard";
 
 
 function App() {
@@ -125,12 +127,26 @@ function App() {
               } 
               />
 
+              <Route path="/admin/agents-applications" element={
+                <Protected>
+                  <AdminAgentApplications />
+                </Protected>} />
+
+              <Route path ="/admin/orders" element={
+                <Protected>
+                  <AdminOrders />
+                </Protected>} />
+
+               <Route path ="/admin" element={
+                <Protected>
+                  <AdminDashboard/>
+                </Protected>} />
+
             <Route path="/airdrop" element={<Airdrop />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/p2p" element={<P2P />} />
             <Route path="/p2p/sell" element={<P2P mode="sell" />} />
             <Route path="/p2p/buy" element={<P2P mode="buy" />} />
-            <Route path="/admin" element={<AdminOrders />} />
             <Route path="/about" element={<About />} />
             <Route path="/career" element={<Career />} />
             <Route path="/apply" element={<JobApplication />} />

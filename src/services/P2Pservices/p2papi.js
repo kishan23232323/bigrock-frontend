@@ -183,9 +183,9 @@ export const adminRejectOrder = async (orderId, reason) => {
 };
 
 // Get all orders (admin)
-export const adminGetAllOrders = async ({ page = 1, search = "" }) => {
+export const adminGetAllOrders = async ({ page = 1, search = "", limit=10 }) => {
   try {
-    const response = await API.get(`/api/v1/p2p/admin/all-orders?page=${page}&limit=20&search=${encodeURIComponent(search)}`);
+    const response = await API.get(`/api/v1/p2p/admin/all-orders?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`);
     return response.data?.data;
   } catch (error) {
     throw error.response ? error.response.data : error;
