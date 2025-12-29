@@ -12,7 +12,7 @@ import {
   adminAcceptAgent,
   adminRejectAgent,
   adminChangeAgentStatus,
- } from "../../services/Agent/agentApi";
+ } from "../../services/Agent/agentapi";
 
 
 const AgentRow = ({ agent, expanded, onToggle }) => (
