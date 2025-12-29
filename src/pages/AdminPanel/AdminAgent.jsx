@@ -7,13 +7,13 @@ import {
   IoCloseCircleOutline,
   IoImageOutline,
 } from "react-icons/io5";
-
 import {
   adminGetAgentApplications,
   adminAcceptAgent,
   adminRejectAgent,
   adminChangeAgentStatus,
-} from "../../services/agent/agentApi";
+ } from "../../services/Agent/agentApi";
+
 
 const AgentRow = ({ agent, expanded, onToggle }) => (
   <div className={styles.orderRow} onClick={onToggle}>
