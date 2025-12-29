@@ -31,6 +31,7 @@ import ScrollToTop from "./ScrollToTop";
 import JobApplication from "./pages/JobApplication";
 import AdminAgentApplications from "./pages/AdminPanel/AdminAgent";
 import AdminDashboard from "./pages/AdminPanel/AdminDashboard";
+import AdminProtected from "./components/AdminProtected";
 
 
 function App() {
@@ -128,19 +129,19 @@ function App() {
               />
 
               <Route path="/admin/agents-applications" element={
-                <Protected>
+                <AdminProtected>
                   <AdminAgentApplications />
-                </Protected>} />
+                </AdminProtected>} />
 
               <Route path ="/admin/orders" element={
-                <Protected>
+                <AdminProtected>
                   <AdminOrders />
-                </Protected>} />
+                </AdminProtected>} />
 
                <Route path ="/admin" element={
-                <Protected>
+                <AdminProtected>
                   <AdminDashboard/>
-                </Protected>} />
+                </AdminProtected>} />
 
             <Route path="/airdrop" element={<Airdrop />} />
             <Route path="/profile" element={<Profile />} />
