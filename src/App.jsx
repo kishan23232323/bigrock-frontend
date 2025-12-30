@@ -37,13 +37,11 @@ import AdminProtected from "./components/AdminProtected";
 function App() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = accessToken || localStorage.getItem("accessToken");
 
     if (!token) {
-      setLoading(false);
       dispatch(logout());
       return;
     }
@@ -65,9 +63,6 @@ function App() {
         console.log("App.jsx :: error in getUserProfile", error);
         dispatch(logout());
       })
-      .finally(() => {
-        setLoading(false);
-      });;
   }, [accessToken, dispatch]);
 
   return (
@@ -75,100 +70,68 @@ function App() {
       <NavBar />
       <ScrollToTop />
       <div className="contentWrapper">
-        {loading ? (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "60vh",
-              flexDirection: "column",
-              gap: 12,
-            }}
-          >
-            <div
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: "50%",
-                border: "5px solid rgba(6,238,245,0.15)",
-                borderTopColor: "#06eef5",
-                animation: "spin 1s linear infinite",
-              }}
-            />
-            <div style={{ color: "#aaa" }}>Loading...</div>
-
-            <style>
-              {`@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}`}
-            </style>
-          </div>
-        ) : (
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/login"
-              element={
-                <Protected authenication={false}>
-                  <Login />
-                </Protected>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <Protected authenication={false}>
-                  <Register />
-                </Protected>
-              }
-            />
-             <Route path="/agent" element={
-              <Protected>
-                <Agent />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={
+              <Protected authenication={false}>
+                <Login />
               </Protected>
-              } 
-              />
-
-              <Route path="/admin/agents-applications" element={
-                <AdminProtected>
-                  <AdminAgentApplications />
-                </AdminProtected>} />
-
-              <Route path ="/admin/orders" element={
-                <AdminProtected>
-                  <AdminOrders />
-                </AdminProtected>} />
-
-               <Route path ="/admin" element={
-                <AdminProtected>
-                  <AdminDashboard/>
-                </AdminProtected>} />
-
-            <Route path="/airdrop" element={<Airdrop />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/p2p" element={<P2P />} />
-            <Route path="/p2p/sell" element={<P2P mode="sell" />} />
-            <Route path="/p2p/buy" element={<P2P mode="buy" />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/career" element={<Career />} />
-            <Route path="/apply" element={<JobApplication />} />
-            <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
-            <Route path="/presale" element={<Presale />} />
-            <Route path="/info" element={<Info />} />
-            <Route path="/earninfo" element={<Earn_info />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/reset-password/:token" element={<ResetPassword/>} />
-            <Route path ="/edit-profile" element={
-              <Protected>
-                <EditProfile/>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Protected authenication={false}>
+                <Register />
               </Protected>
-            }/>
-            <Route path="/terms" element={<Terms />} />
+            }
+          />
+          <Route path="/agent" element={
+            <Protected>
+              <Agent />
+            </Protected>
+          }
+          />
 
+          <Route path="/admin/agents-applications" element={
+            <AdminProtected>
+              <AdminAgentApplications />
+            </AdminProtected>} />
 
-            
-          </Routes>
-        )}
+          <Route path="/admin/orders" element={
+            <AdminProtected>
+              <AdminOrders />
+            </AdminProtected>} />
+
+          <Route path="/admin" element={
+            <AdminProtected>
+              <AdminDashboard />
+            </AdminProtected>} />
+
+          <Route path="/airdrop" element={<Airdrop />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/p2p" element={<P2P />} />
+          <Route path="/p2p/sell" element={<P2P mode="sell" />} />
+          <Route path="/p2p/buy" element={<P2P mode="buy" />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/career" element={<Career />} />
+          <Route path="/apply" element={<JobApplication />} />
+          <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
+          <Route path="/presale" element={<Presale />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/earninfo" element={<Earn_info />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/edit-profile" element={
+            <Protected>
+              <EditProfile />
+            </Protected>
+          } />
+          <Route path="/terms" element={<Terms />} />
+        </Routes>
       </div>
 
       <Footer />
