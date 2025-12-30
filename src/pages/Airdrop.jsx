@@ -24,8 +24,8 @@ import { useWeb3 } from "../../context/Web3Context.jsx";
 //   { id: 5, label: "Follow us on X", icon: <FaXTwitter />, status: "Follow" },
 // ];
 const initialAirdropData = [
-  { id: 2, name: "Early Bird Bonus", amount: "500 BIGROCK", status: "CLAIMABLE", icon: "✓" },
-  { id: 3, name: "Referral Rewards", amount: "1250 BIGROCK", status: "LOCKED", icon: "!" },
+  { id: 2, name: "Early Bird Bonus", amount: "0 BIGROCK", status: "CLAIMABLE", icon: "✓" },
+  { id: 3, name: "Referral Rewards", amount: "0 BIGROCK", status: "LOCKED", icon: "!" },
 ];
 
 export default function AirdropPage({ onNavigate }) {
