@@ -1,4 +1,4 @@
-export const airdropContractAddress = "0xbEAB49CBb9bDb36A77F64ee279eC4BF6aED18F5d";
+export const airdropContractAddress = "0x5cFd5d7A50799CeDBEf0A3491b00c8DfAc38E708";
 export const rewardContractAddress = "0xabcdef1234567890abcdef1234567890abcdef12";
 
 export const airdropABI = [
