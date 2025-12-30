@@ -3,6 +3,9 @@ import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
 import { LifiWidgetEventListener } from "../../components/Widget/LifiWidgetEventListener.jsx";
 import LiFiWidgetComponent from "../../components/Widget/LifiWidget.jsx";
+import { useAccount, useAccountEffect } from "wagmi";
+import { saveWalletAddress } from "../../services/Airdrops/airdropsapi.js";
+import { toast } from "react-toastify";
 
 const cardInfo = [
   {
@@ -33,6 +36,25 @@ const cardInfo = [
 ];
 
 const Home = () => {
+
+  const { address } = useAccount();
+
+  useAccountEffect({
+    onConnect({ address }) {
+      if (!token) return;
+      if (!address) return;
+      console.log("Connected address:", address);
+      saveWalletAddress({ walletAddress: address, token })
+        .then(() => {
+          toast.success("Wallet connected");
+        })
+        .catch((err) => {
+          toast.error(err?.message || "Failed to save wallet");
+        });
+    },
+  });
+
+
   return (
     <div className={styles.homeContainer}>
       <div className={styles.bgAnimation}>
@@ -98,14 +120,14 @@ const Home = () => {
             ))}
           </div>
         </div>
-         <Link to="/presale" className={styles.mainImage}>
+        <Link to="/presale" className={styles.mainImage}>
           <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
         </Link>
         <div className={styles.buttons}>
           <Link to="" className={styles.primaryButton}>whitepaper</Link>
 
         </div>
-       
+
 
       </section>
 
