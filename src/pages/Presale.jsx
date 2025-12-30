@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Zap, Award, Trophy, Rocket, ChevronDown, Star, TrendingUp } from 'lucide-react';
+import { Zap, Award, Trophy, Rocket, ChevronDown, Star, TrendingUp, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styles from './Presale.module.css';
  
@@ -53,11 +53,14 @@ import styles from './Presale.module.css';
   const presaleProgress = 75; // 75%
 
   const tokenomicsData = [
-    { name: 'Marketing', percentage: 40, color: '#06eef5' },
-    { name: 'Maxi Fund', percentage: 25, color: '#a855f7' },
-    { name: 'Dev Team', percentage: 15, color: '#ec4899' },
-    { name: 'Liquidity', percentage: 15, color: '#f59e0b' },
-    { name: 'Staking', percentage: 5, color: '#10b981' },
+    
+    { name: 'Presale', percentage: 25, color: '#a855f7' },
+    { name: 'Liquidity', percentage: 15, color: '#f59e0b', vesting: 'Locked 12–24 months' },
+    { name: 'User Rewards', percentage: 30, color: '#10b981', vesting: '0.5% every 6 months' },
+    { name: 'Marketing', percentage: 10, color: '#06eef5', vesting: '12-month cliff + 24-month vesting' },
+    { name: 'Treasury', percentage: 10, color: '#facc15' },
+    { name: 'Team', percentage: 5, color: '#ec4899', vesting: '12-month cliff + 36-month vesting' },
+    { name: 'Advisors', percentage: 5, color: '#3b82f6', vesting: '12-month cliff + 24-month vesting' },
   ];
 
   let cumulativePercentage = 0;
@@ -68,30 +71,60 @@ import styles from './Presale.module.css';
     return `${item.color} ${start}% ${end}%`;
   });
   const conicGradient = `conic-gradient(${gradientParts.join(', ')})`;
+
 const roadmapData = [
     {
-      quarter: 'Q4 2025',
-      title: 'Project Inception & Whitepaper',
+      quarter: 'Phase 1',
+      title: 'Platform Ready & Public Launch',
       status: 'Completed',
-      details: 'Initial concept, team formation, and drafting the foundational whitepaper outlining BigRock\'s vision.'
+      details: [
+        'DEX Aggregator live (60+ blockchains, 10,000+ tokens)',
+        'Non-custodial wallet-based swaps',
+        'P2P crypto buy/sell module',
+        'WalletConnect integration',
+        'User dashboard & profile system',
+        'Backend & transaction tracking',
+        'Official public launch of Bigrock Exchange'
+      ]
     },
     {
-      quarter: 'Q1 2026',
-      title: 'Token Presale & DEX Launch',
+      quarter: 'Phase 2',
+      title: 'Presale & Early Community',
       status: 'In Progress',
-      details: 'Conducting the public presale event and launching the core decentralized exchange on the mainnet.'
+      details: [
+        'Goal: Capital + Core Users',
+        'BIGROCK token presale (Premium 2,000 members)',
+        'Fundraise Target: $222,791',
+        'Fixed Entry: $111.40 per member',
+        'Community onboarding & referral activation',
+        'Transparency on token allocation & vesting'
+      ]
     },
     {
-      quarter: 'Q2 2026',
-      title: 'Advanced Trading Features',
+      quarter: 'Phase 3',
+      title: 'Liquidity & Token Activation',
       status: 'Planned',
-      details: 'Integration of limit orders, advanced charting tools, and expanded asset support.'
+      details: [
+        'Goal: Utility-driven token usage',
+        'Liquidity deployment on DEX',
+        'BIGROCK token DEX listing',
+        'Launch price at 1.5× presale',
+        'Airdrop rewards for swap transactions',
+        'Users receive BIGROCK based on swap volume'
+      ]
     },
     {
-      quarter: 'Q3 2026',
-      title: 'Governance & Staking V2',
+      quarter: 'Phase 4',
+      title: 'Growth & Market Expansion',
       status: 'Planned',
-      details: 'Launching the governance DAO and introducing enhanced staking and yield farming opportunities.'
+      details: [
+        'Goal: Scale users & volume',
+        'Focus: Singapore, USA, Turkey, Nigeria, India, Indonesia, Brazil',
+        'Strategic partnerships (wallets, protocols)',
+        'Influencer & ecosystem marketing',
+        'P2P agent onboarding & liquidity programs',
+        'Volume-based incentives & analytics'
+      ]
     }
   ];
 
@@ -299,8 +332,8 @@ const roadmapData = [
             <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
             
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
-              Tokenomics
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white drop-shadow-lg">
+              Bigrock Exchange Tokenomics
             </h2>
 
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
@@ -309,15 +342,15 @@ const roadmapData = [
                 <div className="absolute inset-0 rounded-full opacity-75 blur-lg" style={{ background: conicGradient }}></div>
                 <div className="relative w-full h-full rounded-full shadow-2xl" style={{ background: conicGradient }}>
                   <div className="absolute inset-4 bg-gray-900 rounded-full flex flex-col items-center justify-center z-10 shadow-inner">
-                    <span className="text-gray-400 text-sm font-bold tracking-widest uppercase mb-1">Total Supply</span>
-                    <span className="text-2xl md:text-3xl font-black text-white">1,000,000,000</span>
-                    <span className="text-cyan-400 text-sm font-bold mt-1">$BIGROCK</span>
+                    <span className="text-fuchsia-400 text-sm font-extrabold tracking-widest uppercase mb-1">Total Supply</span>
+                    <span className="text-2xl md:text-3xl font-black text-white">10,000,000,000</span>
+                    <span className="text-yellow-400 text-sm font-extrabold mt-1">$BIGROCK</span>
                   </div>
                 </div>
               </div>
 
               {/* Legend Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+              <div className="grid grid-cols-1 gap-4 w-full">
                 {tokenomicsData.map((item) => (
                   <div key={item.name} className="group relative bg-gray-800/40 border border-gray-700/50 rounded-xl p-4 hover:bg-gray-800/60 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/30">
                     <div className="flex items-center justify-between mb-2">
@@ -330,6 +363,12 @@ const roadmapData = [
                     <div className="w-full bg-gray-700/50 rounded-full h-1.5 mt-2 overflow-hidden">
                       <div className="h-full rounded-full transition-all duration-1000 ease-out group-hover:brightness-125" style={{ width: `${item.percentage}%`, backgroundColor: item.color }}></div>
                     </div>
+                    {item.vesting && (
+                      <div className="flex items-center gap-2 mt-3 text-xs font-medium text-gray-400 bg-black/20 py-2 px-3 rounded-lg border border-gray-700/30 w-fit">
+                        <Lock size={12} className="text-gray-500" />
+                        <span className="text-gray-300">{item.vesting}</span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -356,7 +395,14 @@ const roadmapData = [
                     <span className={`${styles.timelineStatus} ${styles[`statusText${item.status.replace(' ', '')}`]}`}>{item.status}</span>
                   </div>
                   <h3 className={styles.timelineCardTitle}>{item.title}</h3>
-                  <p className={styles.timelineDetails}>{item.details}</p>
+                  <ul className="space-y-2 mt-3">
+                    {item.details.map((detail, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-gray-400">
+                        <span className="text-cyan-400 mt-1.5 text-[6px] flex-shrink-0">●</span>
+                        <span className="leading-relaxed">{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}

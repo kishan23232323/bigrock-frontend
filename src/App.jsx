@@ -29,6 +29,9 @@ import EditProfile from "./components/EditProfile/EditProfile";
 import Terms from "./pages/Terms";
 import ScrollToTop from "./ScrollToTop";
 import JobApplication from "./pages/JobApplication";
+import AdminAgentApplications from "./pages/AdminPanel/AdminAgent";
+import AdminDashboard from "./pages/AdminPanel/AdminDashboard";
+import AdminProtected from "./components/AdminProtected";
 
 
 function App() {
@@ -118,17 +121,37 @@ function App() {
                 </Protected>
               }
             />
+             <Route path="/agent" element={
+              <Protected>
+                <Agent />
+              </Protected>
+              } 
+              />
+
+              <Route path="/admin/agents-applications" element={
+                <AdminProtected>
+                  <AdminAgentApplications />
+                </AdminProtected>} />
+
+              <Route path ="/admin/orders" element={
+                <AdminProtected>
+                  <AdminOrders />
+                </AdminProtected>} />
+
+               <Route path ="/admin" element={
+                <AdminProtected>
+                  <AdminDashboard/>
+                </AdminProtected>} />
+
             <Route path="/airdrop" element={<Airdrop />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/p2p" element={<P2P />} />
             <Route path="/p2p/sell" element={<P2P mode="sell" />} />
             <Route path="/p2p/buy" element={<P2P mode="buy" />} />
-            <Route path="/admin" element={<AdminOrders />} />
             <Route path="/about" element={<About />} />
             <Route path="/career" element={<Career />} />
             <Route path="/apply" element={<JobApplication />} />
             <Route path="/sonic-insentive" element={<Sonic_Incentive />} />
-            <Route path="/agent" element={<Agent />} />
             <Route path="/presale" element={<Presale />} />
             <Route path="/info" element={<Info />} />
             <Route path="/earninfo" element={<Earn_info />} />
