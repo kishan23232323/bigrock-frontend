@@ -22,10 +22,10 @@ const adminCards = [
     accent: "from-emerald-500/20 to-green-500/20",
   },
   {
-    title: "Users",
-    description: "Manage platform users (coming soon)",
+    title: "Airdrop Panel",
+    description: "Manage airdrop allocations and subscriptions",
     icon: IoPeopleOutline,
-    disabled: true,
+    route: "/admin/airdrop-panel",
   },
   {
     title: "Reports",

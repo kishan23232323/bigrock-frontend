@@ -32,6 +32,7 @@ import JobApplication from "./pages/JobApplication";
 import AdminAgentApplications from "./pages/AdminPanel/AdminAgent";
 import AdminDashboard from "./pages/AdminPanel/AdminDashboard";
 import AdminProtected from "./components/AdminProtected";
+import AdminAirdropPanel from "./pages/AdminPanel/AdminAirdropPanel";
 
 
 function App() {
@@ -108,6 +109,11 @@ function App() {
           <Route path="/admin" element={
             <AdminProtected>
               <AdminDashboard />
+            </AdminProtected>} />
+
+          <Route path="/admin/airdrop-panel" element={
+            <AdminProtected>
+              <AdminAirdropPanel />
             </AdminProtected>} />
 
           <Route path="/airdrop" element={<Airdrop />} />
