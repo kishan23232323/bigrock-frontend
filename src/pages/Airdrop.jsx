@@ -108,7 +108,7 @@ export default function AirdropPage({ onNavigate }) {
 
       if (mounted) {
         setAirdropData([
-          { id: 2, name: "Early Bird Bonus", amount: "500 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
+          { id: 2, name: "Early Bird Bonus", amount: "100 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
           { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : (user.referredCount > 0 ? "CLAIMED" : "LOCKED"), icon: "!" },
         ]);
       }
