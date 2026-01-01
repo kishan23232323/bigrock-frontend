@@ -1,5 +1,7 @@
-export const airdropContractAddress = "0x5cFd5d7A50799CeDBEf0A3491b00c8DfAc38E708";
-export const rewardContractAddress = "0xabcdef1234567890abcdef1234567890abcdef12";
+// export const airdropContractAddress = import.meta.env.VITE_AIRDROP_CONTRACT_ADDRESS; // will be used in future
+// export const rewardContractAddress = import.meta.env.VITE_REWARD_CONTRACT_ADDRESS; // will be used in future
+export const airdropContractAddress = "0x90047677CE8296438F4DC78CCdA4b08560A8cf04";
+export const rewardContractAddress = "0xa9Ac8B828235FeD7764e9C8D4C5c314D7b15c2A6";
 
 export const airdropABI = [
     {
@@ -168,6 +170,12 @@ export const airdropABI = [
                 "internalType": "address",
                 "name": "to",
                 "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
             }
         ],
         "name": "ReferRewardAllocationRemoved",
@@ -308,6 +316,12 @@ export const airdropABI = [
                 "internalType": "address",
                 "name": "to",
                 "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
             }
         ],
         "name": "SwapRewardAllocationRemoved",
@@ -356,6 +370,19 @@ export const airdropABI = [
             }
         ],
         "name": "Unpaused",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "WalletRewardAmountSet",
         "type": "event"
     },
     {
@@ -976,7 +1003,7 @@ export const airdropABI = [
         "stateMutability": "nonpayable",
         "type": "function"
     }
-];
+]
 
 export const rewardTokenABI = [
     {

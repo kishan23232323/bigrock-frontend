@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 
 // 👉 Replace with your contract config
 import {
-    rewardContractAddress,
     airdropABI,
     airdropContractAddress,
 } from "../lib/ContractConfig.jsx";
