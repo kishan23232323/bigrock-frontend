@@ -361,6 +361,42 @@ const AdminAirdropPanel = () => {
           </div>
         </Section>
 
+        {/*  BATCH WALLET ELIGIBILITY */}
+        <Section title="Wallet Eligibility (Batch)">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div>
+              <label className="block text-sm text-slate-300 mb-2">
+                Wallet Addresses (one per line)
+              </label>
+              <textarea
+                value={batchEligibleAddresses}
+                onChange={(e) => setBatchEligibleAddresses(e.target.value)}
+                className="w-full h-40 rounded-xl bg-white/5 border border-white/10 p-3 text-sm outline-none focus:border-blue-400"
+                placeholder="0x123...\n0x456...\n0x789..."
+              />
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <Select
+                label="Eligibility Status"
+                options={["Eligible", "Not Eligible"]}
+                value={batchEligibleStatus}
+                onChange={(e) => setBatchEligibleStatus(e.target.value)}
+              />
+
+              <AdminButton
+                color="emerald"
+                onClick={handleBatchWalletEligibility}
+              >
+                Apply Batch Eligibility
+              </AdminButton>
+            </div>
+
+          </div>
+        </Section>
+
+
 
         {/*  EMERGENCY ACTIONS */}
         <Section title="Emergency Actions" danger>

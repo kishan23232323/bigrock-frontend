@@ -11,7 +11,7 @@ const Terms = () => {
       <div className="max-w-3xl w-full bg-transparent backdrop-blur-lg border border-gray-700 rounded-2xl p-6 sm:p-10 text-gray-300">
         <button
           type="button"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="flex items-center text-gray-400 hover:text-white transition-colors mb-6"
         >
           <svg
