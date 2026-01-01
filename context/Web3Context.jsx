@@ -380,6 +380,7 @@ export function Web3Provider({ children }) {
                     setWalletEligibleSingle,
                     setWalletEligibleBatch,
                     emergencyWithdraw,
+                    setWalletNotEligible,
                     notify,
                 }}
             >
