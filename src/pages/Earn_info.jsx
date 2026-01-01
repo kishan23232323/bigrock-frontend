@@ -5,27 +5,15 @@ import { IoArrowBackCircleOutline } from 'react-icons/io5';
 import {
   FaWallet,
   FaUsers,
-  FaExchangeAlt,
   FaUserFriends,
   FaRocket,
-  FaCalendarAlt,
-  FaPlayCircle,
-  FaCogs,
-  FaGift,
 } from 'react-icons/fa';
 
 function Earn_info() {
     const participationSteps = [
-        { icon: <FaWallet />, title: 'Connect Your Wallet', description: 'Connect your wallet to check your eligibility for the airdrop.' },
+        { icon: <FaWallet />, title: 'Connect Your Wallet', description: 'Connect your wallet to claim your BIGROCK tokens .' },
         { icon: <FaUsers />, title: 'Complete Social Tasks', description: 'Follow our social media channels and join the community to earn points.' },
-        { icon: <FaExchangeAlt />, title: 'Bridge Assets', description: 'Bridge assets to the BigRock network to get a multiplier on your points.' },
-        { icon: <FaUserFriends />, title: 'Refer Friends', description: 'Invite your friends to join the airdrop and earn bonus points for each successful referral.' },
-    ];
-
-    const airdropTimelineSteps = [
-        { icon: <FaPlayCircle />, title: 'Phase 1: Social Tasks & Early Participation', description: 'Currently active!' },
-        { icon: <FaCogs />, title: 'Phase 2: On-chain Interaction', description: 'Coming Soon' },
-        { icon: <FaGift />, title: 'Token Claim', description: 'To be announced after the campaign concludes.' },
+        { icon: <FaUserFriends />, title: 'Refer Friends', description: 'Invite your friends to join the airdrop and earn BIGROCK tokens for each successful referral.' },
     ];
 
     // Custom hook to manage the interactive timeline logic
@@ -77,7 +65,6 @@ function Earn_info() {
     };
 
     const participationTimeline = useInteractiveTimeline(participationSteps);
-    const airdropTimeline = useInteractiveTimeline(airdropTimelineSteps);
 
     return (
         <div className={styles['info-page-container']}>
@@ -107,28 +94,6 @@ function Earn_info() {
                             <section className={styles['info-section']}>
                                 <div className={styles.sectionTitleContainer}>
                                     <div className={styles['timeline-icon-wrapper']}>{step.icon}</div>
-                                    <h3>{step.title}</h3>
-                                </div>
-                                <p>{step.description}</p>
-                            </section>
-                        </div>
-                    ))}
-                </div>
-
-                <div className={styles.sectionHeader} style={{ marginTop: '60px' }}>
-                    <div className={`${styles.headerIconWrapper} ${styles.buyIcon}`}>
-                        <FaCalendarAlt />
-                    </div>
-                    <h2>Airdrop Timeline</h2>
-                </div>
-                <div className={`${styles.timeline} ${styles.buyTimeline}`} ref={airdropTimeline.timelineRef}>
-                    <div className={styles['timeline-progress-line']} style={{ height: airdropTimeline.progressHeight }}></div>
-                    {airdropTimelineSteps.map((step, index) => (
-                        <div key={`airdrop-${index}`} className={styles['timeline-item']} ref={airdropTimeline.itemRefs.current[index]}>
-                            <div className={styles['timeline-dot']}></div>
-                            <section className={styles['info-section']}>
-                                <div className={styles.sectionTitleContainer}>
-                                    <div className={`${styles['timeline-icon-wrapper']} ${styles.buyIconWrapper}`}>{step.icon}</div>
                                     <h3>{step.title}</h3>
                                 </div>
                                 <p>{step.description}</p>

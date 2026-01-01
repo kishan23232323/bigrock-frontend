@@ -776,7 +776,7 @@ const handleCancelOrder = async()=>{
           <div className="w-full flex justify-center mb-4">
           <p className="text-xs text-center text-gray-400 max-w-xs sm:max-w-sm px-4">
             By submitting you are agreeing to our{" "}
-            <a href="/terms" className="text-blue-500 hover:underline">
+            <a href="/terms" target="_blank"  rel="noopener noreferrer" className="text-blue-500 hover:underline">
               Terms & Conditions
             </a>
           </p>

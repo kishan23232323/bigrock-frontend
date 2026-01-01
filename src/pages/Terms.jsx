@@ -1,12 +1,35 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Terms = () => {
+  const navigate = useNavigate();
   return (
     <div
       className="min-h-screen px-4 py-12 flex justify-center"
       style={{ background: "#08111B" }}
     >
       <div className="max-w-3xl w-full bg-transparent backdrop-blur-lg border border-gray-700 rounded-2xl p-6 sm:p-10 text-gray-300">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="flex items-center text-gray-400 hover:text-white transition-colors mb-6"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          Back
+        </button>
         <h1 className="text-2xl sm:text-3xl font-bold text-center text-slate-100 mb-6">
           Terms & Conditions
         </h1>
