@@ -357,6 +357,27 @@ export function Web3Provider({ children }) {
         }
     };
 
+    const getUserRewardState = async (user) => {
+  try {
+    const [walletClaimable, referPending, swapPending] =
+      await publicClient.readContract({
+        address: airdropContractAddress,
+        abi: airdropABI,
+        functionName: "getUserRewardState",
+        args: [user],
+      });
+
+    return {
+      walletClaimable,
+      referPending,
+      swapPending,
+    };
+  } catch (err) {
+    console.error("Failed to read reward state", err);
+    return null;
+  }
+};
+
 
     /* --------------------------------------------------
        Provider Value
@@ -381,6 +402,7 @@ export function Web3Provider({ children }) {
                     setWalletEligibleBatch,
                     emergencyWithdraw,
                     notify,
+                    getUserRewardState,
                 }}
             >
                 {children}

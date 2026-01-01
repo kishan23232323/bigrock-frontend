@@ -100,27 +100,6 @@ export default function AirdropPage({ onNavigate }) {
   //     .finally(() => setLoading(false));
   //   return () => { mounted = false; };
   // }, []);
-  useEffect(() => {
-    let mounted = true;
-
-    try {
-      if (!user) return;
-
-      if (mounted) {
-        setAirdropData([
-          { id: 2, name: "Early Bird Bonus", amount: "100 BIGROCK", status: user.walletPointsClaimed ? "CLAIMED" : "CLAIMABLE", icon: "✓" },
-          { id: 3, name: "Referral Rewards", amount: `${user.referralPoints || 0} BIGROCK`, status: user.referralPoints > 0 ? "CLAIMABLE" : (user.referredCount > 0 ? "CLAIMED" : "LOCKED"), icon: "!" },
-        ]);
-      }
-    } catch (err) {
-      console.warn("Failed to create airdrop data from user profile.", err);
-    }
-
-    return () => {
-      mounted = false;
-    };
-  }, [user]);
-
 
   const handleClaim = async (id) => {
     try {
@@ -140,29 +119,51 @@ export default function AirdropPage({ onNavigate }) {
     }
   };
 
+const [rewardState, setRewardState] = useState(null);
+ const { getUserRewardState } = useWeb3();
+  useEffect( () => {
+    if (!address) return;
 
-  const Navigation = () => (
-    <div className={styles.bottomNav}>
-      <div className={styles.navContainer}>
-        <button onClick={() => onNavigate("home")} className={styles.navButton}>
-          <Home size={22} />
-        </button>
-        <button onClick={() => onNavigate("p2p")} className={styles.navButton}>
-          <ArrowLeftRight size={22} />
-        </button>
-        <button onClick={() => onNavigate("airdrop")} className={`${styles.navButton} ${styles.active}`}>
-          <Star size={22} />
-        </button>
-        <button onClick={() => onNavigate("profile")} className={styles.navButton}>
-          <User size={22} />
-        </button>
-      </div>
-    </div>
-  );
+    getUserRewardState(address).then(setRewardState);
+  }, [address]);
 
-  const total = 100;
-  const current = 50;
-  const progress = (current / total) * 100;
+useEffect(() => {
+  if (!rewardState) return;
+
+  setAirdropData([
+    {
+      id: 2,
+      name: "Early Bird Bonus",
+      amount: rewardState.walletClaimable ? "500 BIGROCK" : "0 BIGROCK",
+      status: rewardState.walletClaimable ? "CLAIMABLE" : "LOCKED",
+      icon: rewardState.walletClaimable ? "✓" : "🔒",
+    },
+    {
+      id: 3,
+      name: "Referral Rewards",
+      amount: `${rewardState.referPending} BIGROCK`,
+      status: rewardState.referPending > 0n ? "CLAIMABLE" : "LOCKED",
+      icon: rewardState.referPending > 0n ? "!" : "🔒",
+    },
+  ]);
+}, [rewardState]);
+
+useEffect(() => {
+  if (!address) {
+    setRewardState(null);
+  }
+}, [address]);
+
+
+
+const isWalletConnected = !!address;
+
+const walletClaimable =
+  isWalletConnected &&
+  rewardState?.walletClaimable;
+const referClaimable =
+  isWalletConnected &&
+  rewardState?.referPending > 0n;
 
   return (
     <div className={styles.pageWrapper}>
@@ -197,7 +198,12 @@ export default function AirdropPage({ onNavigate }) {
           </div>
           <div className={styles.totalRewards}>
             <p className={styles.rewardsLabel}>Total Claimable</p>
-            <p className={styles.rewardsAmount}>{(user?.referralPoints || 0) + (!user?.walletPointsClaimed ? 500 : 0)} BIGROCK</p>
+            <p className={styles.rewardsAmount}>
+              {rewardState
+                ? `${Number(rewardState.referPending) + (rewardState.walletClaimable ? 500 : 0)} BIGROCK`
+                : "0 BIGROCK"}
+            </p>
+
           </div>
           <Link to="/earninfo">
             <button className="group flex items-center justify-center p-3 rounded-full bg-gray-900/50 backdrop-blur-md border border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,238,245,0.25)] transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-[0_0_25px_rgba(6,238,245,0.6)] hover:scale-110">
@@ -229,32 +235,63 @@ export default function AirdropPage({ onNavigate }) {
 
               <h3 className={styles.airdropName}>{airdrop.name}</h3>
               <p className={styles.airdropAmount}>{airdrop.amount}</p>
+              
+                {/* 🔐 Eligibility messages */}
+                {/* {airdrop.id === 2 && !isWalletConnected && (
+                  <p className="text-xs text-center text-gray-400 mt-1">
+                    Connect wallet to check eligibility
+                  </p>
+                )}
+
+                {airdrop.id === 2 && isWalletConnected && rewardState && !rewardState.walletClaimable && (
+                  <p className="text-xs text-gray-400 mt-1">
+                    Waiting for admin approval
+                  </p>
+                )} */}
 
               <button
-                disabled={(isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id}
+                disabled={
+                  loading === airdrop.id ||
+                  !isWalletConnected ||
+                  (airdrop.id === 2 && !rewardState?.walletClaimable) ||
+                  (airdrop.id === 3 && !referClaimable)
+                }
                 onClick={() => {
-                  // 🔐 BLOCK if wallet is connected but user not logged in
-                  if (isConnected && !token) {
+                  if (!isWalletConnected) {
+                    openConnectModal();
+                    return;
+                  }
+
+                  if (!token) {
                     disconnect();
                     toast.error("Please login first");
                     return;
                   }
 
-                  if (!isConnected) {
-                    toast.error("Please connect your wallet first");
-                  } else {
-                    handleClaim(airdrop.id);
-                  }
+                  handleClaim(airdrop.id);
                 }}
-
-                className={`${styles.claimBtn} ${((isConnected && airdrop.status !== "CLAIMABLE") || loading === airdrop.id) ? styles.disabled : ""} mt-auto`}
+                className={`${styles.claimBtn} ${
+                  loading === airdrop.id ||
+                  !isWalletConnected ||
+                  (airdrop.id === 2 && !rewardState?.walletClaimable) ||
+                  (airdrop.id === 3 && !referClaimable)
+                    ? styles.disabled
+                    : ""
+                } mt-auto`}
               >
                 {loading === airdrop.id
                   ? "Claiming..."
-                  : airdrop.status === "CLAIMABLE"
-                    ? "Claim Now"
-                    : airdrop.status}
+                  : !isWalletConnected
+                    ? "Connect Wallet"
+                    : airdrop.id === 2
+                      ? rewardState?.walletClaimable
+                        ? "Claim Now"
+                        : "Locked"
+                      : referClaimable
+                        ? "Claim Now"
+                        : "Locked"}
               </button>
+
             </div>
           ))}
         </div>
