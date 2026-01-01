@@ -1,7 +1,7 @@
 // export const airdropContractAddress = import.meta.env.VITE_AIRDROP_CONTRACT_ADDRESS; // will be used in future
 // export const rewardContractAddress = import.meta.env.VITE_REWARD_CONTRACT_ADDRESS; // will be used in future
 export const airdropContractAddress = "0x90047677CE8296438F4DC78CCdA4b08560A8cf04";
-export const rewardContractAddress = "0xa9Ac8B828235FeD7764e9C8D4C5c314D7b15c2A6";
+export const rewardContractAddress = "0xdC6562bF433F790aFc4a4eC8e3F0ed2c75aBd30E";
 
 export const airdropABI = [
     {
