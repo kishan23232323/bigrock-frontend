@@ -64,7 +64,7 @@ const AdminButton = ({ children, color, onClick }) => {
   );
 };
 const AdminAirdropPanel = () => {
-  const { setWalletRewardAmount, pauseContract, unpauseContract, setSubscriptionParams, setSingleReferAllocation, setSingleSwapAllocation, setBatchReferAllocation, setBatchSwapAllocation, setWalletEligibleSingle, setWalletEligibleBatch, setWalletNotEligible, emergencyWithdraw } = useWeb3();
+  const { setWalletRewardAmount, pauseContract, unpauseContract, setSubscriptionParams, setSingleReferAllocation, setSingleSwapAllocation, setBatchReferAllocation, setBatchSwapAllocation, setWalletEligibleSingle, setWalletEligibleBatch, emergencyWithdraw } = useWeb3();
 
   const [walletAmount, setWalletAmount] = React.useState("");
   const [subFee, setSubFee] = React.useState("");
