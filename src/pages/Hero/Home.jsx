@@ -24,7 +24,7 @@ const cardInfo = [
     imageSrc: "/heroCardImages/earnAirdrops.png",
     title: "Earn BigRock tokens",
     subtext:
-      "Swap rewards: earn BigRock tokens as a gas-fee reward for using the platform (Coming soon). " +
+      "Swap rewards: earn BigRock tokens as a gas-fee reward for using the platform . " +
       "Referral rewards: invite friends, earn tokens directly when they join and trade.",
   },
   {

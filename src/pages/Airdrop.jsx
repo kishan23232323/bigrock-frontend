@@ -317,28 +317,7 @@ export default function AirdropPage({ onNavigate }) {
           </div>
         </div>
 
-        {/* Info Cards */}
-        <div className={styles.infoCardsGrid}>
-          <div className={styles.infoCard}>
-            <h3 className={styles.infoTitle}>How it Works</h3>
-            <ul className={styles.infoList}>
-              <li>Complete tasks to unlock airdrops</li>
-              <li>Claim rewards directly to wallet</li>
-              <li>Refer friends for bonus rewards</li>
-              <li>No limits on earning potential</li>
-            </ul>
-          </div>
-
-          <div className={styles.infoCard}>
-            <h3 className={styles.infoTitle}>Requirements</h3>
-            <ul className={styles.infoList}>
-              <li>Complete KYC verification</li>
-              <li>Minimum wallet balance: 100 BIGROCK</li>
-              <li>Active trading account</li>
-              <li>7+ days account age</li>
-            </ul>
-          </div>
-        </div>
+       
 
       </div>
 
