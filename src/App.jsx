@@ -33,6 +33,7 @@ import AdminAgentApplications from "./pages/AdminPanel/AdminAgent";
 import AdminDashboard from "./pages/AdminPanel/AdminDashboard";
 import AdminProtected from "./components/AdminProtected";
 import AdminAirdropPanel from "./pages/AdminPanel/AdminAirdropPanel";
+import VerifiedOnly from "./components/VerifiedOnly";
 
 
 function App() {
@@ -116,11 +117,38 @@ function App() {
               <AdminAirdropPanel />
             </AdminProtected>} />
 
-          <Route path="/airdrop" element={<Airdrop />} />
+          <Route path="/airdrop" element={
+             <Protected>
+              <VerifiedOnly>
+                 <Airdrop />
+              </VerifiedOnly>
+             </Protected>
+          
+            
+            } />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/p2p" element={<P2P />} />
-          <Route path="/p2p/sell" element={<P2P mode="sell" />} />
-          <Route path="/p2p/buy" element={<P2P mode="buy" />} />
+          <Route path="/p2p" element={
+            <Protected>
+              <VerifiedOnly>
+                 <P2P />
+              </VerifiedOnly>
+             </Protected>
+        
+        } />
+          <Route path="/p2p/sell" element={
+            <Protected>
+              <VerifiedOnly>
+                 <P2P mode="sell" />
+              </VerifiedOnly>
+             </Protected>
+          } />
+          <Route path="/p2p/buy" element={
+            <Protected>
+              <VerifiedOnly>
+                 <P2P mode="buy" />
+              </VerifiedOnly>
+             </Protected>
+          } />
           <Route path="/about" element={<About />} />
           <Route path="/career" element={<Career />} />
           <Route path="/apply" element={<JobApplication />} />

@@ -1,6 +1,6 @@
 // export const airdropContractAddress = import.meta.env.VITE_AIRDROP_CONTRACT_ADDRESS; // will be used in future
 // export const rewardContractAddress = import.meta.env.VITE_REWARD_CONTRACT_ADDRESS; // will be used in future
-export const airdropContractAddress = "0xdc7ac5ff7979367dc3b47ac1dfb9a82fd1b1d36d";
+export const airdropContractAddress = "0xC14c2c5Ca5abD1651d50C9a1b1017Dde01cbBBe7";
 export const rewardContractAddress = "0xdC6562bF433F790aFc4a4eC8e3F0ed2c75aBd30E";
 
 export const airdropABI = [
@@ -654,6 +654,25 @@ export const airdropABI = [
 		"anonymous": false,
 		"inputs": [
 			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "USDTWithdrawn",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
 				"indexed": false,
 				"internalType": "address",
 				"name": "account",
@@ -748,6 +767,87 @@ export const airdropABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getAdminBalances",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "rewardTokenBalance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "usdtTokenBalance",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getSubscriptionInfo",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "active",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "expiry",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "fee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "duration",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getUserClaimableAmounts",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "walletAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "referAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "swapAmount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -770,6 +870,40 @@ export const airdropABI = [
 			{
 				"internalType": "uint256",
 				"name": "swapPending",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getUserStatus",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "subscribed",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "walletEligible_",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "walletClaimed",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "subscriptionExpiry_",
 				"type": "uint256"
 			}
 		],
@@ -958,6 +1092,19 @@ export const airdropABI = [
 	{
 		"inputs": [],
 		"name": "totalClaimed",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "usdtBalance",
 		"outputs": [
 			{
 				"internalType": "uint256",
