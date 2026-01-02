@@ -15,6 +15,7 @@ import { getUserProfile } from "../services/authservices/authapi";
 import { useAccount, useAccountEffect, useDisconnect } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useWeb3 } from "../../context/Web3Context.jsx";
+import { formatUnits } from "viem";
 // TASKS DATA
 // const tasks = [
 //   { id: 1, label: "Connect your wallet", icon: <FiCreditCard />, status: "Completed" },
@@ -120,12 +121,18 @@ export default function AirdropPage({ onNavigate }) {
   };
 
 const [rewardState, setRewardState] = useState(null);
- const { getUserRewardState } = useWeb3();
-  useEffect( () => {
-    if (!address) return;
+const [rewardLoading, setRewardLoading] = useState(false);
 
-    getUserRewardState(address).then(setRewardState);
-  }, [address]);
+ const { getUserRewardState } = useWeb3();
+ useEffect(() => {
+  if (!address) return;
+
+  setRewardLoading(true);
+  getUserRewardState(address)
+    .then(setRewardState)
+    .finally(() => setRewardLoading(false));
+}, [address]);
+
 
 useEffect(() => {
   if (!rewardState) return;
@@ -141,7 +148,7 @@ useEffect(() => {
     {
       id: 3,
       name: "Referral Rewards",
-      amount: `${rewardState.referPending} BIGROCK`,
+      amount: `${formatUnits(rewardState.referPending, 18)} BIGROCK`,
       status: rewardState.referPending > 0n ? "CLAIMABLE" : "LOCKED",
       icon: rewardState.referPending > 0n ? "!" : "🔒",
     },
@@ -198,12 +205,19 @@ const referClaimable =
           </div>
           <div className={styles.totalRewards}>
             <p className={styles.rewardsLabel}>Total Claimable</p>
+            
             <p className={styles.rewardsAmount}>
-              {rewardState
-                ? `${Number(rewardState.referPending) + (rewardState.walletClaimable ? 500 : 0)} BIGROCK`
-                : "0 BIGROCK"}
+              {rewardLoading
+                ? "Checking..."
+                : rewardState
+                  ? `${formatUnits(
+                  (rewardState?.referPending ?? 0n) +
+                    (rewardState?.walletClaimable ? 500n * 10n ** 18n : 0n),
+                  18
+                )} BIGROCK`
+                  : "0 BIGROCK"}
             </p>
-
+            
           </div>
           <Link to="/earninfo">
             <button className="group flex items-center justify-center p-3 rounded-full bg-gray-900/50 backdrop-blur-md border border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,238,245,0.25)] transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-[0_0_25px_rgba(6,238,245,0.6)] hover:scale-110">

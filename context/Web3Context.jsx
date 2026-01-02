@@ -378,6 +378,170 @@ export function Web3Provider({ children }) {
   }
 };
 
+    const getUserClaimableAmounts = async (user) => {
+  try {
+    const [walletAmount, referAmount, swapAmount] =
+      await publicClient.readContract({
+        address: airdropContractAddress,
+        abi: airdropABI,
+        functionName: "getUserClaimableAmounts",
+        args: [user],
+      });
+
+    return { walletAmount, referAmount, swapAmount };
+  } catch (err) {
+    console.error("getUserClaimableAmounts failed", err);
+    return null;
+  }
+};
+
+    const getUserStatus = async (user) => {
+  try {
+    const [subscribed, walletEligible, walletClaimed, expiry] =
+      await publicClient.readContract({
+        address: airdropContractAddress,
+        abi: airdropABI,
+        functionName: "getUserStatus",
+        args: [user],
+      });
+
+    return { subscribed, walletEligible, walletClaimed, expiry };
+  } catch (err) {
+    console.error("getUserStatus failed", err);
+    return null;
+  }
+};
+
+    const getAdminBalances = async () => {
+  try {
+    const [rewardBalance, usdtBalance] =
+      await publicClient.readContract({
+        address: airdropContractAddress,
+        abi: airdropABI,
+        functionName: "getAdminBalances",
+        args: [],
+      });
+
+    return { rewardBalance, usdtBalance };
+  } catch (err) {
+    console.error("getAdminBalances failed", err);
+    return null;
+  }
+};
+
+    const getSubscriptionInfo = async (user) => {
+  try {
+    const [active, expiry, fee, duration] =
+      await publicClient.readContract({
+        address: airdropContractAddress,
+        abi: airdropABI,
+        functionName: "getSubscriptionInfo",
+        args: [user],
+      });
+
+    return { active, expiry, fee, duration };
+  } catch (err) {
+    console.error("getSubscriptionInfo failed", err);
+    return null;
+  }
+};
+
+    const getRewardTokenBalance = async () => {
+  try {
+    return await publicClient.readContract({
+      address: airdropContractAddress,
+      abi: airdropABI,
+      functionName: "contractBalance",
+      args: [],
+    });
+  } catch {
+    return 0n;
+  }
+};
+
+const getUSDTBalance = async () => {
+  try {
+    return await publicClient.readContract({
+      address: airdropContractAddress,
+      abi: airdropABI,
+      functionName: "usdtBalance",
+      args: [],
+    });
+  } catch {
+    return 0n;
+  }
+};
+
+    const cancelSubscription = async ({ user }) => {
+  try {
+    toast.success("⏳ Cancelling subscription...");
+
+    const hash = await writeContractAsync({
+      address: airdropContractAddress,
+      abi: airdropABI,
+      functionName: "cancelSubscription",
+      args: [user],
+    });
+
+    await publicClient.waitForTransactionReceipt({ hash });
+    toast.success("✅ Subscription cancelled");
+    return { success: true, hash };
+  } catch (err) {
+    const msg = err.shortMessage || err.message;
+    toast.error(`❌ ${msg}`);
+    return { success: false };
+  }
+};
+
+const withdrawUSDT = async ({ to, amount }) => {
+  try {
+    if (!to || !amount) {
+      toast.error("Address and amount required");
+      return { success: false };
+    }
+
+    toast.success("⏳ Withdrawing USDT...");
+
+    const hash = await writeContractAsync({
+      address: airdropContractAddress,
+      abi: airdropABI,
+      functionName: "withdrawUSDT",
+      args: [to, amount],
+    });
+
+    await publicClient.waitForTransactionReceipt({ hash });
+    toast.success(
+  <a
+    href={`https://sepolia.etherscan.io/tx/${hash}`}
+    target="_blank"
+    rel="noreferrer"
+  >
+    ✅ View Transaction
+  </a>
+);
+    return { success: true, hash };
+  } catch (err) {
+    const msg = err.shortMessage || err.message;
+    toast.error(`❌ ${msg}`);
+    return { success: false };
+  }
+};
+
+const isPaused = async () => {
+  try {
+    return await publicClient.readContract({
+      address: airdropContractAddress,
+      abi: airdropABI,
+      functionName: "paused",
+    });
+  } catch (err) {
+    console.error("isPaused failed", err);
+    return false;
+  }
+};
+
+
+
 
     /* --------------------------------------------------
        Provider Value
@@ -403,6 +567,15 @@ export function Web3Provider({ children }) {
                     emergencyWithdraw,
                     notify,
                     getUserRewardState,
+                    getUserClaimableAmounts,
+                    getUserStatus,
+                    getAdminBalances,
+                    getSubscriptionInfo,
+                    getRewardTokenBalance,
+                    getUSDTBalance,
+                    cancelSubscription,
+                    withdrawUSDT,
+                    isPaused,
                 }}
             >
                 {children}

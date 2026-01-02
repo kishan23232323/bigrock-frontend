@@ -1,6 +1,6 @@
 import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { parseUnits } from "viem";
+import { parseUnits,formatUnits } from "viem";
 import { useWeb3 } from "../../../context/Web3Context";
 import { toast } from "react-toastify";
 
@@ -46,7 +46,7 @@ const Select = ({ label, options, value, onChange }) => (
 );
 
 
-const AdminButton = ({ children, color, onClick }) => {
+const AdminButton = ({ children, color, onClick, loading = false }) => {
   const colors = {
     blue: "bg-blue-500/20 border-blue-400/40 text-blue-300",
     green: "bg-green-500/20 border-green-400/40 text-green-300",
@@ -56,13 +56,17 @@ const AdminButton = ({ children, color, onClick }) => {
 
   return (
     <button
+      disabled={loading}
       onClick={onClick}
-      className={`px-4 py-2 rounded-lg border font-semibold transition hover:scale-[1.02] ${colors[color]}`}
+      className={`px-4 py-2 rounded-lg border font-semibold transition hover:scale-[1.02] ${
+        loading ? "opacity-50 cursor-not-allowed" : ""
+      } ${colors[color]}`}
     >
-      {children}
+      {loading ? "Processing..." : children}
     </button>
   );
 };
+
 const AdminAirdropPanel = () => {
   const { setWalletRewardAmount, pauseContract, unpauseContract, setSubscriptionParams, setSingleReferAllocation, setSingleSwapAllocation, setBatchReferAllocation, setBatchSwapAllocation, setWalletEligibleSingle, setWalletEligibleBatch, emergencyWithdraw } = useWeb3();
 
@@ -80,37 +84,68 @@ const AdminAirdropPanel = () => {
   const [batchEligibleAddresses, setBatchEligibleAddresses] = React.useState("");
   const [batchEligibleStatus, setBatchEligibleStatus] = React.useState("Eligible");
   const [emergencyTo, setEmergencyTo] = React.useState("");
+  const { getAdminBalances, isPaused } = useWeb3();
+  const [adminBalances, setAdminBalances] = React.useState(null);
+  const [paused, setPaused] = React.useState(false);
+  const [adminLoading, setAdminLoading] = React.useState(false);
 
-  const handleSetWalletAmount = async () => {
-    if (!walletAmount) {
-      toast.error("⚠ Enter wallet reward amount");
-      return;
-    }
 
-    const amountInWei = parseUnits(walletAmount.toString(), 18);
+  React.useEffect(() => {
+    getAdminBalances()?.then(setAdminBalances);
+    isPaused()?.then(setPaused);
+  }, []);
 
+
+const handleSetWalletAmount = async () => {
+  if (!walletAmount) {
+    toast.error("⚠ Enter wallet reward amount");
+    return;
+  }
+
+  const amountInWei = parseUnits(walletAmount.toString(), 18);
+
+  try {
+    setAdminLoading(true);
     await setWalletRewardAmount({
       amount: amountInWei,
     });
-  };
+  } finally {
+    setAdminLoading(false);
+  }
+};
 
-  const handleSetSubscription = async () => {
-    const feeInUnits = parseUnits(subFee.toString(), 6); // USDT = 6 decimals
-    const durationInSeconds = BigInt(subDuration);
 
+ const handleSetSubscription = async () => {
+  const feeInUnits = parseUnits(subFee.toString(), 6); // USDT = 6 decimals
+  const durationInSeconds = BigInt(subDuration);
+
+  try {
+    setAdminLoading(true);
     await setSubscriptionParams({
       fee: feeInUnits,
       duration: durationInSeconds,
     });
-  };
+  } finally {
+    setAdminLoading(false);
+  }
+};
 
-  const handleSingleAllocation = async () => {
-    if (!allocAddress || !allocAmount) {
-      toast.error("⚠ Address and amount required");
-      return;
-    }
 
-    const amountInWei = parseUnits(allocAmount.toString(), 18);
+ const handleSingleAllocation = async () => {
+  if (!allocAddress || !allocAmount) {
+    toast.error("⚠ Address and amount required");
+    return;
+  }
+
+  const amountInWei = parseUnits(allocAmount.toString(), 18);
+
+  if (adminBalances?.rewardBalance < amountInWei) {
+    toast.error("❌ Not enough reward tokens in contract");
+    return;
+  }
+
+  try {
+    setAdminLoading(true);
 
     if (allocType === "Refer") {
       await setSingleReferAllocation({
@@ -123,86 +158,112 @@ const AdminAirdropPanel = () => {
         amount: amountInWei,
       });
     }
-  };
+  } finally {
+    setAdminLoading(false);
+  }
+};
+
 
 
   const handleBatchAllocation = async () => {
-    if (!batchAddresses || !batchAmounts) {
-      toast.error("⚠ Addresses and amounts required");
-      return;
-    }
+  if (!batchAddresses || !batchAmounts) {
+    toast.error("⚠ Addresses and amounts required");
+    return;
+  }
 
-    const users = batchAddresses
-      .split("\n")
-      .map(a => a.trim())
-      .filter(Boolean);
+  const users = batchAddresses
+    .split("\n")
+    .map(a => a.trim())
+    .filter(Boolean);
 
-    const amounts = batchAmounts
-      .split("\n")
-      .map(a => parseUnits(a.trim(), 18));
+  const amounts = batchAmounts
+    .split("\n")
+    .map(a => parseUnits(a.trim(), 18));
 
-    if (users.length !== amounts.length) {
-      toast.error("⚠ Address and amount count mismatch");
-      return;
-    }
+  if (users.length !== amounts.length) {
+    toast.error("⚠ Address and amount count mismatch");
+    return;
+  }
+
+  try {
+    setAdminLoading(true);
 
     if (batchType === "Refer") {
       await setBatchReferAllocation({ users, amounts });
     } else {
       await setBatchSwapAllocation({ users, amounts });
     }
-  };
+  } finally {
+    setAdminLoading(false);
+  }
+};
 
-  const handleWalletEligibility = async () => {
-    if (!eligibleAddress) {
-      toast.error("⚠ Wallet address required");
-      return;
-    }
 
-    const isEligible = eligibleStatus === "Eligible";
+ const handleWalletEligibility = async () => {
+  if (!eligibleAddress) {
+    toast.error("⚠ Wallet address required");
+    return;
+  }
 
+  const isEligible = eligibleStatus === "Eligible";
+
+  try {
+    setAdminLoading(true);
     await setWalletEligibleSingle({
       user: eligibleAddress,
       status: isEligible,
     });
-  };
+  } finally {
+    setAdminLoading(false);
+  }
+};
 
 
+const handleBatchWalletEligibility = async () => {
+  const users = batchEligibleAddresses
+    .split("\n")
+    .map(a => a.trim())
+    .filter(Boolean);
 
-  const handleBatchWalletEligibility = async () => {
-    const users = batchEligibleAddresses
-      .split("\n")
-      .map(a => a.trim())
-      .filter(Boolean);
+  if (!users.length) {
+    toast.error("⚠ No addresses provided");
+    return;
+  }
 
-    if (!users.length) {
-      toast.error("⚠ No addresses provided");
-      return;
-    }
-    const statuses = users.map(() => batchEligibleStatus === "Eligible");
+  const statuses = users.map(() => batchEligibleStatus === "Eligible");
+
+  try {
+    setAdminLoading(true);
     await setWalletEligibleBatch({
       users,
       statuses,
     });
+  } finally {
+    setAdminLoading(false);
+  }
+};
 
-  };
 
+ const handleEmergencyWithdraw = async () => {
+  if (!emergencyTo) {
+    toast.error("⚠ Enter destination address");
+    return;
+  }
 
-  const handleEmergencyWithdraw = async () => {
-    if (!emergencyTo) {
-      toast.error("⚠ Enter destination address");
-      return;
-    }
-
+  try {
+    setAdminLoading(true);
     await emergencyWithdraw({
       to: emergencyTo,
     });
-  };
-
-
+  } finally {
+    setAdminLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#08111b] px-6 py-8 text-white">
+
+      
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Airdrop Admin Panel</h1>
@@ -214,14 +275,23 @@ const AdminAirdropPanel = () => {
 
       <div className="space-y-6">
 
+        <Section title="Contract Status">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-slate-300">
+            <div>Paused: <b>{paused ? "YES" : "NO"}</b></div>
+            <div>Reward Balance: <b> {adminBalances?formatUnits(adminBalances.rewardBalance, 18) : "-"}</b></div>
+            <div>USDT Balance: <b>{adminBalances?formatUnits(adminBalances.usdtBalance, 6) : "-"}</b></div>
+          </div>
+        </Section>
+
+
         {/*  CONTRACT CONTROLS */}
         <Section title="Contract Controls">
           <div className="flex gap-4 flex-wrap">
-            <AdminButton color="blue" onClick={pauseContract}>
+            <AdminButton color="blue" onClick={pauseContract} loading={adminLoading}>
               Pause Contract
             </AdminButton>
 
-            <AdminButton color="green" onClick={unpauseContract}>
+            <AdminButton color="green" onClick={unpauseContract} loading={adminLoading}>
               Unpause Contract
             </AdminButton>
           </div>
@@ -245,7 +315,7 @@ const AdminAirdropPanel = () => {
               onChange={(e) => setSubDuration(e.target.value)}
             />
 
-            <AdminButton color="emerald" onClick={handleSetSubscription}>
+            <AdminButton color="emerald" onClick={handleSetSubscription} loading={adminLoading}>
               Set Params
             </AdminButton>
           </div>
@@ -264,6 +334,7 @@ const AdminAirdropPanel = () => {
             <AdminButton
               color="emerald"
               onClick={handleSetWalletAmount}
+              loading={adminLoading}
             >
               Set Amount
             </AdminButton>
@@ -290,7 +361,7 @@ const AdminAirdropPanel = () => {
               value={allocType}
               onChange={(e) => setAllocType(e.target.value)}
             />
-            <AdminButton color="blue" onClick={handleSingleAllocation}>
+            <AdminButton color="blue" onClick={handleSingleAllocation} loading={adminLoading}>
               Allocate
             </AdminButton>
           </div>
@@ -334,7 +405,7 @@ const AdminAirdropPanel = () => {
               onChange={(e) => setBatchType(e.target.value)}
             />
 
-            <AdminButton color="emerald" onClick={handleBatchAllocation}>
+            <AdminButton color="emerald" onClick={handleBatchAllocation} loading={adminLoading}>
               Execute Batch
             </AdminButton>
           </div>
@@ -355,7 +426,7 @@ const AdminAirdropPanel = () => {
               value={eligibleStatus}
               onChange={(e) => setEligibleStatus(e.target.value)}
             />
-            <AdminButton color="blue" onClick={handleWalletEligibility}>
+            <AdminButton color="blue" onClick={handleWalletEligibility } loading={adminLoading}>
               Update
             </AdminButton>
           </div>
@@ -388,6 +459,7 @@ const AdminAirdropPanel = () => {
               <AdminButton
                 color="emerald"
                 onClick={handleBatchWalletEligibility}
+                loading={adminLoading}
               >
                 Apply Batch Eligibility
               </AdminButton>
@@ -406,7 +478,7 @@ const AdminAirdropPanel = () => {
               value={emergencyTo}
               onChange={(e) => setEmergencyTo(e.target.value)}
             />
-            <AdminButton color="red" onClick={handleEmergencyWithdraw}>
+            <AdminButton color="red" onClick={handleEmergencyWithdraw} loading={adminLoading}>
               Emergency Withdraw
             </AdminButton>
           </div>
