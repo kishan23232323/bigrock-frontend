@@ -24,8 +24,7 @@ const cardInfo = [
     imageSrc: "/heroCardImages/earnAirdrops.png",
     title: "Earn BigRock tokens",
     subtext:
-      "Swap rewards: earn BigRock tokens as a gas-fee reward for using the platform . " +
-      "Referral rewards: invite friends, earn tokens directly when they join and trade.",
+      "User rewards are allocated to incentivize platform usage. Rewards are distributed periodically based on swap activity, with a controlled emission of 25 Million Bigrock tokens  every 6 months.",
   },
   {
     imageSrc: "/heroCardImages/secure.png",
