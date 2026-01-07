@@ -55,12 +55,12 @@ import styles from './Presale.module.css';
   const tokenomicsData = [
     
     { name: 'Presale', percentage: 25, color: '#a855f7' },
-    { name: 'Liquidity', percentage: 15, color: '#f59e0b', vesting: 'Locked 12–24 months' },
-    { name: 'User Rewards', percentage: 30, color: '#10b981', vesting: '0.5% every 6 months' },
-    { name: 'Marketing', percentage: 10, color: '#06eef5', vesting: '12-month cliff + 24-month vesting' },
+    { name: 'Liquidity', percentage: 15, color: '#f59e0b', vesting: 'Locked 12–36 months' },
+    { name: 'User Rewards', percentage: 30, color: '#10b981', vesting: '0.25% every 6 months' },
+    { name: 'Marketing', percentage: 10, color: '#06eef5', vesting: 'TGE-0% + 12-month cliff + 24-month vesting' },
     { name: 'Treasury', percentage: 10, color: '#facc15' },
-    { name: 'Team', percentage: 5, color: '#ec4899', vesting: '12-month cliff + 36-month vesting' },
-    { name: 'Advisors', percentage: 5, color: '#3b82f6', vesting: '12-month cliff + 24-month vesting' },
+    { name: 'Team', percentage: 5, color: '#ec4899', vesting: 'TGE-0% + 24-month cliff + 36-month vesting' },
+    { name: 'Advisors', percentage: 5, color: '#3b82f6', vesting: 'TGE-0% + 12-month cliff + 36-month vesting' },
   ];
 
   let cumulativePercentage = 0;

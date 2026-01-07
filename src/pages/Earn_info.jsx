@@ -12,7 +12,7 @@ import {
 function Earn_info() {
     const participationSteps = [
         { icon: <FaWallet />, title: 'Connect Your Wallet', description: 'Connect your wallet to claim your BIGROCK tokens .' },
-        { icon: <FaUsers />, title: 'Complete Social Tasks', description: 'Follow our social media channels and join the community to earn points.' },
+        { icon: <FaUsers />, title: 'Community to stay updated', description: 'Follow our social media channels and join the community to earn points.' },
         { icon: <FaUserFriends />, title: 'Refer Friends', description: 'Invite your friends to join the airdrop and earn BIGROCK tokens for each successful referral.' },
     ];
 
