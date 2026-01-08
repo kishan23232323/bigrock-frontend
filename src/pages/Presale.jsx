@@ -8,6 +8,9 @@ import styles from './Presale.module.css';
   const [sonicAmount, setSonicAmount] = useState('');
   const [isCalculating, setIsCalculating] = useState(false);
   const [timeLeft, setTimeLeft] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
 
   useEffect(() => {
     // Set a target sale start date in the future
@@ -409,7 +412,24 @@ const roadmapData = [
           </div>
         </div>
        <div className={styles.buttons}>
-          <Link to="" className={styles.primaryButton}>Whitepaper</Link>
+          <Link
+            to=""
+            className={styles.primaryButton}
+            style={{
+              background: hasClicked ? "#4CAF50" : (isHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
+              border: "1px solid #06eef5",
+              color: "#ffffff",
+              transition: "all 0.3s ease",
+              transform: isActive ? "scale(0.95)" : (isHovered ? "scale(1.05)" : "scale(1)"),
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => { setIsHovered(false); setIsActive(false); }}
+            onMouseDown={() => setIsActive(true)}
+            onMouseUp={() => setIsActive(false)}
+            onClick={() => setHasClicked(true)}
+          >
+            Whitepaper
+          </Link>
         </div>
         
 
