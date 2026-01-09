@@ -6,13 +6,16 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 import WalletConfig from "./wallet/WalletConfig.jsx";
 import { Web3Provider } from "../context/Web3Context.jsx";
+import { PresaleWeb3Provider } from "../context/PresaleWeb3.jsx";
 
 createRoot(document.getElementById("root")).render(
   <WalletConfig>
     <Provider store={store}>
       <BrowserRouter>
         <Web3Provider>
-          <App />
+        <PresaleWeb3Provider>
+           <App />
+        </PresaleWeb3Provider>
         </Web3Provider>
       </BrowserRouter>
     </Provider>

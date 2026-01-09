@@ -1,13 +1,53 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Zap, Award, Trophy, Rocket, ChevronDown, Star, TrendingUp, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styles from './Presale.module.css';
+import { useAccount, usePublicClient} from 'wagmi';
+import { formatUnits } from 'viem';
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { usePresaleWeb3 } from '../../context/PresaleWeb3.jsx';
+
  
  function Presale() {
-  const [usdtAmount, setUsdtAmount] = useState('');
-  const [sonicAmount, setSonicAmount] = useState('');
   const [isCalculating, setIsCalculating] = useState(false);
   const [timeLeft, setTimeLeft] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
+  const [lots, setLots] = useState(1);
+  const [stats, setStats] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
+  const { isConnected, address } = useAccount();
+  const { openConnectModal } = useConnectModal();
+  const [isBuying, setIsBuying] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false);
+  const [claimCountdown, setClaimCountdown] = useState(null);
+
+
+
+  // const publicClient = usePublicClient();
+
+
+ const {  getPresaleStats, getUserPresaleInfo, buyLots, claimTokens } = usePresaleWeb3();
+  useEffect(() => {
+  const load = async () => {
+    // const chainId = await publicClient.getChainId();
+    // console.log("Connected to Chain ID:", chainId);
+    const presaleStats = await getPresaleStats();
+    // console.log('Presale Stats:', presaleStats);
+    setStats(presaleStats);
+
+    if (address) {
+      const user = await getUserPresaleInfo(address);
+      setUserInfo(user);
+    }
+  };
+
+  load();
+      const interval = setInterval(load, 15000); // Auto-refresh data every 15s
+    return () => clearInterval(interval);
+}, [address]);
 
   useEffect(() => {
     // Set a target sale start date in the future
@@ -39,28 +79,110 @@ import styles from './Presale.module.css';
     return () => clearInterval(interval);
   }, []);
 
-  const handleUsdtChange = (e) => {
-    const value = e.target.value;
-    setUsdtAmount(value);
-    // Example conversion: 1 USDT = 10 SONIC
-    setSonicAmount(value ? parseFloat(value) * 10 : '');
+  useEffect(() => {
+  if (!stats?.claimEnableTime) {
+    setClaimCountdown(null);
+    return;
+  }
 
-    // Trigger glow animation
-    setIsCalculating(true);
-    setTimeout(() => setIsCalculating(false), 700); // Match animation duration
-  };
+  const claimTs = Number(stats.claimEnableTime); // seconds
+
+  if (claimTs === 0) {
+    setClaimCountdown(null);
+    return;
+  }
+
+  const interval = setInterval(() => {
+    const now = Math.floor(Date.now() / 1000);
+    const diff = claimTs - now;
+
+    if (diff <= 0) {
+      clearInterval(interval);
+      setClaimCountdown(null);
+      return;
+    }
+
+    const days = Math.floor(diff / 86400);
+    const hours = Math.floor((diff % 86400) / 3600);
+    const minutes = Math.floor((diff % 3600) / 60);
+    const seconds = diff % 60;
+
+    setClaimCountdown({
+      days,
+      hours,
+      minutes,
+      seconds,
+    });
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [stats?.claimEnableTime]);
+
+  const claimableFormatted = useMemo(() => {
+    if (!userInfo?.claimable) return "0";
+    return Number(formatUnits(userInfo.claimable, 18)).toLocaleString();
+  }, [userInfo]);
+  // Calculate Upper Limit for Lots
+  const maxAvailableLots = useMemo(() => {
+    if (!stats) return 0;
+    
+    const total = 2000; 
+    const sold = Number(stats.totalSold || 0);
+    return Math.max(0, total - sold);
+  }, [stats]);
+
+  const TOTAL_LOTS = 2000;
+
+const isSoldOut = useMemo(() => {
+  if (!stats) return false;
+  return Number(stats.totalSold) >= TOTAL_LOTS;
+}, [stats]);
+
+
+const claimEnabled = useMemo(() => {
+  if (!stats) return false;
+  const now = Math.floor(Date.now() / 1000);
+  return (
+    Number(stats.claimEnableTime) > 0 &&
+    now >= Number(stats.claimEnableTime)
+  );
+}, [stats]);
+
+const hasClaimable =
+  userInfo && BigInt(userInfo.claimable || 0n) > 0n;
+
+
+
+
+ const currentPrice =
+  stats?.tokenPrice
+    ? Number(formatUnits(stats.tokenPrice, 18))
+    : 0;
+
+
+const launchPrice = currentPrice * 2;
+
+const usdtAmount =
+  stats?.lotPrice
+    ? lots * Number(formatUnits(stats.lotPrice, 18)) // keep 18 because contract uses 18
+    : 0;
+
+const receiveAmount = stats
+  ? lots * Number(stats.tokensPerLot)
+  : 0;
+
 
   const presaleProgress = 75; // 75%
 
   const tokenomicsData = [
     
     { name: 'Presale', percentage: 25, color: '#a855f7' },
-    { name: 'Liquidity', percentage: 15, color: '#f59e0b', vesting: 'Locked 12–24 months' },
-    { name: 'User Rewards', percentage: 30, color: '#10b981', vesting: '0.5% every 6 months' },
-    { name: 'Marketing', percentage: 10, color: '#06eef5', vesting: '12-month cliff + 24-month vesting' },
+    { name: 'Liquidity', percentage: 15, color: '#f59e0b', vesting: 'Locked 12–36 months' },
+    { name: 'User Rewards', percentage: 30, color: '#10b981', vesting: '0.25% every 6 months' },
+    { name: 'Marketing', percentage: 10, color: '#06eef5', vesting: 'TGE-0% + 12-month cliff + 24-month vesting' },
     { name: 'Treasury', percentage: 10, color: '#facc15' },
-    { name: 'Team', percentage: 5, color: '#ec4899', vesting: '12-month cliff + 36-month vesting' },
-    { name: 'Advisors', percentage: 5, color: '#3b82f6', vesting: '12-month cliff + 24-month vesting' },
+    { name: 'Team', percentage: 5, color: '#ec4899', vesting: 'TGE-0% + 24-month cliff + 36-month vesting' },
+    { name: 'Advisors', percentage: 5, color: '#3b82f6', vesting: 'TGE-0% + 12-month cliff + 36-month vesting' },
   ];
 
   let cumulativePercentage = 0;
@@ -135,7 +257,7 @@ const roadmapData = [
     },
     {
       question: 'How can I participate in the presale?',
-      answer: 'To participate, connect your cryptocurrency wallet (like MetaMask) to this page. Then, enter the amount of USDT you wish to contribute, and our platform will automatically calculate the amount of SONIC you will receive. Finally, confirm the transaction in your wallet.'
+      answer: 'To participate, connect your cryptocurrency wallet (like MetaMask) to this page. Then, enter the amount of USDT you wish to contribute, and our platform will automatically calculate the amount of BIGROCK tokens you will receive. Finally, confirm the transaction in your wallet.'
     },
     {
       question: 'What happens after the presale ends?',
@@ -146,8 +268,6 @@ const roadmapData = [
       answer: 'Security is our top priority. Our smart contracts have been rigorously audited by leading third-party security firms. However, as with any cryptocurrency investment, there are inherent risks. We encourage you to do your own research.'
     }
   ];
-
-  const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -238,18 +358,59 @@ const roadmapData = [
           </div>
           <p className={styles.subtitle}>Join the future of decentralized exchange.</p>
         </header>
+      
+      {isSoldOut && !claimEnabled && (
+   <div className="mt-6 p-6 rounded-xl border border-red-500/40 bg-red-900/20 text-center">
+    <h3 className="text-2xl ml-3 text-center font-bold text-red-400">
+      Presale Sold Out 🚀
+    </h3>
 
+   { !claimCountdown && ( <p className="mt-2 text-sm text-gray-400">
+      Claim Phase Starts Soon stay tuned for updates!
+    </p> )}
+
+    {claimCountdown ? (
+      <>
+        <p className="text-sm text-gray-400 mt-2">
+          Claim phase starts in
+        </p>
+
+        <div className="mt-4 flex justify-center gap-3">
+          {[
+            { label: "D", value: claimCountdown.days },
+            { label: "H", value: claimCountdown.hours },
+            { label: "M", value: claimCountdown.minutes },
+            { label: "S", value: claimCountdown.seconds },
+          ].map((t) => (
+            <div
+              key={t.label}
+              className="px-3 py-2 rounded-lg bg-black/40 border border-cyan-500/30"
+            >
+              <div className="text-xl font-bold text-cyan-400">
+                {String(t.value).padStart(2, "0")}
+              </div>
+              <div className="text-[10px] text-gray-400">
+                {t.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    ) : null}
+  </div>
+)} 
+{!isSoldOut && (
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <h2 className={styles.cardTitle}>Presale is Live!</h2>
             <div className="flex flex-wrap justify-center gap-4 mt-4 w-full">
               <div className="flex flex-col items-center px-6 py-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,238,245,0.15)]">
                 <span className="text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">Current Price</span>
-                <span className="text-2xl font-bold text-white">$0.12</span>
+                <span className="text-2xl font-bold text-white"> ${currentPrice.toFixed(6)}</span>
               </div>
               <div className="flex flex-col items-center px-6 py-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
                 <div className="flex items-center gap-2 mb-1"><TrendingUp size={14} className="text-emerald-400" /><span className="text-xs text-emerald-400 font-bold uppercase tracking-widest">Launch Price</span></div>
-                <span className="text-2xl font-bold text-white">$0.45</span>
+                <span className="text-2xl font-bold text-white"> ${launchPrice.toFixed(6)}</span>
               </div>
             </div>
           </div>
@@ -295,36 +456,160 @@ const roadmapData = [
             </div>
           </div>
 
-          <div className={styles.buyForm}>
-            <div>
-              <label htmlFor="usdt" className={styles.inputLabel}>Amount in USDT</label>
-              <input
-                id="usdt"
-                type="number"
-                value={usdtAmount}
-                onChange={handleUsdtChange}
-                placeholder="0.00"
-                className={styles.inputField}
-              />
-            </div>
-            <div>
-              <label htmlFor="sonic" className={styles.inputLabel}>You will receive (BIGROCK)</label>
-              <input
-                id="sonic"
-                type="text"
-                value={sonicAmount}
-                readOnly
-                placeholder="0.00"
-                className={`${styles.inputField} ${isCalculating ? styles.inputGlow : ''}`}
-              />
-            </div>
-          </div>
+<div className={styles.buyForm}>
+  {/* Field 1: User Input (Lots) */}
+  <div>
+    <label className={styles.inputLabel}>Number of Lots</label>
+<input
+    type="number"
+    min="1"
+    max={maxAvailableLots} // Prevents over-buying via HTML validation
+    value={lots}
+    onChange={(e) => {
+      let val = Number(e.target.value);
+      // Logic Fix: Ensure value stays within bounds
+      if (val > maxAvailableLots) val = maxAvailableLots; 
+      if (val < 0) val = 0;
+      setLots(val);
+    }}
+    placeholder="0"
+    className={styles.inputField}
+  />
+  <span className="text-[10px] text-cyan-400 mt-1 block">
+    Available: {maxAvailableLots} Lots
+  </span>
+  </div>
 
-          <button className={styles.buyButton}>
-            <Zap size={20} style={{ marginRight: '8px' }} />
-            Connect Wallet & Buy
-          </button>
+  {/* Field 2: Calculated USDT (Read-only) */}
+  <div>
+    <label className={styles.inputLabel}>Total Cost (USDT)</label>
+    <div className={styles.readonlyWrapper}>
+       <input
+        type="text"
+        value={usdtAmount.toLocaleString() + " USDT"}
+        readOnly
+        className={styles.inputFieldReadOnly}
+      />
+    </div>
+  </div>
+
+  {/* Field 3: Calculated Tokens (Read-only) */}
+  <div className={styles.fullWidthField}>
+    <label className={styles.inputLabel}>You will receive (BIGROCK)</label>
+    <input
+      type="text"
+      value={receiveAmount.toLocaleString()}
+      readOnly
+      className={`${styles.inputFieldReadOnly} ${isCalculating ? styles.inputGlow : ''}`}
+    />
+  </div>
+</div>
+
+<button
+  disabled={isBuying || stats?.paused || isSoldOut}
+  className={`${styles.buyButton} ${
+    isBuying || isSoldOut ? "opacity-60 cursor-not-allowed" : ""
+  }`}
+  onClick={async () => {
+    if (!isConnected) {
+      openConnectModal();
+      return;
+    }
+
+    if (!stats || isSoldOut) return;
+
+    setIsBuying(true);
+    const res = await buyLots({ lots });
+    setIsBuying(false);
+
+    if (res?.success) {
+      const user = await getUserPresaleInfo(address);
+      setUserInfo(user);
+    }
+  }}
+>
+  {isBuying ? (
+    <span className="flex items-center gap-2">
+      <span className="animate-spin rounded-full h-4 w-4 border-2 border-black border-t-transparent"></span>
+      Processing...
+    </span>
+  ) : (
+    <>
+      <Zap size={20} />
+      {isConnected
+        ? "Buy BIGROCK"
+        : "Connect Wallet"
+        }  
+    </>
+  )}
+</button>
+
+
+
         </div>
+      )}
+
+{isSoldOut && claimEnabled && (
+  <div className="mt-10 flex justify-center">
+    <div className="w-full max-w-md bg-gray-900/60 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-6 text-center shadow-[0_0_25px_rgba(6,238,245,0.15)]">
+      
+      {/* Title */}
+      <h3 className="text-xl font-bold text-cyan-400 mb-2">
+        Claim BIGROCK Tokens
+      </h3>
+
+      <p className="text-sm text-gray-400 mb-6">
+        Your presale allocation is ready to be claimed
+      </p>
+
+      {/* Claim Button */}
+      <button
+        disabled={!claimEnabled || !hasClaimable || isClaiming}
+        onClick={async () => {
+          if (!isConnected) {
+            openConnectModal();
+            return;
+          }
+          setIsClaiming(true);
+          const res = await claimTokens();
+          setIsClaiming(false);
+
+          if (res?.success) {
+            const user = await getUserPresaleInfo(address);
+            setUserInfo(user);
+          }
+        }}
+        className={`
+          w-full py-3 rounded-xl font-bold tracking-wide
+          transition-all duration-300
+          ${
+            claimEnabled && hasClaimable
+              ? "bg-gradient-to-r from-emerald-400 to-cyan-400 text-black shadow-lg hover:scale-[1.03] border border-emerald-400"
+              : "bg-gray-400 text-gray-400 cursor-not-allowed border border-cyan-500"
+          }
+        `}
+      >
+        {isConnected
+          ? isClaiming
+            ? "Claiming..."
+            : "Claim BIGROCK Tokens"
+          : "Connect Wallet to Claim"}
+      </button>
+
+      {/* Claimable Amount */}
+      {isConnected && hasClaimable && (
+        <div className="mt-4 text-sm text-cyan-400">
+          Claimable:{" "}
+          <span className="font-bold text-white">
+            {claimableFormatted}
+          </span>{" "}
+          BIGROCK
+        </div>
+      )}
+    </div>
+  </div>
+)}
+
 
         <div className="w-full mt-12">
           <div className="relative bg-gray-900/60 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8 md:p-12 overflow-hidden shadow-2xl">
@@ -409,7 +694,24 @@ const roadmapData = [
           </div>
         </div>
        <div className={styles.buttons}>
-          <Link to="" className={styles.primaryButton}>Whitepaper</Link>
+          <Link
+            to=""
+            className={styles.primaryButton}
+            style={{
+              background: hasClicked ? "#4CAF50" : (isHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
+              border: "1px solid #06eef5",
+              color: "#ffffff",
+              transition: "all 0.3s ease",
+              transform: isActive ? "scale(0.95)" : (isHovered ? "scale(1.05)" : "scale(1)"),
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => { setIsHovered(false); setIsActive(false); }}
+            onMouseDown={() => setIsActive(true)}
+            onMouseUp={() => setIsActive(false)}
+            onClick={() => setHasClicked(true)}
+          >
+            Whitepaper
+          </Link>
         </div>
         
 

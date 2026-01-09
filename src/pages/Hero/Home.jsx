@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
 import { LifiWidgetEventListener } from "../../components/Widget/LifiWidgetEventListener.jsx";
@@ -24,8 +24,7 @@ const cardInfo = [
     imageSrc: "/heroCardImages/earnAirdrops.png",
     title: "Earn BigRock tokens",
     subtext:
-      "Swap rewards: earn BigRock tokens as a gas-fee reward for using the platform . " +
-      "Referral rewards: invite friends, earn tokens directly when they join and trade.",
+      "User rewards are allocated to incentivize platform usage. Rewards are distributed periodically based on swap activity, with a controlled emission of 25 Million Bigrock tokens  every 6 months.",
   },
   {
     imageSrc: "/heroCardImages/secure.png",
@@ -38,6 +37,9 @@ const cardInfo = [
 const Home = () => {
 
   const { address } = useAccount();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
 
   useAccountEffect({
     onConnect({ address }) {
@@ -124,7 +126,22 @@ const Home = () => {
           <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
         </Link>
         <div className={styles.buttons}>
-          <Link to="" className={styles.primaryButton}>whitepaper</Link>
+          <Link
+            to=""
+            className={styles.primaryButton}
+            style={{
+              background: hasClicked ? "#4CAF50" : (isHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
+              border: "1px solid #06eef5",
+              color: "#ffffff",
+              transition: "all 0.3s ease",
+              transform: isActive ? "scale(0.95)" : (isHovered ? "scale(1.05)" : "scale(1)"),
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => { setIsHovered(false); setIsActive(false); }}
+            onMouseDown={() => setIsActive(true)}
+            onMouseUp={() => setIsActive(false)}
+            onClick={() => setHasClicked(true)}
+          >whitepaper</Link>
 
         </div>
 
