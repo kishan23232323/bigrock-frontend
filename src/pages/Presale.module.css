@@ -240,18 +240,7 @@
   margin-top: 0.25rem;
 }
 
-.buyForm {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  align-items: flex-end;
-}
 
-@media (min-width: 768px) {
-  .buyForm {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 .inputLabel {
   display: block;
@@ -776,4 +765,47 @@
 .primaryButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 30px rgba(6, 238, 245, 0.6);
+}
+
+/* --- Presale.module.css --- */
+.buyForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+ 
+}
+
+.buyForm > div {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.buyForm > div > span {
+  min-height: 14px;
+}
+
+.fullWidthField {
+  grid-column: span 2; /* Receive field stretches across both */
+}
+
+.inputFieldReadOnly {
+  width: 100%;
+  color: #06eef5; /* Cyan text to show it's a result */
+  background-color: rgba(31, 41, 55, 0.3); /* Slightly darker/dimmed */
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(75, 85, 99, 0.4); /* Fainter border */
+  border-radius: 0.5rem;
+  cursor: not-allowed;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .buyForm {
+    grid-template-columns: 1fr;
+  }
+  .fullWidthField {
+    grid-column: span 1;
+  }
 }
