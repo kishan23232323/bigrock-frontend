@@ -153,8 +153,15 @@ const TradeItem = ({ trade, getTradeIcon, setTrades }) => {
 export default function ProfilePage() {
   const { accessToken, user } = useSelector((state) => state.auth || {});
   const[trades, setTrades]=useState([]);
+
+  const isAgent = user?.role === "agent";
+  const hasApplied = user?.agentStatus=== "PENDING" 
+  const isSuspended = user?.agentStatus=== "SUSPENDED";
+  const isRejected = user?.agentStatus=== "REJECTED";
+
   useEffect(()=>{
     if(!accessToken) return;
+    console.log("Fetching user trades...",user);
     getMyOrders()
     .then((res)=>{
       setTrades(res);
@@ -277,11 +284,27 @@ export default function ProfilePage() {
           <p className={styles.agentDescription}>
             Earn more by facilitating trades
           </p>
-          <Link to="/agent">
-            <motion.button className={styles.agentButton}>
-              Register as Agent
-            </motion.button>
-          </Link>
+          <motion.button
+            disabled={isAgent || hasApplied || isSuspended || isRejected}
+            className={`${styles.agentButton} ${
+              isAgent || hasApplied || isSuspended || isRejected
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+          >
+            {isAgent
+              ? "You are already an Agent"
+              : hasApplied
+              ? "Application Pending"
+              : isSuspended
+              ? "Application Suspended"
+              : isRejected
+              ? "Application Rejected"
+              : "Register as Agent"
+              
+              }
+          </motion.button>
+
         </motion.div>
 
       </motion.div>

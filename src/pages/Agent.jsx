@@ -103,8 +103,8 @@ import { useNavigate } from 'react-router-dom';
 
           {/* Telegram/Social ID */}
           <div>
-            <label className="block text-sm font-medium text-gray-400">Telegram / Social ID</label>
-            <input type="text" name="socialId" value={formData.socialId} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="Enter your Telegram or other social ID" />
+            <label className="block text-sm font-medium text-gray-400">Telegram ID</label>
+            <input type="text" name="socialId" value={formData.socialId} onChange={handleChange} required className="mt-1 w-full text-slate-200 bg-gray-800/50 px-4 py-2 border border-gray-600 rounded-lg shadow-sm focus:ring-cyan-500 focus:border-cyan-500" placeholder="@username" />
           </div>
 
           {/* Proof of Address */}
