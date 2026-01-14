@@ -92,7 +92,9 @@ function App() {
           />
           <Route path="/agent" element={
             <Protected>
+              <VerifiedOnly>
               <Agent />
+              </VerifiedOnly>
             </Protected>
           }
           />
