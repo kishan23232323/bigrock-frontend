@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { getMyOrders, requestCancelOrder } from "../services/P2Pservices/p2papi";
 import { useEffect, useState } from "react";
 import {  IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const TradeItem = ({ trade, getTradeIcon, setTrades }) => {
   const [expanded, setExpanded] = useState(false);
@@ -158,6 +159,9 @@ export default function ProfilePage() {
   const hasApplied = user?.agentStatus=== "PENDING" 
   const isSuspended = user?.agentStatus=== "SUSPENDED";
   const isRejected = user?.agentStatus=== "REJECTED";
+  const navigate = useNavigate();
+
+
 
   useEffect(()=>{
     if(!accessToken) return;
@@ -286,6 +290,7 @@ export default function ProfilePage() {
           </p>
           <motion.button
             disabled={isAgent || hasApplied || isSuspended || isRejected}
+            onClick={() => navigate('/agent')}
             className={`${styles.agentButton} ${
               isAgent || hasApplied || isSuspended || isRejected
                 ? "opacity-50 cursor-not-allowed"
