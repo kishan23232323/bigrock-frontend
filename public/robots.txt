@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /profile
+Disallow: /p2p
+Disallow: /edit-profile
+
+Sitemap: https://bigrock.exchange/sitemap.xml
