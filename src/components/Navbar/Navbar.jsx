@@ -11,6 +11,7 @@ const Navbar = () => {
   const { accessToken, user } = useSelector((state) => state.auth || {});
   const isLoggedIn = Boolean(accessToken);
   const isAdmin = user?.role === "admin";
+  const isAgent = user?.role === "agent";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const getP2PState = () => {
@@ -36,6 +37,8 @@ const Navbar = () => {
     { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/profile", label: "Profile", icon: <FaUser /> },
     ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
+    ...(isAgent ? [{ to: "/agent/orders", label: "Agent", icon: <FaUser /> }] : []),
+    
   ];
 
   return (

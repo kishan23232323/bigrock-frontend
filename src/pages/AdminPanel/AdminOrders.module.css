@@ -325,6 +325,15 @@
   background: rgba(234, 179, 8, 0.2);
   color: #eab308;
 }
+.processing {
+  background: rgb(15, 3, 246);
+  color: #020e15;
+}
+
+.fulfilled {
+  background: rgba(246, 32, 32, 0.871);
+  color: #270814;
+}
 
 
 .modalOverlay {
