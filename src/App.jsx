@@ -34,7 +34,9 @@ import AdminDashboard from "./pages/AdminPanel/AdminDashboard";
 import AdminProtected from "./components/AdminProtected";
 import AdminAirdropPanel from "./pages/AdminPanel/AdminAirdropPanel";
 import VerifiedOnly from "./components/VerifiedOnly";
+import AgentOrders from "./pages/AgentPanel/AgentPanel";
 import CustomerSupportPanel from "./pages/AdminPanel/CustomerSupportPanel";
+
 
 
 function App() {
@@ -131,12 +133,15 @@ function App() {
                 <Airdrop />
               </VerifiedOnly>
             </Protected>
-
-
           } />
 
-
-
+          <Route path="/agent/orders" element={
+            <Protected>
+              <VerifiedOnly>
+                <AgentOrders />
+              </VerifiedOnly>
+            </Protected>
+          } />
           <Route path="/profile" element={<Profile />} />
           <Route path="/p2p" element={
             <Protected>

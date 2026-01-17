@@ -147,6 +147,42 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage, onStatusUpda
           <span className={styles.detailValueGray}>No proof uploaded</span>
         )}
       </div>
+      <span className=" text-amber-300">AGENT ASSIGNED</span>
+
+     { order.assignedAgent? ( <div>
+
+
+      <div className={styles.detailRow}>
+        <span className={styles.detailLabel}>Agent Name</span>
+        <span className={styles.detailValueGray}>{order.assignedAgent.fullName.toUpperCase() || "Unknown User"}</span>
+      </div>
+
+      <div className={styles.detailRow}>
+        <span className={styles.detailLabel}>Agent UID</span>
+        <span className={styles.detailValueGray}>{order.assignedAgent.agentUid || "Not Provided"}</span>
+      </div>
+
+      <div className={styles.detailRow}>
+        <span className={styles.detailLabel}>Agent Transaction Hash</span>
+        <span className={styles.detailValueGray}>{order.agentProofHash || "Not Provided"}</span>
+      </div>
+
+       <div className={styles.detailRow}>
+        <span className={styles.detailLabel}>Agent Payment Proof</span>
+        {order.proofImage ? (
+          <button className={styles.viewImgBtn} onClick={() => onPreviewImage(order.agentProofImage)}>
+            <IoImageOutline size={20} /> View Proof
+          </button>
+        ) : (
+          <span className={styles.detailValueGray}>No proof uploaded</span>
+        )}
+      </div>
+
+      </div> ) :(
+        <span className="text-gray-300"> No Agent Assigned yet</span>
+      )
+}
+      
 
 {/* ADMIN STATUS UPDATE */}
 <div className={styles.detailRow}>
@@ -174,6 +210,9 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage, onStatusUpda
       <option className="bg-black" value="AWAITING_CONFIRMATION">AWAITING_CONFIRMATION</option>
       <option className="bg-black" value="COMPLETED">COMPLETED</option>
       <option className="bg-black" value="CANCELLED">CANCELLED</option>
+      <option className="bg-black" value="FULFILLED">FULFILLED</option>
+      <option className="bg-black" value="PROCESSING">PROCESSING</option>
+
     </select>
 
     {/* APPLY BUTTON */}
