@@ -1,5 +1,49 @@
 import API from "../../config/axios";
 
+
+/**
+ * Get orders assigned to logged-in agent
+ */
+export const agentGetOrders = async ({ page = 1, search = "" }) => {
+  try {
+    const res = await API.get(
+      `/api/v1/agent/orders?page=${page}&limit=10&search=${encodeURIComponent(
+        search
+      )}`
+    );
+    return res.data?.data;
+  } catch (err) {
+    throw err.response ? err.response.data : err;
+  }
+};
+
+/**
+ * Upload agent proof (image + hash)
+ */
+export const agentUploadProof = async ({
+  orderId,
+  proofImage,
+  agentProofHash,
+}) => {
+  try {
+    const formData = new FormData();
+    formData.append("proof", proofImage);
+    formData.append("agentProofHash", agentProofHash);
+
+    const res = await API.post(
+      `/api/v1/agent/upload-proofs/${orderId}`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+
+    return res.data?.data;
+  } catch (err) {
+    throw err.response ? err.response.data : err;
+  }
+};
+
 export const applyForAgent = async ({
     phoneNumber,
     dob,
