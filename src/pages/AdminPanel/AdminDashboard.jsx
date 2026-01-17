@@ -4,6 +4,7 @@ import {
   IoPersonAddOutline,
   IoPeopleOutline,
   IoStatsChartOutline,
+  IoHeadsetOutline,
 } from "react-icons/io5";
 
 const adminCards = [
@@ -26,6 +27,12 @@ const adminCards = [
     description: "Manage airdrop allocations and subscriptions",
     icon: IoPeopleOutline,
     route: "/admin/airdrop-panel",
+  },
+  {
+    title: "Customer Support",
+    description: "Manage customer queries and support tickets",
+    icon: IoHeadsetOutline,
+    route: "/admin/customer-support-panel",
   },
   {
     title: "Reports",

@@ -35,6 +35,8 @@ import AdminProtected from "./components/AdminProtected";
 import AdminAirdropPanel from "./pages/AdminPanel/AdminAirdropPanel";
 import VerifiedOnly from "./components/VerifiedOnly";
 import AgentOrders from "./pages/AgentPanel/AgentPanel";
+import CustomerSupportPanel from "./pages/AdminPanel/CustomerSupportPanel";
+
 
 
 function App() {
@@ -94,7 +96,7 @@ function App() {
           <Route path="/agent" element={
             <Protected>
               <VerifiedOnly>
-              <Agent />
+                <Agent />
               </VerifiedOnly>
             </Protected>
           }
@@ -120,43 +122,48 @@ function App() {
               <AdminAirdropPanel />
             </AdminProtected>} />
 
-          <Route path="/airdrop" element={
-             <Protected>
-              <VerifiedOnly>
-                 <Airdrop />
-              </VerifiedOnly>
-             </Protected>
-             } />
+          <Route path="/admin/customer-support-panel" element={
+            <AdminProtected>
+              <CustomerSupportPanel />
+            </AdminProtected>} />
 
-            <Route path="/agent/orders" element={
-             <Protected>
+          <Route path="/airdrop" element={
+            <Protected>
               <VerifiedOnly>
-                 <AgentOrders />
+                <Airdrop />
               </VerifiedOnly>
-             </Protected>
-            }/>
+            </Protected>
+          } />
+
+          <Route path="/agent/orders" element={
+            <Protected>
+              <VerifiedOnly>
+                <AgentOrders />
+              </VerifiedOnly>
+            </Protected>
+          } />
           <Route path="/profile" element={<Profile />} />
           <Route path="/p2p" element={
             <Protected>
               <VerifiedOnly>
-                 <P2P />
+                <P2P />
               </VerifiedOnly>
-             </Protected>
-        
-        } />
+            </Protected>
+
+          } />
           <Route path="/p2p/sell" element={
             <Protected>
               <VerifiedOnly>
-                 <P2P mode="sell" />
+                <P2P mode="sell" />
               </VerifiedOnly>
-             </Protected>
+            </Protected>
           } />
           <Route path="/p2p/buy" element={
             <Protected>
               <VerifiedOnly>
-                 <P2P mode="buy" />
+                <P2P mode="buy" />
               </VerifiedOnly>
-             </Protected>
+            </Protected>
           } />
           <Route path="/about" element={<About />} />
           <Route path="/career" element={<Career />} />
