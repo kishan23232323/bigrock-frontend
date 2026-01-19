@@ -161,6 +161,13 @@ export default function ProfilePage() {
   const isRejected = user?.agentStatus=== "REJECTED";
   const navigate = useNavigate();
 
+    const [isHovered, setIsHovered] = useState(false);
+    const [isActive, setIsActive] = useState(false);
+    const [hasClicked, setHasClicked] = useState(false);
+    const [isAgentHovered, setAgentIsHovered] = useState(false);
+    const [isAgentActive, setAgentIsActive] = useState(false);
+    const [hasAgentClicked, setAgentHasClicked] = useState(false);
+
 
 
   useEffect(()=>{
@@ -243,7 +250,22 @@ export default function ProfilePage() {
               )}
             </div>
               {accessToken && (
-                  <Link to="/edit-profile" className={`${styles.primaryButton} `}>Edit</Link>
+                  <Link to="/edit-profile" 
+                              className={styles.primaryButton}
+                              style={{
+                                background: hasClicked ? "#4CAF50" : (isHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
+                                border: "1px solid #06eef5",
+                                color: "#ffffff",
+                                transition: "all 0.3s ease",
+                                transform: isActive ? "scale(0.95)" : (isHovered ? "scale(1.05)" : "scale(1)"),
+                              }}
+                              onMouseEnter={() => setIsHovered(true)}
+                              onMouseLeave={() => { setIsHovered(false); setIsActive(false); }}
+                              onMouseDown={() => setIsActive(true)}
+                              onMouseUp={() => setIsActive(false)}
+                              onClick={() => setHasClicked(true)}
+                  
+                  >Edit</Link>
               )}
           </div>
 
@@ -290,12 +312,27 @@ export default function ProfilePage() {
           </p>
           <motion.button
             disabled={isAgent || hasApplied || isSuspended || isRejected}
-            onClick={() => navigate('/agent')}
+            onClick={() => {
+              setAgentHasClicked(true)
+              navigate('/agent')
+            }}
             className={`${styles.agentButton} ${
               isAgent || hasApplied || isSuspended || isRejected
                 ? "opacity-50 cursor-not-allowed"
                 : ""
             }`}
+                              style={{
+                                background: hasAgentClicked ? "#4CAF50" : (isAgentHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
+                                border: "1px solid #06eef5",
+                                color: "#ffffff",
+                                transition: "all 0.3s ease",
+                                transform: isAgentActive ? "scale(0.95)" : (isAgentHovered ? "scale(1.05)" : "scale(1)"),
+                              }}
+                              onMouseEnter={() => setAgentIsHovered(true)}
+                              onMouseLeave={() => { setAgentIsHovered(false); setAgentIsActive(false); }}
+                              onMouseDown={() => setAgentIsActive(true)}
+                              onMouseUp={() => setAgentIsActive(false)}
+            
           >
             {isAgent
               ? "You are already an Agent"

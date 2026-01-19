@@ -26,7 +26,7 @@ import { formatUnits } from "viem";
 // ];
 const initialAirdropData = [
   { id: 2, name: "Early Bird Bonus", amount: "0 BIGROCK", status: "CLAIMABLE", icon: "✓" },
-  { id: 3, name: "Referral Rewards", amount: "0 BIGROCK", status: "LOCKED", icon: "!" },
+  { id: 3, name: "Referral Rewards  ", amount: "0 BIGROCK", status: "LOCKED", icon: "!" },
 ];
 
 export default function AirdropPage({ onNavigate }) {
@@ -247,7 +247,15 @@ const referClaimable =
                 </span>
               </div>
 
-              <h3 className={styles.airdropName}>{airdrop.name}</h3>
+              <h3 className={styles.airdropName}>
+                {airdrop.name}
+                {airdrop.id === 3 && (
+                  <span className={styles.referralRate}>
+                    ( 1 Referral = 70 BIGROCK )
+                  </span>
+                )}
+</h3>
+
               <p className={styles.airdropAmount}>{airdrop.amount}</p>
               
                 {/* 🔐 Eligibility messages */}
@@ -262,6 +270,7 @@ const referClaimable =
                     Waiting for admin approval
                   </p>
                 )} */}
+
 
               <button
                 disabled={
@@ -352,14 +361,14 @@ const referClaimable =
           <h2 className={styles.sectionTitle}>Stay Connected</h2>
           <p className={styles.referralDesc}>Follow our social channels for the latest airdrop updates, announcements, and community events.</p>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-            <a href="https://t.me/" target="_blank" rel="noopener noreferrer"
+            <a href="https://t.me/+PGohKmN3pG9kMzQ1" target="_blank" rel="noopener noreferrer"
               className="group flex items-center justify-center gap-3 p-4 rounded-xl border border-[#229ED9]/30 bg-[#229ED9]/10 hover:bg-[#229ED9]/20 transition-all duration-300"
             >
               <FaTelegramPlane size={24} className="text-[#229ED9] group-hover:scale-110 transition-transform" />
               <span className="font-bold text-white">Join Telegram</span>
             </a>
 
-            <a href="https://x.com/" target="_blank" rel="noopener noreferrer"
+            <a href="https://x.com/bigrock_ex" target="_blank" rel="noopener noreferrer"
               className="group flex items-center justify-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
             >
               <FaXTwitter size={24} className="text-white group-hover:scale-110 transition-transform" />

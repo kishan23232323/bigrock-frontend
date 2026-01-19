@@ -10,9 +10,9 @@ export default function useConvert() {
   const debounceRef = useRef(null);
   const lastParamsRef = useRef(null);
 
-  const convert = (amount, from, to, delay = 500) => {
+  const convert = (amount, from, to, mode, delay = 500) => {
     
-    lastParamsRef.current = { amount, from, to };
+    lastParamsRef.current = { amount, from, to, mode };
 
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
@@ -20,7 +20,7 @@ export default function useConvert() {
       setLoading(true);
       setError(null);
       try {
-        const resp = await convertFiatUsdt({ amount, from, to });
+        const resp = await convertFiatUsdt({ amount, from, to, mode });
         setConverted(resp.convertedAmount ?? resp.converted ?? null);
         setRate(resp.rate ?? null);
       } catch (err) {
@@ -33,12 +33,12 @@ export default function useConvert() {
     }, delay);
   };
 
-  const triggerNow = async (amount, from, to) => {
+  const triggerNow = async (amount, from, to, mode) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     setLoading(true);
     setError(null);
     try {
-      const resp = await convertFiatUsdt({ amount, from, to });
+      const resp = await convertFiatUsdt({ amount, from, to, mode });
       setConverted(resp.convertedAmount ?? resp.converted ?? null);
       setRate(resp.rate ?? null);
     } catch (err) {
