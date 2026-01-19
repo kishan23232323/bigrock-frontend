@@ -36,6 +36,7 @@ import AdminAirdropPanel from "./pages/AdminPanel/AdminAirdropPanel";
 import VerifiedOnly from "./components/VerifiedOnly";
 import AgentOrders from "./pages/AgentPanel/AgentPanel";
 import CustomerSupportPanel from "./pages/AdminPanel/CustomerSupportPanel";
+import ReferralPanel from "./pages/AdminPanel/ReferralPanel";
 
 
 
@@ -125,6 +126,11 @@ function App() {
           <Route path="/admin/customer-support-panel" element={
             <AdminProtected>
               <CustomerSupportPanel />
+            </AdminProtected>} />
+
+          <Route path="/admin/referral-points" element={
+            <AdminProtected>
+              <ReferralPanel />
             </AdminProtected>} />
 
           <Route path="/airdrop" element={

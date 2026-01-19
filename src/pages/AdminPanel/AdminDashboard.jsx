@@ -5,6 +5,7 @@ import {
   IoPeopleOutline,
   IoStatsChartOutline,
   IoHeadsetOutline,
+  IoGiftOutline,
 } from "react-icons/io5";
 
 const adminCards = [
@@ -35,11 +36,18 @@ const adminCards = [
     route: "/admin/customer-support-panel",
   },
   {
+    title: "Referral Points",
+    description: "View and manage user referral points",
+    icon: IoGiftOutline,
+    route: "/admin/referral-points",
+  },
+  {
     title: "Reports",
     description: "System reports & analytics (coming soon)",
     icon: IoStatsChartOutline,
     disabled: true,
-  },
+  }
+
 ];
 
 const AdminDashboard = () => {
