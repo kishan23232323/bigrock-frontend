@@ -292,6 +292,10 @@ const SellSection = ({ selectedCountry }) => {
   const { accessToken } = useSelector((state) => state.auth || {});
   const isLoggedIn = Boolean(accessToken);
 
+  const [creatingOrder, setCreatingOrder] = useState(false);
+  const [submittingProof, setSubmittingProof] = useState(false);
+
+
 
   // Conversion
   
@@ -412,6 +416,8 @@ const SellSection = ({ selectedCountry }) => {
     };
 
     try {
+     if (creatingOrder) return; 
+       setCreatingOrder(true);
       const response = await createSellOrder(payload);
       console.log(response);
       setOrderData(response.order);
@@ -419,7 +425,10 @@ const SellSection = ({ selectedCountry }) => {
     } catch (err) {
       console.error("Create sell order failed:", err);
       toast.error(err?.message || "Failed to create order");
+    } finally{
+       setCreatingOrder(false);
     }
+
   };
 
   const [txnHash, setTxnHash] = useState("");
@@ -451,7 +460,9 @@ const SellSection = ({ selectedCountry }) => {
     if (proofFile) formData.append("proof", proofFile);
 
     try {
-      console.log(orderData?._id, txnHash, proofFile);
+        if (submittingProof) return;
+         setSubmittingProof(true);
+      // console.log(orderData?._id, txnHash, proofFile);
       await confirmSellOrder({
         orderId: orderData?._id,
         txnHash,
@@ -464,6 +475,9 @@ const SellSection = ({ selectedCountry }) => {
     } catch (err) {
       console.error("Confirm sell failed:", err);
       toast.error(err?.message || "Failed to confirm sell");
+    }
+    finally {
+       setSubmittingProof(false);
     }
   };
   const handleCopyAddress = async () => {
@@ -700,14 +714,19 @@ const handleCancelOrder = async()=>{
 
       {/* Buttons */}
       <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
- <button className={`${styles.confirmButton} w-full`} onClick={()=>{
+        <button
+        disabled={creatingOrder || !isLoggedIn}
+         className={`${styles.confirmButton} w-full ${
+         creatingOrder ? styles.disabled : ""
+           }`}
+            onClick={()=>{
           if(!isLoggedIn){
             navigate("/login");
             return;
           }
           handleCreateOrder(); 
         }}>
-          {isLoggedIn ? "Create Sell Order" : "Login to Use P2P Service"}
+         {creatingOrder ? "Creating..." : "Create Sell Order"}
         </button>
       </div>
     </div>
@@ -788,8 +807,13 @@ const handleCancelOrder = async()=>{
         <button className={`${styles.cancelButton} w-full`} onClick={() => setShowCancelConfirm(true)}>
           Cancel Order
         </button>
-        <button className={`${styles.confirmButton} w-full`} onClick={handleConfirmSell}>
-          Submit Proof
+        <button 
+        disabled={submittingProof}
+         className={`${styles.confirmButton} w-full ${
+          submittingProof ? styles.disabled : ""
+        }`}
+         onClick={handleConfirmSell}>
+           {submittingProof ? "Submitting..." : "Submit Proof"}
         </button>
       </div>
     </div>
@@ -851,7 +875,7 @@ const BuySection = ({ selectedCountry }) => {
 
   // Network selection (default TRC20) 
   const [network, setNetwork] = useState("TRC20");
-const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
+  const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
 
 
 
@@ -860,6 +884,10 @@ const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
 
     const { accessToken } = useSelector((state) => state.auth || {});
     const isLoggedIn = Boolean(accessToken);
+
+    const [creatingOrder, setCreatingOrder] = useState(false);
+    const [submittingProof, setSubmittingProof] = useState(false);
+
 
   // ------------------------- Conversion -------------------------
   const onUsdtChange = (v) => {
@@ -944,6 +972,10 @@ const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
     };
 
     try {
+      if (creatingOrder) return;      
+
+      setCreatingOrder(true);
+
       const response = await createBuyOrder(payload);
     
       const returnedOrder = response?.order || response?.data?.order || response;
@@ -952,6 +984,8 @@ const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
     } catch (err) {
       console.error("Create buy order failed:", err);
       toast.error(err?.message || "Failed to create buy order");
+    } finally {
+       setCreatingOrder(false);
     }
   };
 
@@ -972,6 +1006,10 @@ const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
     }
 
     try {
+       if (submittingProof) return;
+
+       setSubmittingProof(true);
+
       await confirmBuyOrder({ orderId: orderData._id, proof: proofFile });
       toast.success("Buy order submitted, awaiting admin approval");
       navigate("/profile");
@@ -979,6 +1017,8 @@ const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
     } catch (err) {
       console.error("Confirm buy failed:", err);
       toast.error(err?.message || "Failed to confirm buy");
+    } finally {
+      setSubmittingProof(false);
     }
   };
 
@@ -1172,14 +1212,19 @@ const handleCancelOrder = async()=>{
 
       {/* Buttons */}
       <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
-        <button className={`${styles.confirmButton} w-full`} onClick={()=>{
+        <button
+         disabled={creatingOrder || !isLoggedIn}
+         className={`${styles.confirmButton} w-full ${
+          creatingOrder ? styles.disabled : ""
+        }`} 
+        onClick={()=>{
           if(!isLoggedIn){
             navigate("/login");
             return;
           }
           handleCreateOrder(); 
         }}>
-          {isLoggedIn ? "Create Buy Order" : "Login to Use P2P Service"}
+          {creatingOrder ? "Creating..." : "Create Buy Order"}
         </button>
       </div>
     </div>
@@ -1277,8 +1322,13 @@ const handleCancelOrder = async()=>{
           <button className={`${styles.cancelButton} w-full`} onClick={() => setShowCancelConfirm(true)}>
             Cancel Order
           </button>
-          <button className={`${styles.confirmButton} w-full`} onClick={handleConfirmBuy}>
-            Submit Proof
+          <button 
+           disabled={submittingProof}
+          className={`${styles.confirmButton} w-full ${
+            submittingProof ? styles.disabled : ""
+          }`}
+           onClick={handleConfirmBuy}>
+            {submittingProof ? "Submitting..." : "Submit Proof"}
           </button>
         </div>
       </div>
