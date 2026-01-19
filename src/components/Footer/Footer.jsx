@@ -42,7 +42,7 @@ const Footer = () => {
           </p>
           <div className={styles.socialRow}>
             <a
-              href="https://twitter.com"
+              href="https://x.com/bigrock_ex"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialCircle}
@@ -59,7 +59,7 @@ const Footer = () => {
               <FaInstagram />
             </a>
             <a
-              href="https://telegram.org"
+              href="https://t.me/+PGohKmN3pG9kMzQ1"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialCircle}

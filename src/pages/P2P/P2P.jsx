@@ -298,7 +298,7 @@ const SellSection = ({ selectedCountry }) => {
   const onUsdtChange = (v) => {
     setUsdtAmount(v);
     setEditingField("usdt");
-    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase());
+    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase(),"SELL");
   };
 
   useEffect(() => {
@@ -570,7 +570,7 @@ const handleCancelOrder = async()=>{
         {loading && <small style={{ color: "#aaa" }}>Updating rate...</small>}
         {!loading && rate != null && (
           <small style={{ color: "#aaa" }}>
-            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode}
+            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode} (Excluding 2% Fee)
           </small>
         )}
       </div>
@@ -865,7 +865,7 @@ const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
   const onUsdtChange = (v) => {
     setUsdtAmount(v);
     setEditingField("usdt");
-    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase());
+    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase(),"BUY");
   };
 
   const onFiatChange = (v) => {
@@ -1077,7 +1077,7 @@ const handleCancelOrder = async()=>{
         {loading && <small style={{ color: "#aaa" }}>Updating rate...</small>}
         {!loading && rate != null && (
           <small style={{ color: "#aaa" }}>
-            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode}
+            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode} (Excluding 5% Fee)
           </small>
         )}
       </div>
