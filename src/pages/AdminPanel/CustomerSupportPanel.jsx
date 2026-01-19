@@ -77,13 +77,9 @@ const CustomerSupportPanel = () => {
                 <input
                     type="text"
                     placeholder="Search by query or keyword..."
-                    className="
-            w-full rounded-xl
-            bg-[#0b1624] border border-[#1e2a3a]
-            px-4 py-3 text-sm
-            text-gray-200 placeholder-gray-500
-            focus:outline-none focus:ring-2 focus:ring-cyan-500/40
-          "
+                    className="w-full rounded-xl bg-[#0b1624] border border-[#1e2a3a]
+                    px-4 py-3 text-sm text-gray-200 placeholder-gray-500
+                    focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
                     value={search}
                     onChange={(e) => {
                         setPage(1);
@@ -95,10 +91,9 @@ const CustomerSupportPanel = () => {
             {/* Table */}
             <div className="rounded-2xl border border-[#1e2a3a] bg-[#0b1624]/80 backdrop-blur shadow-xl overflow-hidden">
                 <table className="w-full text-sm">
-
                     <thead className="bg-[#0f1d30] text-gray-300">
                         <tr>
-                            <th className="px-6 py-4 text-left font-semibold">Telegram ID</th>
+                            <th className="px-6 py-4 text-left font-semibold">Email</th>
                             <th className="px-6 py-4 text-left font-semibold">Query</th>
                             <th className="px-6 py-4 text-left font-semibold">Status</th>
                             <th className="px-6 py-4 text-center font-semibold">Action</th>
@@ -124,9 +119,9 @@ const CustomerSupportPanel = () => {
                                     key={q._id}
                                     className="border-t border-[#1e2a3a] hover:bg-[#0f1d30]/60 transition"
                                 >
-                                    {/* Telegram ID */}
-                                    <td className="px-6 py-4 font-mono text-gray-300">
-                                        {q.telegramId}
+                                    {/* Email */}
+                                    <td className="px-6 py-4 text-gray-300">
+                                        {q.email || "—"}
                                     </td>
 
                                     {/* Query */}
@@ -137,14 +132,13 @@ const CustomerSupportPanel = () => {
                                     {/* Status */}
                                     <td className="px-6 py-4">
                                         <span
-                                            className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wide
-                        ${q.status === "resolved"
+                                            className={`px-3 py-1 rounded-full text-xs font-semibold
+                                            ${q.status === "resolved"
                                                     ? "bg-green-500/15 text-green-400 border border-green-500/30"
                                                     : q.status === "in_progress"
                                                         ? "bg-yellow-500/15 text-yellow-400 border border-yellow-500/30"
                                                         : "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30"
-                                                }
-                      `}
+                                                }`}
                                         >
                                             {q.status.replace("_", " ").toUpperCase()}
                                         </span>
@@ -185,36 +179,25 @@ const CustomerSupportPanel = () => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="mt-8 flex items-center justify-center gap-4 text-sm">
+                <div className="mt-8 flex justify-center gap-4 text-sm">
                     <button
                         disabled={page === 1}
-                        onClick={() => setPage((p) => p - 1)}
-                        className="
-              px-4 py-2 rounded-lg
-              border border-[#1e2a3a]
-              bg-[#0b1624]
-              hover:bg-[#0f1d30]
-              disabled:opacity-40
-            "
+                        onClick={() => setPage(p => p - 1)}
+                        className="px-4 py-2 rounded-lg border border-[#1e2a3a]
+                        bg-[#0b1624] hover:bg-[#0f1d30] disabled:opacity-40"
                     >
                         Prev
                     </button>
 
                     <span className="text-gray-400">
-                        Page <span className="text-white font-semibold">{page}</span> of{" "}
-                        {totalPages}
+                        Page <span className="text-white font-semibold">{page}</span> of {totalPages}
                     </span>
 
                     <button
                         disabled={page === totalPages}
-                        onClick={() => setPage((p) => p + 1)}
-                        className="
-              px-4 py-2 rounded-lg
-              border border-[#1e2a3a]
-              bg-[#0b1624]
-              hover:bg-[#0f1d30]
-              disabled:opacity-40
-            "
+                        onClick={() => setPage(p => p + 1)}
+                        className="px-4 py-2 rounded-lg border border-[#1e2a3a]
+                        bg-[#0b1624] hover:bg-[#0f1d30] disabled:opacity-40"
                     >
                         Next
                     </button>
