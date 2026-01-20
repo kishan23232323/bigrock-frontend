@@ -615,3 +615,11 @@
   object-fit: contain;
   vertical-align: middle;
 }
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(30%);
+  transform: none !important;
+}
