@@ -6,7 +6,7 @@ import { useAccount } from "wagmi";
 const basicFeeConfig = {
     name: "Bigrock-Exchange",
     logoURI: "https://yourdapp.com/logo.png",
-    fee: 0.005, // 0.5% fee
+    fee: 0.01, // 1% fee
     showFeePercentage: true,
     showFeeTooltip: true
 };
@@ -15,7 +15,7 @@ export default function LiFiWidgetComponent() {
 
     const { openConnectModal } = useConnectModal();
     const { isConnected } = useAccount();
-     const isMobile = /Android|iPhone/i.test(navigator.userAgent);
+    const isMobile = /Android|iPhone/i.test(navigator.userAgent);
 
     const widgetConfig = useMemo(() => ({
         variant: "compact",
@@ -45,28 +45,28 @@ export default function LiFiWidgetComponent() {
             },
             forceWalletConnect: true,
             usePartialWalletManagement: true,
-            walletConnect:{
+            walletConnect: {
                 projectId: '9f028ef985d9cf1bacdfea0f961c9a85',
             }
         },
-         sdkConfig: {
+        sdkConfig: {
             executionOptions: {
-            disableMessageSigning: true,
+                disableMessageSigning: true,
             },
         },
 
     }), [openConnectModal]);
 
     return (
-       <div className="mx-auto max-w-md p-4">
-  {isMobile && (
-    <div className="mb-3 rounded-md bg-yellow-900/30 p-3 text-center text-sm wrap-break-word text-yellow-200">
-      If you don’t see the confirmation request, please reopen your wallet app.
-    </div>
-  )}
+        <div className="mx-auto max-w-md p-4">
+            {isMobile && (
+                <div className="mb-3 rounded-md bg-yellow-900/30 p-3 text-center text-sm wrap-break-word text-yellow-200">
+                    If you don’t see the confirmation request, please reopen your wallet app.
+                </div>
+            )}
 
-  <LiFiWidget integrator="Bigrock-Exchange" config={widgetConfig} />
-</div>
+            <LiFiWidget integrator="Bigrock-Exchange" config={widgetConfig} />
+        </div>
 
     );
 }
