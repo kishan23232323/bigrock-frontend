@@ -15,7 +15,7 @@ import {
 
 const config = getDefaultConfig({
   appName: 'BigRock Exchange',
-  projectId: '9f028ef985d9cf1bacdfea0f961c9a85',
+  projectId: import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID,
   chains: [mainnet, polygon, optimism, arbitrum, base, sepolia, bsc],
   ssr: false,
 })
