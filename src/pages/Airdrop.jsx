@@ -85,6 +85,18 @@ export default function AirdropPage({ onNavigate }) {
 
   const referralLink = `https://www.bigrock.exchange/signup?referral=${user ? user.referralCode : ''}`;
 
+  const EARLY_BIRD_POINTS = 10000;
+  const MAX_POINTS = 25000;
+
+  const earlyBirdPoints = EARLY_BIRD_POINTS;
+
+  const referralPoints = 2500;
+
+  const totalPoints = earlyBirdPoints + referralPoints;
+
+  const progressPercent = Number(
+    (totalPoints * 100) / MAX_POINTS
+  );
 
   // useEffect(() => {
   //   let mounted = true;
@@ -197,6 +209,7 @@ export default function AirdropPage({ onNavigate }) {
           </button>
         )}
 
+
         <div className={styles.headerCard}>
           <div className={styles.headerContent}>
             <h1 className={styles.title}>Airdrop Hub</h1>
@@ -224,6 +237,27 @@ export default function AirdropPage({ onNavigate }) {
               <GrCircleInformation size={24} className="group-hover:rotate-12 transition-transform" />
             </button>
           </Link>
+        </div>
+
+        {/* Progress Section */}
+        <div className="mt-6 w-full relative">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-400">Your Progress</span>
+            <span className="text-sm text-cyan-400 font-semibold">
+              {progressPercent}%
+            </span>
+          </div>
+
+          <div className="relative w-full h-4 bg-gray-800 rounded-full overflow-hidden shadow-inner">
+            <div
+              className="absolute left-0 top-0 h-full bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_12px_rgba(34,211,238,0.8)] transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+
+          <div className="mt-2 text-right text-xs text-slate-400">
+            {totalPoints} / {MAX_POINTS} BIGROCK
+          </div>
         </div>
 
 
@@ -317,6 +351,7 @@ export default function AirdropPage({ onNavigate }) {
             </div>
           ))}
         </div>
+
 
         {/* Referral Section */}
 
