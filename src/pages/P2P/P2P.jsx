@@ -450,10 +450,16 @@ const SellSection = ({ selectedCountry }) => {
       return;
     }
 
-    if (!isValidProofFile(proofFile)) {
-      toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
-      return;
-    }
+    if (!proofFile) {
+    toast.error("Please upload payment proof");
+    return;
+  }
+
+  if (!isValidProofFile(proofFile)) {
+    toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
+    return;
+  }
+
 
     const formData = new FormData();
     formData.append("txnHash", txnHash);
@@ -501,6 +507,15 @@ const handleCancelOrder = async()=>{
     toast.error("Failed to cancel order");
    }
 }
+
+const isSellDisabled =
+  !selectedCountry ||
+  !usdtAmount ||
+  !fiatAmount ||
+  !expandedPayment ||
+  creatingOrder ||
+  !isLoggedIn;
+
 
 
   const renderCreateUI = () => (
@@ -715,9 +730,9 @@ const handleCancelOrder = async()=>{
       {/* Buttons */}
       <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
         <button
-        disabled={creatingOrder || !isLoggedIn}
+        disabled={isSellDisabled}
          className={`${styles.confirmButton} w-full ${
-         creatingOrder ? styles.disabled : ""
+         isSellDisabled ? styles.disabled : ""
            }`}
             onClick={()=>{
           if(!isLoggedIn){
@@ -1044,6 +1059,16 @@ const handleCancelOrder = async()=>{
    }
 }
 
+const isBuyDisabled =
+  !selectedCountry ||
+  !usdtAmount ||
+  !fiatAmount ||
+  !expandedPayment ||
+  !userUsdtWallet ||
+  creatingOrder ||
+  !isLoggedIn;
+
+
 
   // ------------------------- Render Create UI -------------------------
   const renderCreateUI = () => (
@@ -1213,9 +1238,9 @@ const handleCancelOrder = async()=>{
       {/* Buttons */}
       <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
         <button
-         disabled={creatingOrder || !isLoggedIn}
+         disabled={isBuyDisabled}
          className={`${styles.confirmButton} w-full ${
-          creatingOrder ? styles.disabled : ""
+           isBuyDisabled ? styles.disabled : ""
         }`} 
         onClick={()=>{
           if(!isLoggedIn){

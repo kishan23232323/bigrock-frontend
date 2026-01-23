@@ -346,3 +346,66 @@
   z-index: 100000; /* force top */
   padding: 10px;
 }
+
+
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.modalText {
+  font-size: 0.95rem;
+  color: #bcc7d6;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.modalBtnNo {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.modalBtnNo:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.modalBtnYes {
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
+  color: #050b14;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(6, 238, 245, 0.5);
+  transition: 0.2s ease;
+}
+
+.modalBtnYes:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 26px rgba(6, 238, 245, 0.9);
+}

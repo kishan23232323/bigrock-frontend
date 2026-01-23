@@ -45,7 +45,7 @@ const ReferralPanel = () => {
                     Referral Points Dashboard
                 </h2>
                 <p className="text-sm text-gray-400 mt-1">
-                    Users with referral points greater than 700
+                    Users with referral points earned through referrals.
                 </p>
             </div>
 

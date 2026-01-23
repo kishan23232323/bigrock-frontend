@@ -85,22 +85,21 @@ export default function AirdropPage({ onNavigate }) {
 
   const referralLink = `https://www.bigrock.exchange/signup?referral=${user ? user.referralCode : ''}`;
 
+  const EARLY_BIRD_POINTS = 10000;
+  const MAX_POINTS = 25000;
 
-  // useEffect(() => {
-  //   let mounted = true;
-  //   setLoading(true);
-  //   getAirdrops()
-  //     .then((data) => {
-  //       if (mounted && data && Array.isArray(data)) {
-  //         setAirdropData(data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.warn('Failed to fetch airdrop data, using local version.', err);
-  //     })
-  //     .finally(() => setLoading(false));
-  //   return () => { mounted = false; };
-  // }, []);
+ const earlyBirdPoints = EARLY_BIRD_POINTS;
+
+const referredCount = Math.min(user?.referredCount || 0, 6);
+const referralPoints = referredCount * 2500;
+
+
+  const totalPoints = earlyBirdPoints + referralPoints;
+
+  const progressPercent = Number(
+    (totalPoints * 100) / MAX_POINTS
+  );
+
 
   const handleClaim = async (id) => {
     try {
@@ -120,57 +119,57 @@ export default function AirdropPage({ onNavigate }) {
     }
   };
 
-const [rewardState, setRewardState] = useState(null);
-const [rewardLoading, setRewardLoading] = useState(false);
+  const [rewardState, setRewardState] = useState(null);
+  const [rewardLoading, setRewardLoading] = useState(false);
 
- const { getUserRewardState } = useWeb3();
- useEffect(() => {
-  if (!address) return;
+  const { getUserRewardState } = useWeb3();
+  useEffect(() => {
+    if (!address) return;
 
-  setRewardLoading(true);
-  getUserRewardState(address)
-    .then(setRewardState)
-    .finally(() => setRewardLoading(false));
-}, [address]);
-
-
-useEffect(() => {
-  if (!rewardState) return;
-
-  setAirdropData([
-    {
-      id: 2,
-      name: "Early Bird Bonus",
-      amount: rewardState.walletClaimable ? "500 BIGROCK" : "0 BIGROCK",
-      status: rewardState.walletClaimable ? "CLAIMABLE" : "LOCKED",
-      icon: rewardState.walletClaimable ? "✓" : "🔒",
-    },
-    {
-      id: 3,
-      name: "Referral Rewards",
-      amount: `${formatUnits(rewardState.referPending, 18)} BIGROCK`,
-      status: rewardState.referPending > 0n ? "CLAIMABLE" : "LOCKED",
-      icon: rewardState.referPending > 0n ? "!" : "🔒",
-    },
-  ]);
-}, [rewardState]);
-
-useEffect(() => {
-  if (!address) {
-    setRewardState(null);
-  }
-}, [address]);
+    setRewardLoading(true);
+    getUserRewardState(address)
+      .then(setRewardState)
+      .finally(() => setRewardLoading(false));
+  }, [address]);
 
 
+  useEffect(() => {
+    if (!rewardState) return;
 
-const isWalletConnected = !!address;
+    setAirdropData([
+      {
+        id: 2,
+        name: "Early Bird Bonus",
+        amount: rewardState.walletClaimable ? "10000 BIGROCK" : "0 BIGROCK",
+        status: rewardState.walletClaimable ? "CLAIMABLE" : "LOCKED",
+        icon: rewardState.walletClaimable ? "✓" : "🔒",
+      },
+      {
+        id: 3,
+        name: "Referral Rewards",
+        amount: `${formatUnits(rewardState.referPending, 18)} BIGROCK`,
+        status: rewardState.referPending > 0n ? "CLAIMABLE" : "LOCKED",
+        icon: rewardState.referPending > 0n ? "!" : "🔒",
+      },
+    ]);
+  }, [rewardState]);
 
-const walletClaimable =
-  isWalletConnected &&
-  rewardState?.walletClaimable;
-const referClaimable =
-  isWalletConnected &&
-  rewardState?.referPending > 0n;
+  useEffect(() => {
+    if (!address) {
+      setRewardState(null);
+    }
+  }, [address]);
+
+
+
+  const isWalletConnected = !!address;
+
+  const walletClaimable =
+    isWalletConnected &&
+    rewardState?.walletClaimable;
+  const referClaimable =
+    isWalletConnected &&
+    rewardState?.referPending > 0n;
 
   return (
     <div className={styles.pageWrapper}>
@@ -197,6 +196,7 @@ const referClaimable =
           </button>
         )}
 
+
         <div className={styles.headerCard}>
           <div className={styles.headerContent}>
             <h1 className={styles.title}>Airdrop Hub</h1>
@@ -205,19 +205,19 @@ const referClaimable =
           </div>
           <div className={styles.totalRewards}>
             <p className={styles.rewardsLabel}>Total Claimable</p>
-            
+
             <p className={styles.rewardsAmount}>
               {rewardLoading
                 ? "Checking..."
                 : rewardState
                   ? `${formatUnits(
-                  (rewardState?.referPending ?? 0n) +
+                    (rewardState?.referPending ?? 0n) +
                     (rewardState?.walletClaimable ? 500n * 10n ** 18n : 0n),
-                  18
-                )} BIGROCK`
+                    18
+                  )} BIGROCK`
                   : "0 BIGROCK"}
             </p>
-            
+
           </div>
           <Link to="/earninfo">
             <button className="group flex items-center justify-center p-3 rounded-full bg-gray-900/50 backdrop-blur-md border border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,238,245,0.25)] transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-[0_0_25px_rgba(6,238,245,0.6)] hover:scale-110">
@@ -226,9 +226,50 @@ const referClaimable =
           </Link>
         </div>
 
+        {/* Progress Section */}
+      { progressPercent < 100 ? (
+             <div className={styles.progressWrapper}>
+          <div className={styles.progressRow}>
+            <span>Your Progress</span>
+            <span style={{ color: "#00e8ff", fontWeight: "600" }}>
+              {progressPercent}%
+            </span>
+          </div>
+
+          <div className={styles.progressBarContainer}>
+            <div
+              className={styles.progressFill}
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+
+          <div className={styles.progressText}>
+            {totalPoints} / {MAX_POINTS} BIGROCK
+          </div>
+        </div>
+      ):
+      (
+         <div className="mt-6 w-full bg-black/30 border border-cyan-500/20 
+                  rounded-xl p-4 backdrop-blur-md">
+
+    <h2 className="text-cyan-400 font-semibold text-sm mb-2">
+      Your Reward Claim Address
+    </h2>
+
+    <div className="w-full bg-[#0A0F1F] border border-cyan-500/30
+                    text-cyan-300 px-4 py-3 rounded-lg
+                    shadow-[0_0_10px_rgba(0,255,255,0.2)] 
+                    break-all select-all">
+      {user?.walletAddress || "No wallet connected"}
+    </div>
+  </div>
+      )
+      }
+
 
         {/* Airdrop Cards Grid */}
         {loading && <div className={styles.loadingRow}><p className={styles.loadingText}>Loading airdrops...</p></div>}
+      { progressPercent === 100 &&
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 w-full">
           {airdropData.map((airdrop) => (
             <div key={airdrop.id} className={`${styles.airdropCard} flex flex-col`}>
@@ -251,15 +292,15 @@ const referClaimable =
                 {airdrop.name}
                 {airdrop.id === 3 && (
                   <span className={styles.referralRate}>
-                    ( 1 Referral = 70 BIGROCK )
+                    ( 1 Referral = 2500 BIGROCK )
                   </span>
                 )}
-</h3>
+              </h3>
 
               <p className={styles.airdropAmount}>{airdrop.amount}</p>
-              
-                {/* 🔐 Eligibility messages */}
-                {/* {airdrop.id === 2 && !isWalletConnected && (
+
+              {/* 🔐 Eligibility messages */}
+              {/* {airdrop.id === 2 && !isWalletConnected && (
                   <p className="text-xs text-center text-gray-400 mt-1">
                     Connect wallet to check eligibility
                   </p>
@@ -293,14 +334,13 @@ const referClaimable =
 
                   handleClaim(airdrop.id);
                 }}
-                className={`${styles.claimBtn} ${
-                  loading === airdrop.id ||
+                className={`${styles.claimBtn} ${loading === airdrop.id ||
                   !isWalletConnected ||
                   (airdrop.id === 2 && !rewardState?.walletClaimable) ||
                   (airdrop.id === 3 && !referClaimable)
-                    ? styles.disabled
-                    : ""
-                } mt-auto`}
+                  ? styles.disabled
+                  : ""
+                  } mt-auto`}
               >
                 {loading === airdrop.id
                   ? "Claiming..."
@@ -318,6 +358,9 @@ const referClaimable =
             </div>
           ))}
         </div>
+
+      }  
+
 
         {/* Referral Section */}
 
@@ -345,10 +388,17 @@ const referClaimable =
                     <span className="text-4xl font-black text-white drop-shadow-md tracking-tight">
                       {user?.referredCount ? user.referredCount : 0}
                     </span>
+                    <div className="mt-2 text-sm text-slate-400">
+                      {user?.referredCount === 1 ? "friend" : "friends"} invited
+                      </div>
                   </div>
                 </div>
               </div>
+              <div className="mt-4 text-center text-sm text-slate-400 font-medium">
+                Share your referral link and earn 2500 BIGROCK for each successful signup (up to 6 referrals) 
+                </div>
             </div>
+            
             :
             <div className="mt-4 text-sm text-red-500 font-medium">
               Please login to get your referral link.
@@ -377,7 +427,7 @@ const referClaimable =
           </div>
         </div>
 
-       
+
 
       </div>
 

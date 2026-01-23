@@ -7,6 +7,8 @@ import { getMyOrders, requestCancelOrder } from "../services/P2Pservices/p2papi"
 import { useEffect, useState } from "react";
 import {  IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
+
 
 const TradeItem = ({ trade, getTradeIcon, setTrades }) => {
   const [expanded, setExpanded] = useState(false);
@@ -28,17 +30,14 @@ const TradeItem = ({ trade, getTradeIcon, setTrades }) => {
       setLoading(false);
     }
   };
-  useEffect(() => {
+useEffect(() => {
   if (showConfirm) {
     document.body.style.overflow = "hidden";
   } else {
-    document.body.style.overflow = "";
+    document.body.style.overflow = "auto";
   }
-
-  return () => {
-    document.body.style.overflow = "";
-  };
 }, [showConfirm]);
+
 
   return (
     <motion.div>
@@ -112,37 +111,39 @@ const TradeItem = ({ trade, getTradeIcon, setTrades }) => {
       )}
 
       {/* CONFIRM MODAL */}
-{showConfirm && (
-  <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm">
-    <div className="w-full max-w-sm rounded-xl bg-black border border-slate-700 p-6 m-6">
-      <h3 className="text-lg font-semibold text-red-500">
-        Confirm Cancel Request
-      </h3>
+{showConfirm &&
+  createPortal(
+    <div className="globalModalOverlay">
+      <div className="globalModalBox">
+        <h3 className={styles.modalTitle}>Confirm Cancel Request</h3>
+        <p className={styles.modalText}>
+          Are you sure you want to send a cancel request for this trade?
+          This action cannot be undone.
+        </p>
 
-      <p className="mt-2 text-sm text-slate-400">
-        Are you sure you want to send a cancel request for this trade?
-        This action cannot be undone.
-      </p>
+        <div className={styles.modalActions}>
+          <button
+            onClick={() => setShowConfirm(false)}
+            className={styles.modalBtnNo}
+          >
+            No
+          </button>
 
-      <div className="mt-5 flex justify-end gap-3">
-        <button
-          onClick={() => setShowConfirm(false)}
-          className="px-4 py-2 rounded-lg cursor-pointer text-green-500 hover:bg-slate-800"
-        >
-          No
-        </button>
-
-        <button
-          disabled={loading}
-          onClick={handleCancelRequest}
-          className="px-4 py-2 rounded-lg bg-red-600 cursor-pointer text-red-500 hover:bg-red-700 disabled:opacity-50"
-        >
-          {loading ? "Sending..." : "Yes, Cancel"}
-        </button>
+          <button
+            disabled={loading}
+            onClick={handleCancelRequest}
+            className={styles.modalBtnYes}
+          >
+            {loading ? "Sending..." : "Yes, Cancel"}
+          </button>
+        </div>
       </div>
-    </div>
-  </div>
-)}
+    </div>,
+    document.getElementById("modal-root")
+  )
+}
+
+
 
 
     </motion.div>

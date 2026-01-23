@@ -552,3 +552,46 @@
   font-weight: 500;
   white-space: nowrap;
 }
+
+.progressWrapper {
+  margin-top: 24px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.progressRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progressRow span {
+  font-size: 14px;
+  color: #7f8fa3;
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 14px;
+  background: #061018; /* DARK incomplete section */
+  border-radius: 50px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  background: #00e8ff; /* neon fill */
+  box-shadow: 0 0 18px #00e8ff; /* neon glow ONLY on filled part */
+  border-radius: inherit;
+  transition: width 0.6s ease-out;
+}
+
+.progressText {
+  margin-top: 6px;
+  text-align: right;
+  font-size: 12px;
+  color: #00e8ff;
+}
+

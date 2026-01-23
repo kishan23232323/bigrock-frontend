@@ -327,3 +327,76 @@
 .navButton.active {
     color: #06eef5;
 }
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(5, 8, 20, 0.88); /* deep dark overlay */
+  backdrop-filter: blur(6px);
+}
+
+.modalBox {
+  width: 100%;
+  max-width: 420px;
+  background: #0d111a; /* dark navy like your site */
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.18);
+  color: white;
+}
+
+.modalTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ff4d4d;
+}
+
+.modalText {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #b8c2cc;
+  line-height: 1.5;
+}
+
+.modalActions {
+  margin-top: 22px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modalBtnNo {
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  color: #00eaff;
+}
+
+.modalBtnNo:hover {
+  background: rgba(0, 255, 255, 0.08);
+}
+
+.modalBtnYes {
+  padding: 10px 18px;
+  background: #ff3333;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s ease-in-out;
+}
+
+.modalBtnYes:hover {
+  background: #cc0000;
+}
+
+.modalBtnYes:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
