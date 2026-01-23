@@ -14,6 +14,7 @@ import {
   adminGetAllOrders,
   adminOrderStatusUpdate
 } from "../../services/P2Pservices/p2papi";
+import { createPortal } from "react-dom";
 
 
 const ImagePreviewModal = ({ src, onClose }) => {
@@ -247,9 +248,7 @@ const OrderDetails = ({ order, onApprove, onReject, onPreviewImage, onStatusUpda
   <div className={styles.actionRow}>
     <button
       className={styles.approveBtn}
-      onClick={() => {
-        onApprove(order._id);
-      }}
+      onClick={onApprove}
     >
       <IoCheckmarkCircleOutline size={22} /> Approve
     </button>
@@ -309,23 +308,18 @@ const OrderRow = ({ order, expanded, onToggle }) => {
 const OrderCard = ({ order, onUpdate, onPreviewImage }) => {
   const [expanded, setExpanded] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
+  const [showApproveModal, setShowApproveModal] = useState(false);
+  const [approveLoading, setApproveLoading] = useState(false);
+
+
 const [rejectReason, setRejectReason] = useState("");
 
-
-const handleApprove = async (id) => {
-  await adminApproveOrder(id);
-  onUpdate(id, { status: "COMPLETED" });
-};
 
 const handleStatusUpdate = async (id, status) => {
   await adminOrderStatusUpdate(id, status);
   onUpdate(id, { status });
 };
 
-const handleReject = async (id) => {
-  await adminRejectOrder(id);
-  onUpdate(id, { status: "REJECTED" });
-};
 
   
   useEffect(() => {
@@ -340,62 +334,129 @@ const handleReject = async (id) => {
   };
 }, [showRejectModal]);
 
+useEffect(() => {
+  const isOpen =  showApproveModal;
+
+  if (isOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [showApproveModal]);
+
+
   return (
     <div className={styles.orderCard}>
       <OrderRow order={order} expanded={expanded} onToggle={() => setExpanded(!expanded)} />
       {expanded && (
     <OrderDetails
       order={order}
-      onApprove={handleApprove}
+      onApprove={() => setShowApproveModal(true)}
       onReject={() => setShowRejectModal(true)}
       onPreviewImage={onPreviewImage}
       onStatusUpdate={handleStatusUpdate}
     />
 
 )}
-{showRejectModal && (
-  <div className={styles.modalOverlay}>
-    <div className={styles.modalBox}>
-      <h3 className={styles.modalTitle}>Reject Order</h3>
+{showRejectModal &&
+  createPortal(
+    <div className="globalModalOverlay">
+      <div className="globalModalBox">
+        <h3 className={styles.modalTitle}>Reject Order</h3>
 
-      <textarea
-        placeholder="Enter reason for rejection (optional)"
-        value={rejectReason}
-        onChange={(e) => setRejectReason(e.target.value)}
-        className={styles.rejectTextarea}
-      />
+        <textarea
+          placeholder="Enter reason for rejection (optional)"
+          value={rejectReason}
+          onChange={(e) => setRejectReason(e.target.value)}
+          className={styles.rejectTextarea}
+        />
 
-      <div className={styles.modalActions}>
-        <button
-          className={styles.rejectBtn}
-          onClick={async () => {
-            await adminRejectOrder(order._id, rejectReason || undefined);
-            onUpdate(order._id, {
-              status: "REJECTED",
-              rejectReason,
-            });
-            setShowRejectModal(false);
-            setRejectReason("");
-          }}
-        >
-          Confirm Reject
-        </button>
+        <div className={styles.modalActions}>
+          <button
+            className={styles.rejectBtn}
+            onClick={async () => {
+              await adminRejectOrder(order._id, rejectReason || undefined);
+              onUpdate(order._id, {
+                status: "REJECTED",
+                rejectReason,
+              });
+              setShowRejectModal(false);
+              setRejectReason("");
+            }}
+          >
+            Confirm Reject
+          </button>
 
-        <button
-          className={styles.approveBtn}
-          onClick={() => {
-            setShowRejectModal(false);
-            setRejectReason("");
-          }}
-        >
-          Cancel
-        </button>
+          <button
+            className={styles.approveBtn}
+            onClick={() => {
+              setShowRejectModal(false);
+              setRejectReason("");
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
-    </div>
-  </div>
-)}
+    </div>,
+    document.getElementById("modal-root")
+  )
+}
 
+{showApproveModal &&
+  createPortal(
+    <div className="globalModalOverlay">
+      <div className="globalModalBox">
+        <h3 className={styles.modalTitle}>Approve Order</h3>
 
+        <p className={styles.modalText}>
+          Are you sure you want to approve this order?
+          This action will release funds and cannot be undone.
+        </p>
+
+        <div className={styles.modalActions}>
+          <button
+            className={styles.modalBtnNo}
+            disabled={approveLoading}
+            onClick={() => !approveLoading && setShowApproveModal(false)}
+          >
+            {approveLoading ? "..." : "No"}
+          </button>
+
+          <button
+            className={styles.modalBtnYes}
+            disabled={approveLoading}
+            onClick={async () => {
+              if (approveLoading) return;
+
+              try {
+                setApproveLoading(true);
+
+                // UPDATE UI
+                onUpdate(order._id, { status: "PROCESSING" });
+                // CLOSE MODAL
+                setShowApproveModal(false);
+                await adminApproveOrder(order._id);
+              } catch (err) {
+                console.error("Approve error:", err);
+              } finally {
+                // reset loading safely
+                setApproveLoading(false);
+              }
+            }}
+          >
+            {approveLoading ? "Processing..." : "Yes, Approve"}
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.getElementById("modal-root")
+  )
+}
     </div>
   );
 };

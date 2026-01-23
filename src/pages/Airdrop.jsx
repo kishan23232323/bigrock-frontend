@@ -88,9 +88,11 @@ export default function AirdropPage({ onNavigate }) {
   const EARLY_BIRD_POINTS = 10000;
   const MAX_POINTS = 25000;
 
-  const earlyBirdPoints = EARLY_BIRD_POINTS;
+ const earlyBirdPoints = EARLY_BIRD_POINTS;
 
-  const referralPoints = 2500;
+const referredCount = Math.min(user?.referredCount || 0, 6);
+const referralPoints = referredCount * 2500;
+
 
   const totalPoints = earlyBirdPoints + referralPoints;
 
@@ -98,21 +100,6 @@ export default function AirdropPage({ onNavigate }) {
     (totalPoints * 100) / MAX_POINTS
   );
 
-  // useEffect(() => {
-  //   let mounted = true;
-  //   setLoading(true);
-  //   getAirdrops()
-  //     .then((data) => {
-  //       if (mounted && data && Array.isArray(data)) {
-  //         setAirdropData(data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.warn('Failed to fetch airdrop data, using local version.', err);
-  //     })
-  //     .finally(() => setLoading(false));
-  //   return () => { mounted = false; };
-  // }, []);
 
   const handleClaim = async (id) => {
     try {
@@ -240,29 +227,49 @@ export default function AirdropPage({ onNavigate }) {
         </div>
 
         {/* Progress Section */}
-        <div className="mt-6 w-full relative">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-slate-400">Your Progress</span>
-            <span className="text-sm text-cyan-400 font-semibold">
+      { progressPercent < 100 ? (
+             <div className={styles.progressWrapper}>
+          <div className={styles.progressRow}>
+            <span>Your Progress</span>
+            <span style={{ color: "#00e8ff", fontWeight: "600" }}>
               {progressPercent}%
             </span>
           </div>
 
-          <div className="relative w-full h-4 bg-gray-800 rounded-full overflow-hidden shadow-inner">
+          <div className={styles.progressBarContainer}>
             <div
-              className="absolute left-0 top-0 h-full bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_12px_rgba(34,211,238,0.8)] transition-all duration-500"
+              className={styles.progressFill}
               style={{ width: `${progressPercent}%` }}
             />
           </div>
 
-          <div className="mt-2 text-right text-xs text-slate-400">
+          <div className={styles.progressText}>
             {totalPoints} / {MAX_POINTS} BIGROCK
           </div>
         </div>
+      ):
+      (
+         <div className="mt-6 w-full bg-black/30 border border-cyan-500/20 
+                  rounded-xl p-4 backdrop-blur-md">
+
+    <h2 className="text-cyan-400 font-semibold text-sm mb-2">
+      Your Reward Claim Address
+    </h2>
+
+    <div className="w-full bg-[#0A0F1F] border border-cyan-500/30
+                    text-cyan-300 px-4 py-3 rounded-lg
+                    shadow-[0_0_10px_rgba(0,255,255,0.2)] 
+                    break-all select-all">
+      {user?.walletAddress || "No wallet connected"}
+    </div>
+  </div>
+      )
+      }
 
 
         {/* Airdrop Cards Grid */}
         {loading && <div className={styles.loadingRow}><p className={styles.loadingText}>Loading airdrops...</p></div>}
+      { progressPercent === 100 &&
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 w-full">
           {airdropData.map((airdrop) => (
             <div key={airdrop.id} className={`${styles.airdropCard} flex flex-col`}>
@@ -352,6 +359,8 @@ export default function AirdropPage({ onNavigate }) {
           ))}
         </div>
 
+      }  
+
 
         {/* Referral Section */}
 
@@ -379,10 +388,17 @@ export default function AirdropPage({ onNavigate }) {
                     <span className="text-4xl font-black text-white drop-shadow-md tracking-tight">
                       {user?.referredCount ? user.referredCount : 0}
                     </span>
+                    <div className="mt-2 text-sm text-slate-400">
+                      {user?.referredCount === 1 ? "friend" : "friends"} invited
+                      </div>
                   </div>
                 </div>
               </div>
+              <div className="mt-4 text-center text-sm text-slate-400 font-medium">
+                Share your referral link and earn 2500 BIGROCK for each successful signup (up to 6 referrals) 
+                </div>
             </div>
+            
             :
             <div className="mt-4 text-sm text-red-500 font-medium">
               Please login to get your referral link.
