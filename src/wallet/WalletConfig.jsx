@@ -4,19 +4,13 @@ import { WagmiProvider } from 'wagmi'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
 import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  sepolia,
   bsc,
 } from 'wagmi/chains'
 
 const config = getDefaultConfig({
   appName: 'BigRock Exchange',
   projectId: import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID,
-  chains: [mainnet, polygon, optimism, arbitrum, base, sepolia, bsc],
+  chains: [bsc],
   ssr: false,
 })
 
