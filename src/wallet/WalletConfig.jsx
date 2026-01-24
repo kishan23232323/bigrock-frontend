@@ -6,6 +6,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import {
   bsc,
 } from 'wagmi/chains'
+import ForceBSCOnConnect from './ForceBSCOnConnect'
 
 const config = getDefaultConfig({
   appName: 'BigRock Exchange',
@@ -21,6 +22,7 @@ export default function WalletConfig({ children }) {
     <QueryClientProvider client={queryClient}>
       <WagmiProvider config={config}>
         <RainbowKitProvider modalSize="compact">
+          <ForceBSCOnConnect />
           {children}
         </RainbowKitProvider>
       </WagmiProvider>
