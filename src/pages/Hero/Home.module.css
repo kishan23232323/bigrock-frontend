@@ -432,3 +432,81 @@
     0 18px 60px rgba(0, 0, 0, .9),
     0 0 40px rgba(6, 238, 245, .35);
 }
+
+/* WRAPPER */
+.contractContainer {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* LABEL */
+.contractLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #06eef5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+/* SMALL BOX */
+.contractSmallBox {
+  margin-left: auto;
+  margin-right: auto;
+
+  width: fit-content;
+  max-width: 90%;
+
+  padding: 10px 16px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  backdrop-filter: blur(20px);
+  background: rgba(6, 238, 245, 0.08);
+  border: 1px solid rgba(6, 238, 245, 0.4);
+
+  box-shadow: 0 0 16px rgba(6, 238, 245, 0.25);
+}
+
+/* TEXT */
+.contractSmallAddress {
+  font-size: 0.85rem;
+  color: #d1d5db;
+  overflow-wrap: anywhere;
+}
+
+/* COPY BUTTON */
+.contractCopyBtn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #05101a;
+  cursor: pointer;
+
+  box-shadow: 0 0 10px rgba(6, 238, 245, 0.4);
+  transition: 0.2s ease;
+}
+
+.contractCopyBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(6, 238, 245, 0.8);
+}
+
+/* RESPONSIVE */
+@media (max-width: 500px) {
+  .contractSmallBox {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .contractCopyBtn {
+    width: 100%;
+  }
+}

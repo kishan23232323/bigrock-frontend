@@ -230,7 +230,7 @@ const roadmapData = [
         'Goal: Utility-driven token usage',
         'Liquidity deployment on DEX',
         'BIGROCK token DEX listing',
-        'Launch price at 1.5× presale',
+        'Launch price at 2X presale',
         'Airdrop rewards for swap transactions',
         'Users receive BIGROCK based on swap volume'
       ]
@@ -253,7 +253,7 @@ const roadmapData = [
   const faqData = [
     {
       question: 'What is the BigRock token?',
-      answer: 'BigRock is the native utility token of the BigRock ecosystem. It is used for governance, staking, paying transaction fees, and accessing exclusive features within our decentralized exchange.'
+      answer: 'Bigrock Token is the official utility token of the Bigrock Exchange ecosystem.It is designed to power trading, user rewards and premium features inside the Bigrock platform.'
     },
     {
       question: 'How can I participate in the presale?',
@@ -694,8 +694,7 @@ const roadmapData = [
           </div>
         </div>
        <div className={styles.buttons}>
-          <Link
-            to=""
+          <a href='/Bigrock_Exchange_Whitepaper_v1.0.pdf' download="Bigrock Exchange Whitepaper v1.0.pdf"
             className={styles.primaryButton}
             style={{
               background: hasClicked ? "#4CAF50" : (isHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
@@ -711,7 +710,7 @@ const roadmapData = [
             onClick={() => setHasClicked(true)}
           >
             Whitepaper
-          </Link>
+          </a>
         </div>
         
 
