@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Footer.module.css";
 import { MdEmail } from "react-icons/md";
-import { FaLinkedin, FaInstagram, FaDiscord, FaTelegram } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaDiscord, FaTelegram, FaMailchimp, FaEnvelope } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
@@ -51,7 +51,7 @@ const Footer = () => {
             </a>
             
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/bigrock_exchange?igsh=MTZqeHhqOGp0YXRpMQ=="
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialCircle}
@@ -65,6 +65,12 @@ const Footer = () => {
               className={styles.socialCircle}
             >
               <FaTelegram />
+            </a>
+            <a
+              href="mailto:support@bigrock.exchange"
+              className={styles.socialCircle}
+            >
+              <FaEnvelope />
             </a>
           </div>
         </div>

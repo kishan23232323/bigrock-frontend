@@ -40,6 +40,9 @@ const Home = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [hasClicked, setHasClicked] = useState(false);
+  const [AuditIsHovered, setAuditIsHovered] = useState(false);
+  const [AuditisActive, setAuditIsActive] = useState(false);
+  const [AudithasClicked, setAuditHasClicked] = useState(false);
 
   useAccountEffect({
     onConnect({ address }) {
@@ -125,9 +128,47 @@ const Home = () => {
         <Link to="/presale" className={styles.mainImage}>
           <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
         </Link>
-        <div className={styles.buttons}>
-          <Link
-            to=""
+
+                   <div className={styles.contractContainer}>
+          <p className={styles.contractLabel}> BIGROCK TOKEN SMART CONTRACT ADDRESS</p>
+
+          <div className={styles.contractSmallBox}>
+            <span className={styles.contractSmallAddress}>
+              {import.meta.env.VITE_REWARD_CONTRACT_ADDRESS}
+            </span>
+
+            <button
+              className={styles.contractCopyBtn}
+              onClick={() => {
+                navigator.clipboard.writeText("0x1234...ABCD5678EF90123456789");
+                toast.success("Copied!");
+              }}
+            >
+              Copy
+            </button>
+          </div>
+           <div className={styles.buttons}>
+           <a href='/BIGROCK_Token_Audit_Report.pdf' download="BIGROCK($BRK) Token Audit Report.pdf"
+            className={styles.primaryButton}
+            style={{
+              background: AudithasClicked ? "#4CAF50" : (AuditIsHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
+              border: "1px solid #06eef5",
+              color: "#ffffff",
+              transition: "all 0.3s ease",
+              transform: AuditisActive ? "scale(0.95)" : (AuditIsHovered ? "scale(1.05)" : "scale(1)"),
+            }}
+            onMouseEnter={() => setAuditIsHovered(true)}
+            onMouseLeave={() => { setAuditIsHovered(false); setAuditIsActive(false); }}
+            onMouseDown={() => setAuditIsActive(true)}
+            onMouseUp={() => setAuditIsActive(false)}
+            onClick={() => setAuditHasClicked(true)}
+          >Audit Report
+          </a>
+
+        </div>
+
+                <div className={styles.buttons}>
+           <a href='/Bigrock_Exchange_Whitepaper_v1.0.pdf' download="BIGROCK Exchange Whitepaper v1.0.pdf"
             className={styles.primaryButton}
             style={{
               background: hasClicked ? "#4CAF50" : (isHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
@@ -141,9 +182,14 @@ const Home = () => {
             onMouseDown={() => setIsActive(true)}
             onMouseUp={() => setIsActive(false)}
             onClick={() => setHasClicked(true)}
-          >whitepaper</Link>
+          >Whitepaper
+          </a>
 
         </div>
+        </div>
+
+
+
 
 
       </section>

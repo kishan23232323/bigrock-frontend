@@ -659,8 +659,9 @@ const isSellDisabled =
         <button
           className={styles.paymentOptionHeader}
           onClick={() => selectPaymentMethod("paypal", "PayPal")}
+          disabled
         >
-          <span>PayPal</span>
+          <span>PayPal <span className="text-red-500 text-xs p-1"> (Temporary Unavailable) </span></span>
           <IoChevronDownOutline size={20} />
         </button>
 
@@ -1211,8 +1212,9 @@ const isBuyDisabled =
                   <button
                     className={styles.paymentOptionHeader}
                     onClick={() => selectPaymentMethod("paypal", "PayPal")}
+                    disabled
                   >
-                    <span>PayPal</span>
+                    <span>PayPal <span className="text-red-500 text-xs p-1"> (Temporary Unavailable) </span></span>
                   </button>
                 </div>
               )}
