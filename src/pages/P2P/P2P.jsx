@@ -13,68 +13,10 @@ import { confirmSellOrder, createSellOrder, getFiatPairs,createBuyOrder, confirm
 import useConvert from "../../Hooks/useAutoConversion";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { createPortal } from "react-dom";
 
-const modalStyles = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-    backdropFilter: 'blur(5px)',
-  },
-  content: {
-    background: '#1a1a2e',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    borderRadius: '16px',
-    padding: '24px',
-    width: '90%',
-    maxWidth: '400px',
-    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
-    textAlign: 'center',
-    color: '#fff',
-  },
-  title: {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    marginBottom: '16px',
-  },
-  message: {
-    fontSize: '1rem',
-    color: '#e0e0e0',
-    marginBottom: '24px',
-    lineHeight: 1.5,
-  },
-  actions: {
-    display: 'flex',
-    gap: '16px',
-    marginTop: '24px',
-  },
-  button: {
-    padding: '12px 24px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease-in-out',
-    flex: 1,
-  },
-  confirmButton: {
-    background: 'linear-gradient(135deg, #06eef5, #00ffa3)',
-    color: '#050b14',
-    boxShadow: '0 0 30px rgba(6, 238, 245, 0.45)',
-  },
-  cancelModalButton: {
-    backgroundColor: '#333',
-    color: '#fff',
-    border: '1px solid #555',
-  }
-};
+
+
 
 // Helper validators
 const isValidTrc20Address = (addr) => {
@@ -107,26 +49,104 @@ const isValidProofFile = (file) => {
   return file.size <= maxSize && allowedTypes.includes(file.type);
 };
 
-const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message, confirmText = "Yes", cancelText = "No" }) => {
+
+const ConfirmationModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText = "Yes",
+  cancelText = "No"
+}) => {
   if (!isOpen) return null;
 
-  return (
-    <div style={modalStyles.overlay} onClick={onClose}>
-      <div style={modalStyles.content} onClick={(e) => e.stopPropagation()}>
-        <h3 style={modalStyles.title}>{title}</h3>
-        <p style={modalStyles.message}>{message}</p>
-        <div style={modalStyles.actions}>
-          <button style={{ ...modalStyles.button, ...modalStyles.cancelModalButton }} onClick={onClose}>
+  return createPortal(
+    <div
+      className="globalModalOverlay"
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        backgroundColor: "rgba(0,0,0,0.75)",
+        backdropFilter: "blur(6px)",
+        zIndex: 9999,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        className="globalModalBox"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#0e1627",
+          border: "1px solid rgba(0,255,255,0.15)",
+          borderRadius: "16px",
+          padding: "26px",
+          width: "90%",
+          maxWidth: "420px",
+          color: "white",
+          boxShadow: "0 0 25px rgba(0,255,255,0.25)",
+          textAlign: "center",
+        }}
+      >
+        <h3 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: "12px" }}>
+          {title}
+        </h3>
+
+        <p style={{ fontSize: "0.95rem", lineHeight: 1.5, color: "#d8d8d8" }}>
+          {message}
+        </p>
+
+        <div
+          className="modalActions"
+          style={{ display: "flex", gap: "14px", marginTop: "28px" }}
+        >
+          <button
+            className="modalBtnNo"
+            onClick={onClose}
+            style={{
+              flex: 1,
+              padding: "12px",
+              background: "#1d1d2d",
+              borderRadius: "10px",
+              border: "1px solid #333",
+              color: "#fff",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
             {cancelText}
           </button>
-          <button style={{ ...modalStyles.button, ...modalStyles.confirmButton }} onClick={onConfirm}>
+
+          <button
+            className="modalBtnYes"
+            onClick={onConfirm}
+            style={{
+              flex: 1,
+              padding: "12px",
+              background:
+                "linear-gradient(135deg, #06eef5, #00ffa3)",
+              borderRadius: "10px",
+              border: "none",
+              fontWeight: 700,
+              color: "#050b14",
+              cursor: "pointer",
+              boxShadow: "0 0 25px rgba(6,238,245,0.45)",
+              transition: "0.2s",
+            }}
+          >
             {confirmText}
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("modal-root")
   );
 };
+
 
 
 
@@ -296,7 +316,19 @@ const SellSection = ({ selectedCountry }) => {
   const [submittingProof, setSubmittingProof] = useState(false);
 
 
+  useEffect(() => {
+  if (showCancelConfirm) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
 
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [showCancelConfirm]);
+
+  
   // Conversion
   
   const onUsdtChange = (v) => {
@@ -903,6 +935,18 @@ const BuySection = ({ selectedCountry }) => {
 
     const [creatingOrder, setCreatingOrder] = useState(false);
     const [submittingProof, setSubmittingProof] = useState(false);
+
+    useEffect(() => {
+  if (showCancelConfirm) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [showCancelConfirm]);
 
 
   // ------------------------- Conversion -------------------------

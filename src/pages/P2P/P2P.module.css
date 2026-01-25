@@ -623,3 +623,73 @@
   filter: grayscale(30%);
   transform: none !important;
 }
+
+.globalModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(5, 8, 20, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.globalModalBox {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px;
+  background: #0d111a;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.22);
+  color: white;
+  animation: scaleIn 0.22s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.modalText {
+  font-size: 0.95rem;
+  color: #bcc7d6;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.modalBtnNo {
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e5e7eb;
+}
+
+.modalBtnYes {
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #06eef5, #00ffa3);
+  color: #050b14;
+  font-weight: 600;
+  box-shadow: 0 0 16px rgba(6, 238, 245, 0.5);
+}
