@@ -172,7 +172,7 @@ const receiveAmount = stats
   : 0;
 
 
-  const presaleProgress = 75; // 75%
+  const presaleProgress = 10; // 75%
 
   const tokenomicsData = [
     
@@ -354,7 +354,7 @@ const roadmapData = [
           <h1 className={styles.title}>BIGROCK Token Presale</h1>
           <div className={styles.premium}>
             <Star size={18} className={styles.premiumIcon} />
-            <span>Early Access: Limited to First <b>2,000</b> Members</span>
+            <span>Limited to First <b>2,000</b> Members Only</span>
           </div>
           <p className={styles.subtitle}>Join the future of decentralized exchange.</p>
         </header>
@@ -451,7 +451,7 @@ const roadmapData = [
               <div className={styles.progressFill} style={{ width: `${presaleProgress}%` }}></div>
             </div>
             <div className={styles.progressLabels}>
-              <span>Raised: $1,500,000</span>
+              <span>Raised: $2,000,00</span>
               <span>Target: $2,000,000</span>
             </div>
           </div>

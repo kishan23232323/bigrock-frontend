@@ -14,9 +14,13 @@ import { Link } from 'react-router-dom';
          
         </header>
 
-        <Link to="/presale" className={`${styles.mainImage} w-full max-w-[800px] mx-auto aspect-video rounded-2xl overflow-hidden relative z-10`}>
-            <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={`${styles.logoImage} w-full h-full object-cover`} />
-        </Link>
+         <div className=" md:ml-40 md:-mb-66 md:-mt-10 ml-20 -mb-50 -mt-36 w-full   flex justify-center items-center rounded-3xl overflow-hidden">
+          <img src="/logo.png" alt="BigRock Exchange Logo" className="w-[550px] h-[550px] md:w-[600px] md:h-[600px] object-contain rounded-3xl" />
+        </div>
+
+
+
+
 
         <div className="w-full flex flex-col gap-8 md:gap-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -24,7 +28,7 @@ import { Link } from 'react-router-dom';
               <div className="mb-4 text-[#06eef5]"><Zap size={32} /></div>
               <h2 className="text-xl md:text-2xl font-bold mb-3 text-white">Next-Gen Trading</h2>
               <p className="text-gray-400 leading-relaxed text-justify">
-                BigRock Exchange is a next-generation decentralized trading platform built to make crypto trading simple, fast, and secure. We aggregate liquidity across multiple blockchains to deliver the best swap routes with minimal fees.
+               Bigrock Exchange is a next-generation crypto trading platform offering a powerful DEX aggregator that supports 60+ blockchains and 10,000+ tokens. Built for speed, security, and simplicity, Bigrock enables seamless multi-chain swaps and efficient trading through a user-friendly, non-custodial infrastructure designed for global users.
               </p>
             </div>
 
