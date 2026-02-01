@@ -14,9 +14,14 @@ import { Link } from 'react-router-dom';
          
         </header>
 
-         <div className=" md:ml-40 md:-mb-66 md:-mt-10 ml-20 -mb-50 -mt-36 w-full   flex justify-center items-center rounded-3xl overflow-hidden">
-          <img src="/logo.png" alt="BigRock Exchange Logo" className="w-[550px] h-[550px] md:w-[600px] md:h-[600px] object-contain rounded-3xl" />
+         <div className="w-full flex justify-center items-center mt-2 mb-8">
+          <img
+            src="/heroCardImages/logo.png"
+            alt="BigRock Exchange Logo"
+            className="w-[180px] h-[180px] object-contain rounded-3xl"
+          />
         </div>
+
 
 
 
