@@ -693,26 +693,6 @@ const roadmapData = [
             ))}
           </div>
         </div>
-       <div className={styles.buttons}>
-          <a href='/Bigrock_Exchange_Whitepaper_v1.0.pdf' download="Bigrock Exchange Whitepaper v1.0.pdf"
-            className={styles.primaryButton}
-            style={{
-              background: hasClicked ? "#4CAF50" : (isHovered ? "linear-gradient(135deg, #06eef5, #00ffa3)" : "transparent"),
-              border: "1px solid #06eef5",
-              color: "#ffffff",
-              transition: "all 0.3s ease",
-              transform: isActive ? "scale(0.95)" : (isHovered ? "scale(1.05)" : "scale(1)"),
-            }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => { setIsHovered(false); setIsActive(false); }}
-            onMouseDown={() => setIsActive(true)}
-            onMouseUp={() => setIsActive(false)}
-            onClick={() => setHasClicked(true)}
-          >
-            Whitepaper
-          </a>
-        </div>
-        
 
 
         <div className={styles.faqSection}>

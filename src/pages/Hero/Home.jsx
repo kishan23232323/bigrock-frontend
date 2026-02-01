@@ -6,6 +6,7 @@ import LiFiWidgetComponent from "../../components/Widget/LifiWidget.jsx";
 import { useAccount, useAccountEffect } from "wagmi";
 import { saveWalletAddress } from "../../services/Airdrops/airdropsapi.js";
 import { toast } from "react-toastify";
+import Presale from "../Presale";
 
 const cardInfo = [
   {
@@ -125,9 +126,10 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <Link to="/presale" className={styles.mainImage}>
+        {/* <Link to="/presale" className={styles.mainImage}>
           <img src="/heroCardImages/poster1.png" alt="BigRock Exchange Logo" className={styles.logoImage} />
-        </Link>
+        </Link> */}
+        <Presale/>
 
                    <div className={styles.contractContainer}>
           <p className={styles.contractLabel}> BIGROCK TOKEN SMART CONTRACT ADDRESS</p>
