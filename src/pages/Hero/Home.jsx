@@ -7,6 +7,7 @@ import { useAccount, useAccountEffect } from "wagmi";
 import { saveWalletAddress } from "../../services/Airdrops/airdropsapi.js";
 import { toast } from "react-toastify";
 import Presale from "../Presale";
+import PresaleFAQ from "../Faq.jsx";
 
 const cardInfo = [
   {
@@ -131,7 +132,7 @@ const Home = () => {
         </Link> */}
         <Presale/>
 
-                   <div className={styles.contractContainer}>
+        <div className={styles.contractContainer}>
           <p className={styles.contractLabel}> BIGROCK TOKEN SMART CONTRACT ADDRESS</p>
 
           <div className={styles.contractSmallBox}>
@@ -190,7 +191,7 @@ const Home = () => {
         </div>
         </div>
 
-
+        <PresaleFAQ />
 
 
 
