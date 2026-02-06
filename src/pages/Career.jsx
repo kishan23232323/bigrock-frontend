@@ -5,17 +5,25 @@ import styles from './Career.module.css';
  
  function Career() {
   const jobOpenings = [
+
+    {
+      title: 'College/University Ambassador',
+      department: 'Marketing',
+      location: 'Remote',
+      isOpen: true,
+    },
+
     {
       title: 'Senior Blockchain Engineer',
       department: 'Engineering',
       location: 'Remote',
-      isOpen: true,
+      isOpen: false,
     },
     {
       title: 'Frontend Developer (React)',
       department: 'Engineering',
       location: 'Remote',
-      isOpen: true,
+      isOpen: false,
     },
     {
       title: 'Head of Community',
@@ -27,7 +35,7 @@ import styles from './Career.module.css';
       title: 'Product Manager - DeFi',
       department: 'Product',
       location: 'Remote',
-      isOpen: true,
+      isOpen: false,
     },
   ];
 
@@ -80,13 +88,18 @@ import styles from './Career.module.css';
                     <h3 className={styles.jobTitle}>{job.title}</h3>
                     <p className={styles.jobDetails}>{job.department} &middot; {job.location}</p>
                   </div>
-                  <button 
+                  <a
+                   href={`mailto:support@bigrock.exchange?subject=Job Application for ${encodeURIComponent(job.title)}&body=Hello BigRock Team,%0D%0A%0D%0AI want to apply for the position: ${encodeURIComponent(job.title)}.%0D%0A%0D%0ARegards,%0D%0A`}
+                  >
+                                      <button 
                     className={`${styles.applyButton} ${!job.isOpen ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
                     disabled={!job.isOpen}
-                    onClick={() => navigate('/apply', { state: { job } })}
+                    // onClick={() => navigate('/apply', { state: { job } })}
                   >
                     {job.isOpen ? 'Apply Now' : 'Closed'}
                   </button>
+
+                  </a>
                 </div>
               ))}
             </div>
