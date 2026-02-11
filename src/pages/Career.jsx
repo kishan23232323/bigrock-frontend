@@ -89,7 +89,12 @@ import styles from './Career.module.css';
                     <p className={styles.jobDetails}>{job.department} &middot; {job.location}</p>
                   </div>
                   <a
-                   href={`mailto:support@bigrock.exchange?subject=Job Application for ${encodeURIComponent(job.title)}&body=Hello BigRock Team,%0D%0A%0D%0AI want to apply for the position: ${encodeURIComponent(job.title)}.%0D%0A%0D%0ARegards,%0D%0A`}
+                   href={`mailto:support@bigrock.exchange?subject=Job Application for ${encodeURIComponent(
+                    job.title
+                  )}&body=Hello BigRock Team,%0D%0A%0D%0AI want to apply for the position: ${encodeURIComponent(
+                    job.title
+                  )}.%0D%0A%0D%0APlease attach your CV and contact information with this mail.%0D%0A%0D%0ARegards,%0D%0A`}
+
                   >
                                       <button 
                     className={`${styles.applyButton} ${!job.isOpen ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
