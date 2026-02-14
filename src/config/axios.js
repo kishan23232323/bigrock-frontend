@@ -5,6 +5,7 @@ import { logout, setCredentials } from "../store/authslice.js";
 
 const API = axios.create({
   baseURL: baseURL,
+  withCredentials: true, // Include cookies for refresh token
 });
 
 // Attach token to requests
@@ -30,9 +31,10 @@ API.interceptors.response.use(
         const { refreshToken } = store.getState().auth;
 
         // Get new access token
-        const res = await axios.post(`${baseURL}/api/v1/users/refresh-token`, {
-          refreshToken,
-        });
+        const res = await axios.post(`${baseURL}/api/v1/users/refresh-token`, 
+          {},
+          {withCredentials: true} // Ensure cookies are sent
+        );
 
         const newAccessToken = res.data.accessToken;
         const newRefreshToken = res.data.refreshToken;
