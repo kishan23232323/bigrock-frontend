@@ -455,6 +455,7 @@ export default function HackathonPage() {
   </Link>
 
   {/* LEARN MORE BUTTON */}
+  <a href="https://t.me/+PGohKmN3pG9kMzQ1" target="_blank" rel="noopener noreferrer">
   <button
     className="
       px-10 py-3 rounded-xl font-semibold text-gray-200
@@ -467,6 +468,7 @@ export default function HackathonPage() {
   >
     Join Community
   </button>
+  </a>
 </motion.div>
   </div>
 </section>
