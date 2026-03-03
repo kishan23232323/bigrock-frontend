@@ -37,6 +37,8 @@ import VerifiedOnly from "./components/VerifiedOnly";
 import AgentOrders from "./pages/AgentPanel/AgentPanel";
 import CustomerSupportPanel from "./pages/AdminPanel/CustomerSupportPanel";
 import ReferralPanel from "./pages/AdminPanel/ReferralPanel";
+import HackathonPage from "./pages/Hackathon/Hackathon";
+import RegistrationForm from "./pages/Hackathon/Registration";
 
 
 
@@ -171,6 +173,14 @@ function App() {
               </VerifiedOnly>
             </Protected>
           } />
+          <Route path="/hackathon/register" element={
+            <Protected>
+              <VerifiedOnly>
+                <RegistrationForm />
+              </VerifiedOnly>
+            </Protected>
+          } />
+
           <Route path="/about" element={<About />} />
           <Route path="/career" element={<Career />} />
           <Route path="/apply" element={<JobApplication />} />
@@ -178,6 +188,7 @@ function App() {
           <Route path="/presale" element={<Presale />} />
           <Route path="/info" element={<Info />} />
           <Route path="/earninfo" element={<Earn_info />} />
+          <Route path="/hackathon" element={<HackathonPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
