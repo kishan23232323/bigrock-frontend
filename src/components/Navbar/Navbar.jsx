@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavLink, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
-import { FaExchangeAlt, FaGift, FaUser, FaUserPlus, FaBars, FaTimes } from "react-icons/fa";
+import { FaExchangeAlt, FaGift, FaUser, FaUserPlus, FaBars, FaTimes, FaTrophy } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { LogoutBtn } from "./LogoutBtn";
 
@@ -36,8 +36,10 @@ const Navbar = () => {
     { to: "/p2p", label: "P2P", icon: <FaExchangeAlt />, state: getP2PState() },
     { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/profile", label: "Profile", icon: <FaUser /> },
+    {to: "/hackathon", label: "Hackathon", icon: <FaTrophy />},
     ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
     ...(isAgent ? [{ to: "/agent/orders", label: "Agent", icon: <FaUser /> }] : []),
+    
     
   ];
 
