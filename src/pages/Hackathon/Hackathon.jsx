@@ -6,7 +6,8 @@ import { FaTrophy,
   FaCalendarCheck,
   FaMedal, 
   FaAward,
-  FaRobot, FaGlobe, FaLeaf, FaCube, FaLightbulb
+  FaRobot, FaGlobe, FaLeaf, FaCube, FaLightbulb,
+  FaTelegramPlane
  } from "react-icons/fa";
 import {
   FaUsers,
@@ -192,7 +193,7 @@ function TimelineSection()  {
           date: "2026-04-02T23:59:00",
         },
         {
-          title: "Final Team Confirmation",
+          title: "Final Teams Announcement",
           subtitle: "Team lock-in & community onboarding",
           time: "April 3",
           icon: <FaUsers className="text-yellow-300" />,
@@ -429,6 +430,7 @@ export default function HackathonPage() {
     >
       Join the ultimate Hackathon experience—code, create, and collaborate
       with developers across the globe.
+     <div className="text-purple-500 "> Join Community to get latest updates and a chance to win airdrop worth ₹2 Lakh BRK Tokens</div>  
     </motion.p>
 
     {/* Buttons */}
@@ -468,6 +470,7 @@ export default function HackathonPage() {
   >
     Join Community
   </button>
+    
   </a>
 </motion.div>
   </div>
@@ -507,7 +510,7 @@ export default function HackathonPage() {
 
     {[
       { name: "Mikhil Sai N", photo : "/Organizers/mikhil.jpg" },
-      { name: "Prathyun Sai", photo : "/Organizers/prathyun.jpg" },
+      { name: "Sai Prathyun", photo : "/Organizers/prathyun.jpg" },
       { name: "Piyush Sahu", photo : "/Organizers/piyush.jpg" },
       { name: "Tarun Tiwari", photo : "/Organizers/Tarun.jpg" },
     ].map((org, i) => (
