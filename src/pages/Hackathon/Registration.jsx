@@ -335,7 +335,7 @@ export default function RegistrationForm() {
           ⚠️ <strong>Important:</strong>
           All team members must have an account on
           <span className="text-yellow-300 font-semibold"> bigrock.exchange </span>
-          before completing team registration. Teams with members not registered will be rejected.
+          before completing team registration. Teams with members not registered will not able to submit their registration.
         </motion.div>
 
         {/* DOMAIN SELECTION */}
@@ -362,17 +362,6 @@ export default function RegistrationForm() {
           </select>
         </div>
 
-        {/* WHATSAPP */}
-        <div>
-          <label className="font-semibold text-yellow-300">
-            Join our WhatsApp Group *
-          </label>
-          <p className="text-yellow-200 text-sm mb-2">
-            <a href="https://chat.whatsapp.com/E5hPCZySA9B1rYwDyrSM36?mode=gi_t" target="_blank">
-              Click here to join
-            </a>
-          </p>
-        </div>
 
         {/* TELEGRAM */}
         <div>
@@ -393,9 +382,8 @@ export default function RegistrationForm() {
           className="bg-yellow-500/10 border border-yellow-600/40 
                         text-yellow-300 rounded-xl p-4 text-sm leading-relaxed mt-4"
         >
-          ⚠️ <strong>Mandatory Requirement:</strong>
-          All participants must join our WhatsApp & Telegram.  
-          <span className="text-yellow-200">Failure to join results in disqualification.</span>
+          ⚠️ Make sure all participants join our Telegram for problem statements, updates, and support during the hackathon. 
+         
         </motion.div>
 
         {/* SUBMIT BUTTON */}
