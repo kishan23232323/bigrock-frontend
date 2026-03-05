@@ -430,7 +430,8 @@ export default function HackathonPage() {
     >
       Join the ultimate Hackathon experience—code, create, and collaborate
       with developers across the globe.
-     <div className="text-purple-500 "> Join Community to get latest updates and a chance to win airdrop worth ₹2 Lakh BRK Tokens</div>  
+     {/* <div className="text-purple-500 "> Join Community to get latest updates and a chance to win airdrop worth ₹2 Lakh BRK Tokens</div>  
+     */}
     </motion.p>
 
     {/* Buttons */}
