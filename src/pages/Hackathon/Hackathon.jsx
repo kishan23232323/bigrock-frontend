@@ -19,35 +19,34 @@ import {
 function DomainSection() {
   const domains = [
     {
-      name: "AI",
+      name: "Artificial Intelligence",
       icon: <FaRobot size={38} className="text-pink-400" />,
       gradient: "from-pink-500/20 to-purple-600/20",
       glow: "shadow-[0_0_20px_rgba(255,100,180,0.4)]",
+      link:"https://drive.google.com/file/d/1En0hD1i363ls0UuQAGfrmMYzBcg6crA4/view?usp=drive_link"
     },
     {
-      name: "Web",
+      name: "Web Development",
       icon: <FaGlobe size={38} className="text-blue-300" />,
       gradient: "from-blue-500/20 to-cyan-500/20",
       glow: "shadow-[0_0_20px_rgba(100,180,255,0.4)]",
+      link:"https://drive.google.com/file/d/1cd_A1erNw55ObOEqgwlRnWQ2l0VWOGSN/view?usp=drive_link"
     },
     {
-      name: "Sustainability",
+      name: "Sustainability & Green Tech",
       icon: <FaLeaf size={38} className="text-green-300" />,
       gradient: "from-green-500/20 to-emerald-600/20",
       glow: "shadow-[0_0_20px_rgba(80,200,120,0.4)]",
+      link:"https://drive.google.com/file/d/1_j2XS_KNPD1dyDABcofZ3ohS7mt48HFY/view?usp=drive_link"
     },
     {
-      name: "Web3",
+      name: "Web3 & Decentralization",
       icon: <FaCube size={38} className="text-amber-300" />,
       gradient: "from-yellow-500/20 to-orange-600/20",
       glow: "shadow-[0_0_20px_rgba(255,180,80,0.4)]",
+      link:"https://drive.google.com/file/d/1VGxeUIl3SliXw2JcLo6Vd-W2kaWdbuJv/view?usp=drive_link"
     },
-    {
-      name: "Open Innovation",
-      icon: <FaLightbulb size={38} className="text-purple-300" />,
-      gradient: "from-purple-600/20 to-indigo-600/20",
-      glow: "shadow-[0_0_20px_rgba(180,120,255,0.4)]",
-    },
+
   ];
 
   return (
@@ -56,6 +55,7 @@ function DomainSection() {
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10 place-items-center">
 
         {domains.map((d, i) => (
+          <a href={d.link} target="_blank" rel="noopener noreferrer" className="w-full">
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 40 }}
@@ -78,6 +78,7 @@ function DomainSection() {
             {/* Domain Name */}
             <h3 className="text-2xl font-bold text-white mb-1">{d.name}</h3>
           </motion.div>
+          </a>
         ))}
 
       </div>
@@ -90,16 +91,17 @@ function PrizeSection() {
     {
       place: "Winner",
       emoji: "🥇",
-      amount: "₹8,000 + 8,000 BRK Tokens",
+      amount: "₹8,000 + 100,000 BRK Tokens",
       icon: <FaTrophy className="text-yellow-300" size={38} />,
       gradient: "from-yellow-400/40 to-yellow-600/30",
       border: "border-yellow-500/40",
       glow: "shadow-[0_0_35px_rgba(255,215,0,0.45)]",
+      
     },
     {
       place: "Runner-up",
       emoji: "🥈",
-      amount: "₹5,000 + 5,000 BRK Tokens",
+      amount: "₹5,000 + 100,000 BRK Tokens",
       icon: <FaMedal className="text-gray-300" size={36} />,
       gradient: "from-gray-300/40 to-gray-600/20",
       border: "border-gray-400/30",
@@ -108,7 +110,7 @@ function PrizeSection() {
     {
       place: "Second Runner-up",
       emoji: "🥉",
-      amount: "₹4,000 + 4,000 BRK Tokens",
+      amount: "₹4,000 + 100,000 BRK Tokens",
       icon: <FaAward className="text-amber-500" size={36} />,
       gradient: "from-amber-600/40 to-amber-800/30",
       border: "border-amber-600/40",
@@ -117,7 +119,7 @@ function PrizeSection() {
     {
       place: "4th Place",
       emoji: "🔥",
-      amount: "₹1,500 + 1,500 BRK Tokens",
+      amount: "₹1,500 + 100,000 BRK Tokens",
       icon: <FaAward className="text-purple-300" size={34} />,
       gradient: "from-purple-500/30 to-purple-800/20",
       border: "border-purple-500/30",
@@ -126,7 +128,7 @@ function PrizeSection() {
     {
       place: "5th Place",
       emoji: "⭐",
-      amount: "₹1,500 + 1,500 BRK Tokens",
+      amount: "₹1,500 + 100,000 BRK Tokens",
       icon: <FaAward className="text-blue-300" size={34} />,
       gradient: "from-blue-500/30 to-blue-800/20",
       border: "border-blue-500/30",
@@ -176,7 +178,7 @@ function TimelineSection()  {
   const days = [
     {
       dayTitle: "PHASE 1 – REGISTRATIONS",
-      dateLabel: "MARCH 5 – APRIL 3",
+      dateLabel: "MARCH 5 – APRIL 10",
       events: [
         {
           title: "Registrations Open",
@@ -188,72 +190,72 @@ function TimelineSection()  {
         {
           title: "Registrations Close",
           subtitle: "Last day to register",
-          time: "April 2",
+          time: "April 10",
           icon: <FaCalendarTimes className="text-yellow-200" />,
-          date: "2026-04-02T23:59:00",
+          date: "2026-04-10T23:59:00",
         },
         {
           title: "Final Teams Announcement",
           subtitle: "Team lock-in & community onboarding",
-          time: "April 3",
+          time: "April 11",
           icon: <FaUsers className="text-yellow-300" />,
-          date: "2026-04-03T18:00:00",
+          date: "2026-04-11T18:00:00",
         },
       ],
     },
 
     {
       dayTitle: "DAY 1 – HACKATHON BEGINS",
-      dateLabel: "APRIL 4",
+      dateLabel: "APRIL 12",
       events: [
         {
           title: "Inauguration Ceremony",
           subtitle: "Opening remarks & announcements",
           time: "09:00 AM",
           icon: <FaRegClock className="text-yellow-300" />,
-          date: "2026-04-04T09:00:00",
+          date: "2026-04-12T09:00:00",
         },
         {
           title: "Hackathon Officially Begins",
           subtitle: "Start building your project",
           time: "10:00 AM",
           icon: <FaRocket className="text-yellow-200" />,
-          date: "2026-04-04T10:00:00",
+          date: "2026-04-12T10:00:00",
         },
         {
           title: "First Review",
           subtitle: "Checkpoint evaluation window",
           time: "1:00 PM – 3:00 PM",
           icon: <FaRegClock className="text-yellow-300" />,
-          date: "2026-04-04T13:00:00",
+          date: "2026-04-12T13:00:00",
         },
       ],
     },
 
     {
       dayTitle: "DAY 2 – REVIEW & SUBMISSION",
-      dateLabel: "APRIL 5",
+      dateLabel: "APRIL 13",
       events: [
         {
           title: "Second Review",
           subtitle: "Morning progress evaluation",
           time: "08:00 AM – 10:00 AM",
           icon: <FaRegClock className="text-yellow-200" />,
-          date: "2026-04-05T08:00:00",
+          date: "2026-04-13T08:00:00",
         },
         {
           title: "Third Review",
           subtitle: "Final pre-submission feedback",
           time: "06:00 PM – 08:00 PM",
           icon: <FaRegClock className="text-yellow-300" />,
-          date: "2026-04-05T18:00:00",
+          date: "2026-04-13T18:00:00",
         },
         {
           title: "Final Submission Deadline",
           subtitle: "Submission portal closes",
           time: "09:00 PM",
           icon: <FaFlagCheckered className="text-yellow-400" />,
-          date: "2026-04-05T21:00:00",
+          date: "2026-04-13T21:00:00",
         },
       ],
     },

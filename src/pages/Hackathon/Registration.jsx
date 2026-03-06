@@ -358,7 +358,6 @@ export default function RegistrationForm() {
             <option className="bg-black text-black">Web Development</option>
             <option className="bg-black text-black">Sustainability & Green Tech</option>
             <option className="bg-black text-black">Web3 & Decentralization</option>
-            <option className="bg-black text-black">Open Innovation</option>
           </select>
         </div>
 
