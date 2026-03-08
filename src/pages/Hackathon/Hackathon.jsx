@@ -55,7 +55,6 @@ function DomainSection() {
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10 place-items-center">
 
         {domains.map((d, i) => (
-          <a href={d.link} target="_blank" rel="noopener noreferrer" className="w-full">
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 40 }}
@@ -67,7 +66,7 @@ function DomainSection() {
               bg-gradient-to-br ${d.gradient}
               backdrop-blur-xl border border-white/10 
               ${d.glow}
-              flex flex-col items-center text-center
+              flex flex-col items-center text-center 
             `}
           >
             {/* Icon */}
@@ -78,7 +77,7 @@ function DomainSection() {
             {/* Domain Name */}
             <h3 className="text-2xl font-bold text-white mb-1">{d.name}</h3>
           </motion.div>
-          </a>
+         
         ))}
 
       </div>
@@ -459,23 +458,63 @@ export default function HackathonPage() {
   </button>
   </Link>
 
-  {/* LEARN MORE BUTTON */}
+</motion.div>
+{/* Poster Placeholder */}
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.3, duration: 0.6 }}
+  className="mt-12 flex justify-center"
+>
+  <div
+    className="
+      w-full max-w-4xl
+      aspect-[16/9]
+      rounded-2xl
+      border border-purple-500/30
+      bg-gradient-to-br from-purple-900/30 to-black
+      flex items-center justify-center
+      text-gray-400
+      text-lg
+      shadow-[0_0_40px_rgba(180,120,255,0.15)]
+      overflow-hidden
+    "
+  >
+    {/* Replace src with your hackathon poster */}
+    <img
+      src="/Hackathon/poster.jpg"
+      alt="Rockverse Hackathon Poster"
+      className="w-full h-full object-cover"
+    />
+  </div>
+</motion.div>
+
+ {/* Join Community BUTTON */}
+  <motion.div
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ delay: 0.4 }}
+  className="mt-12 flex justify-center gap-6 relative z-20"
+  > 
   <a href="https://t.me/+PGohKmN3pG9kMzQ1" target="_blank" rel="noopener noreferrer">
   <button
     className="
-      px-10 py-3 rounded-xl font-semibold text-gray-200
-      border border-white/30
-      bg-white/5 backdrop-blur-md
-      hover:bg-white/10 hover:border-white/50
-      shadow-[0_0_15px_rgba(255,255,255,0.15)]
+       px-10 py-3 rounded-xl font-semibold text-white
+      bg-gradient-to-r from-purple-600 to-pink-600
+      shadow-[0_0_25px_rgba(200,100,255,0.5)]
+      hover:shadow-[0_0_35px_rgba(200,100,255,0.8)]
+      hover:from-purple-700 hover:to-pink-700
       transition-all duration-300 ease-out
+    
     "
   >
     Join Community
   </button>
     
   </a>
-</motion.div>
+  </motion.div>
+
+
   </div>
 </section>
 
