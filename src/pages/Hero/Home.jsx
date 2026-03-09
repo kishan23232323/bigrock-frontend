@@ -143,7 +143,7 @@ const Home = () => {
             <button
               className={styles.contractCopyBtn}
               onClick={() => {
-                navigator.clipboard.writeText("0x1234...ABCD5678EF90123456789");
+                navigator.clipboard.writeText(import.meta.env.VITE_REWARD_CONTRACT_ADDRESS);
                 toast.success("Copied!");
               }}
             >
