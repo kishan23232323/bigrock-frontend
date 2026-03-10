@@ -71,7 +71,7 @@ function App() {
         console.log("App.jsx :: error in getUserProfile", error);
         dispatch(logout());
       })
-  }, [accessToken, dispatch]);
+  }, [dispatch]);
 
   return (
     <div className="appWrapper">

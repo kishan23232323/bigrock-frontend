@@ -41,18 +41,6 @@ export const logoutUser = async () => {
   }
 }
 
-// export const refreshAccessToken = async () => {
-//   try {
-//     const refreshToken = localStorage.getItem("refreshToken");
-//     if (!refreshToken) throw new Error("No refresh token found");
-
-//     const response = await API.post("/api/v1/users/refresh-token", { refreshToken });
-//     localStorage.setItem("accessToken", response.data.accessToken);
-//     return response.data.accessToken;
-//   } catch (error) {
-//     throw error.response ? error.response.data : error;
-//   }
-// }
 
 export const getUserProfile = async (token) => {
   try {
@@ -61,9 +49,7 @@ export const getUserProfile = async (token) => {
       return null;
     }
 
-    const response = await API.get("/api/v1/users/profile", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await API.get("/api/v1/users/profile");
 
     return response.data?.data;
   } catch (error) {
