@@ -631,7 +631,7 @@ const isSellDisabled =
         {loading && <small style={{ color: "#aaa" }}>Updating rate...</small>}
         {!loading && rate != null && (
           <small style={{ color: "#aaa" }}>
-            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode} (Excluding 2% Fee)
+            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode} (Excluding Platform Fee)
           </small>
         )}
       </div>
@@ -1187,7 +1187,7 @@ const isBuyDisabled =
         {loading && <small style={{ color: "#aaa" }}>Updating rate...</small>}
         {!loading && rate != null && (
           <small style={{ color: "#aaa" }}>
-            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode} (Excluding 5% Fee)
+            Rate: 1 USDT = {Number(rate).toFixed(4)} {currencyCode} (Excluding Platform Fee)
           </small>
         )}
       </div>
