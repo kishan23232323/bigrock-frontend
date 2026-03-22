@@ -42,6 +42,7 @@ contract Airdrop is Ownable, ReentrancyGuard, Pausable {
     // subscription parameters
     uint256 public subscriptionFee; // amount in USDT token decimals
     uint256 public subscriptionDuration; // seconds
+    uint256 public constant MAX_BATCH_SIZE = 200;
 
     event RewardTokenSet(address indexed token);
     event USDTTokenSet(address indexed token);
@@ -230,6 +231,8 @@ referRewardAllocation[_to] = referRewardAllocation[_to] + _amount; // safe under
      */
     function setReferRewardAllocationBatch(address[] calldata _tos, uint256[] calldata _amounts) external onlyOwner whenNotPaused {
         require(_tos.length == _amounts.length, "BigRockAirdrop: length mismatch");
+        require(_tos.length <= MAX_BATCH_SIZE, "BigRockAirdrop: batch too large");
+
         uint256 len = _tos.length;
         for (uint256 i = 0; i < len; ++i) {
             address to = _tos[i];
@@ -244,6 +247,8 @@ referRewardAllocation[_to] = referRewardAllocation[_to] + _amount; // safe under
 
      function setSwapRewardAllocationBatch(address[] calldata _tos, uint256[] calldata _amounts) external onlyOwner whenNotPaused {
         require(_tos.length == _amounts.length, "BigRockAirdrop: length mismatch");
+        require(_tos.length <= MAX_BATCH_SIZE, "BigRockAirdrop: batch too large");
+
         uint256 len = _tos.length;
         for (uint256 i = 0; i < len; ++i) {
             address to = _tos[i];
@@ -262,7 +267,8 @@ referRewardAllocation[_to] = referRewardAllocation[_to] + _amount; // safe under
         require(_to != address(0), "BigRockAirdrop: zero addr");
         require(amount > 0 , "BigRockAirdrop: zero amount");
         require(referRewardAllocation[_to] >= amount, "BigRockAirdrop: amount exceeds allocation");
-        
+        require(referRewardAllocation[_to] - amount >= referRewardClaimed[_to], "BigRockAirdrop: cannot reduce below claimed amount");
+      
         referRewardAllocation[_to] = referRewardAllocation[_to] - amount;
         emit ReferRewardAllocationRemoved(_to,amount);
         }
@@ -271,6 +277,8 @@ referRewardAllocation[_to] = referRewardAllocation[_to] + _amount; // safe under
         require(_to != address(0), "Airdrop: zero addr");
         require(amount > 0 , "Airdrop: zero amount");
         require(swapRewardAllocation[_to] >= amount, "Airdrop: amount exceeds allocation");
+        require(swapRewardAllocation[_to] - amount >= swapRewardClaimed[_to],"BigRockAirdrop: cannot reduce below claimed amount");
+
 
         swapRewardAllocation[_to] = swapRewardAllocation[_to] - amount;
         emit SwapRewardAllocationRemoved(_to,amount);
@@ -287,6 +295,8 @@ referRewardAllocation[_to] = referRewardAllocation[_to] + _amount; // safe under
     ) external onlyOwner {
 
     require(users.length == statuses.length, "BigRockAirdrop: length mismatch");
+    require(users.length <= MAX_BATCH_SIZE, "BigRockAirdrop: batch too large");
+
 
     uint256 len = users.length;
 
