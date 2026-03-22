@@ -39,6 +39,9 @@ import CustomerSupportPanel from "./pages/AdminPanel/CustomerSupportPanel";
 import ReferralPanel from "./pages/AdminPanel/ReferralPanel";
 import HackathonPage from "./pages/Hackathon/Hackathon";
 import RegistrationForm from "./pages/Hackathon/Registration";
+import KolApply from "./pages/Kols/KolApplication";
+import KolApplications from "./pages/AdminPanel/AdminKols";
+import KolDashboard from "./pages/KolPanel/KolPanel";
 
 
 
@@ -105,6 +108,15 @@ function App() {
           }
           />
 
+          <Route path="/kol/me" element={
+            <Protected>
+              <VerifiedOnly>
+                <KolDashboard />
+              </VerifiedOnly>
+            </Protected>
+          }
+          />
+
           <Route path="/admin/agents-applications" element={
             <AdminProtected>
               <AdminAgentApplications />
@@ -133,6 +145,11 @@ function App() {
           <Route path="/admin/referral-points" element={
             <AdminProtected>
               <ReferralPanel />
+            </AdminProtected>} />
+
+          <Route path="/admin/kols" element={
+            <AdminProtected>
+              <KolApplications />
             </AdminProtected>} />
 
           <Route path="/airdrop" element={
@@ -198,6 +215,11 @@ function App() {
             </Protected>
           } />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/kol-application" element={
+            <Protected>
+              <KolApply />
+            </Protected>
+          } />
         </Routes>
       </div>
 

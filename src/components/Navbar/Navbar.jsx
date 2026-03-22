@@ -12,6 +12,7 @@ const Navbar = () => {
   const isLoggedIn = Boolean(accessToken);
   const isAdmin = user?.role === "admin";
   const isAgent = user?.role === "agent";
+  const isKol = user?.role === "kol";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const getP2PState = () => {
@@ -39,6 +40,7 @@ const Navbar = () => {
     {to: "/hackathon", label: "Hackathon", icon: <FaTrophy />},
     ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
     ...(isAgent ? [{ to: "/agent/orders", label: "Agent", icon: <FaUser /> }] : []),
+    ...(isKol ? [{ to: "/kol/me", label: "KOL", icon: <FaUser /> }] : [])
     
     
   ];

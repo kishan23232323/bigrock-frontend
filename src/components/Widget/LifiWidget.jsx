@@ -5,8 +5,8 @@ import { useAccount } from "wagmi";
 
 const basicFeeConfig = {
     name: "Bigrock-Exchange",
-    logoURI: "https://yourdapp.com/logo.png",
-    fee: 0.01, // 1% fee
+    logoURI: "https://bigrock.exchange/logo.png",
+    fee: 0.005, // 0.5% fee
     showFeePercentage: true,
     showFeeTooltip: true
 };
