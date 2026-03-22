@@ -24,11 +24,19 @@ const adminCards = [
     accent: "from-emerald-500/20 to-green-500/20",
   },
   {
+    title: "KOL Applications",
+    description: "Review and manage KOL applications",
+    icon: IoPersonAddOutline,
+    route: "/admin/kols",
+    accent: "from-purple-500/20 to-pink-500/20",
+  },
+  {
     title: "Airdrop Panel",
     description: "Manage airdrop allocations and subscriptions",
     icon: IoPeopleOutline,
     route: "/admin/airdrop-panel",
   },
+
   {
     title: "Customer Support",
     description: "Manage customer queries and support tickets",

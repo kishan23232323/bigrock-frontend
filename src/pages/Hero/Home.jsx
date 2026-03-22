@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
 import { LifiWidgetEventListener } from "../../components/Widget/LifiWidgetEventListener.jsx";
@@ -8,6 +8,8 @@ import { saveWalletAddress } from "../../services/Airdrops/airdropsapi.js";
 import { toast } from "react-toastify";
 import Presale from "../Presale";
 import PresaleFAQ from "../Faq.jsx";
+import {getReferralFromURL, getStoredReferral, storeReferral} from "../../components/Widget/referal.js";
+import { mapWalletToKolApi, validateKol } from "../../services/Swap/swapapi.js";
 
 const cardInfo = [
   {
@@ -47,19 +49,52 @@ const Home = () => {
   const [AudithasClicked, setAuditHasClicked] = useState(false);
 
   useAccountEffect({
-    onConnect({ address }) {
-      if (!token) return;
+   async onConnect({ address }) {
       if (!address) return;
       console.log("Connected address:", address);
-      saveWalletAddress({ walletAddress: address, token })
+
+    
+      saveWalletAddress({ walletAddress: address})
         .then(() => {
           toast.success("Wallet connected");
         })
         .catch((err) => {
           toast.error(err?.message || "Failed to save wallet");
         });
+
+    const kolUid = getStoredReferral();
+       if (kolUid) {
+      try {
+        await mapWalletToKolApi({
+          walletAddress: address,
+          kolUid
+        });
+      } catch (err) {
+        console.error("KOL mapping failed", err);
+      }
+    }  
     },
   });
+
+  useEffect(() => {
+  const ref = getReferralFromURL();
+  if(!ref) return;
+    const processReferral = async () => {
+    const isValid = await validateKol(ref);
+
+    if (isValid) {
+      storeReferral(ref);
+      console.log("✅ Valid KOL stored:", ref);
+    } else {
+      console.log("❌ Invalid KOL link:", ref);
+      localStorage.removeItem("kol_ref"); // optional cleanup
+    }
+  };
+
+  processReferral();
+  
+}, []);
+
 
 
   return (
