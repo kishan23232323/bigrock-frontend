@@ -202,6 +202,7 @@ const roadmapData = [
         'DEX Aggregator live (60+ blockchains, 10,000+ tokens)',
         'Non-custodial wallet-based swaps',
         'P2P crypto buy/sell module',
+        'P2P agent onboarding & liquidity programs',
         'WalletConnect integration',
         'User dashboard & profile system',
         'Backend & transaction tracking',
@@ -243,7 +244,6 @@ const roadmapData = [
         'Focus: Singapore, USA, Turkey, Nigeria, India, Indonesia, Brazil',
         'Strategic partnerships (wallets, protocols)',
         'Influencer & ecosystem marketing',
-        'P2P agent onboarding & liquidity programs',
         'Volume-based incentives & analytics'
       ]
     }
@@ -381,11 +381,11 @@ const roadmapData = [
           <div className={styles.cardHeader}>
             <h2 className={styles.cardTitle}>Presale is Live!</h2>
             <div className="flex flex-wrap justify-center gap-4 mt-4 w-full">
-              <div className="flex flex-col items-center px-6 py-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,238,245,0.15)]">
+              <div class="glass-card rounded-2xl p-4 flex flex-col items-end animated-price-card" data-purpose="current-price-box">
                 <span className="text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">Current Price</span>
                 <span className="text-2xl font-bold text-white"> ${currentPrice.toFixed(6)}</span>
               </div>
-              <div className="flex flex-col items-center px-6 py-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+              <div class="glass-card rounded-2xl p-4 flex flex-col items-end animated-price-card" data-purpose="launch-price-box">
                 <div className="flex items-center gap-2 mb-1"><TrendingUp size={14} className="text-emerald-400" /><span className="text-xs text-emerald-400 font-bold uppercase tracking-widest">Launch Price</span></div>
                 <span className="text-2xl font-bold text-white"> ${launchPrice.toFixed(6)}</span>
               </div>
@@ -604,9 +604,9 @@ const roadmapData = [
                 <div className="absolute inset-0 rounded-full opacity-75 blur-lg" style={{ background: conicGradient }}></div>
                 <div className="relative w-full h-full rounded-full shadow-2xl" style={{ background: conicGradient }}>
                   <div className="absolute inset-4 bg-gray-900 rounded-full flex flex-col items-center justify-center z-10 shadow-inner">
-                    <span className="text-fuchsia-400 text-sm font-extrabold tracking-widest uppercase mb-1">Total Supply</span>
+                    <span className="text-white text-sm font-extrabold tracking-widest uppercase mb-1">Total Supply</span>
                     <span className="text-2xl md:text-3xl font-black text-white">10,000,000,000</span>
-                    <span className="text-yellow-400 text-sm font-extrabold mt-1">$BIGROCK</span>
+                    <span className="text-white text-sm font-extrabold mt-1">$BIGROCK</span>
                   </div>
                 </div>
               </div>
