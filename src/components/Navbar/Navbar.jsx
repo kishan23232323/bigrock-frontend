@@ -34,7 +34,7 @@ const Navbar = () => {
 
   const navItems = [
     { to: "/", label: "Home", icon: <AiFillHome /> },
-    { to: "/p2p", label: "P2P", icon: <FaExchangeAlt />, state: getP2PState() },
+    { to: "/p2p", label: "P2P (Coming Soon)", icon: <FaExchangeAlt />, state: getP2PState() },
     { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/profile", label: "Profile", icon: <FaUser /> },
     {to: "/hackathon", label: "Hackathon", icon: <FaTrophy />},
