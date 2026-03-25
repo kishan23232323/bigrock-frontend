@@ -175,6 +175,10 @@ const P2P = ({ mode = "sell" }) => {
 
 
 const P2PHeader = () => (
+  <>
+  <p className="text-red-500 text-xs sm:text-sm md:text-base text-center sm:text-left leading-tight">
+      P2P feature will be available from 2nd April 2026!
+    </p>
   <div className={styles.header}>
     <h1 className={styles.title}>P2P Trading</h1>
     <Link to="/info">
@@ -182,7 +186,9 @@ const P2PHeader = () => (
                   <GrCircleInformation size={24} className="group-hover:rotate-12 transition-transform" />
                 </button>
               </Link>
+  
   </div>
+  </>
 );
 
 const P2PToggle = ({ activeMode }) => (
