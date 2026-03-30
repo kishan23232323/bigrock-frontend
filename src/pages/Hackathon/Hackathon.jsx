@@ -445,6 +445,7 @@ export default function HackathonPage() {
   {/* REGISTER BUTTON */}
   <Link to="/hackathon/register">
   <button
+   disabled
     className="
       px-10 py-3 rounded-xl font-semibold text-white
       bg-gradient-to-r from-purple-600 to-pink-600
@@ -454,11 +455,23 @@ export default function HackathonPage() {
       transition-all duration-300 ease-out
     "
   >
-    Register Now
+    Registration Closed
   </button>
   </Link>
 
 </motion.div>
+
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.3, duration: 0.6 }}
+  className="mt-12 flex justify-center"
+> 
+<h2 className="text-center text-yellow-400">Thanks for the overwhelming response! - We're excited to review your entries. Stay tuned for updates via our telegram channel.</h2>
+
+</motion.div>
+
+
 {/* Poster Placeholder */}
 <motion.div
   initial={{ opacity: 0, y: 40 }}

@@ -190,13 +190,13 @@ function App() {
               </VerifiedOnly>
             </Protected>
           } />
-          <Route path="/hackathon/register" element={
+          {/* <Route path="/hackathon/register" element={
             <Protected>
               <VerifiedOnly>
                 <RegistrationForm />
               </VerifiedOnly>
             </Protected>
-          } />
+          } /> */}
 
           <Route path="/about" element={<About />} />
           <Route path="/career" element={<Career />} />
