@@ -177,7 +177,7 @@ const P2P = ({ mode = "sell" }) => {
 const P2PHeader = () => (
   <>
   <p className="text-red-500 text-balance sm:text-left leading-tight">
-      P2P feature will be available from 3rd April 2026!
+      P2P feature will be available from 15th April 2026!
     </p>
   <div className={styles.header}>
     <h1 className={styles.title}>P2P Trading</h1>
