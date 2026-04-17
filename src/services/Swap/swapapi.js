@@ -1,10 +1,17 @@
 import API from "../../config/axios";
 
-export const storeSwapTransaction = async ({ userAddress, internalTxnHash, }) => {
+export const storeSwapTransaction = async ({
+    userAddress,
+    txHash,
+    chainId,
+    txLink,
+}) => {
     try {
         const response = await API.post("/api/v1/swap/swap-complete", {
             userAddress,
-            internalTxnHash,
+            txHash,
+            chainId,
+            txLink,
         });
 
         return response.data;
@@ -65,26 +72,26 @@ export const approveKolApi = async (kolId) => {
 };
 
 export const validateKol = async (kolUid) => {
-  try {
-    const res = await API.get(`/api/v1/kol/validate/${kolUid}`);
-    return res.data?.success === true;
-  } catch {
-    return false;
-  }
+    try {
+        const res = await API.get(`/api/v1/kol/validate/${kolUid}`);
+        return res.data?.success === true;
+    } catch {
+        return false;
+    }
 };
 
 export const getAllKolsApi = async ({ page, search }) => {
-  const res = await API.get("/api/v1/kol/admin/kols", {
-    params: { page, search }
-  });
-  return res.data.data;
+    const res = await API.get("/api/v1/kol/admin/kols", {
+        params: { page, search }
+    });
+    return res.data.data;
 };
 
 export const getMyKolDataApi = async () => {
-  try {
-    const res = await API.get("/api/v1/kol/me");
-    return res.data.data;
-  } catch (err) {
-    throw err.response?.data || err;
-  }
+    try {
+        const res = await API.get("/api/v1/kol/me");
+        return res.data.data;
+    } catch (err) {
+        throw err.response?.data || err;
+    }
 };
