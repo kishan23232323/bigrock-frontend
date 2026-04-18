@@ -42,6 +42,7 @@ import RegistrationForm from "./pages/Hackathon/Registration";
 import KolApply from "./pages/Kols/KolApplication";
 import KolApplications from "./pages/AdminPanel/AdminKols";
 import KolDashboard from "./pages/KolPanel/KolPanel";
+import Leaderboard from "./pages/Leaderboard/Leaderboard";
 
 
 
@@ -197,7 +198,7 @@ function App() {
               </VerifiedOnly>
             </Protected>
           } /> */}
-
+          <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/about" element={<About />} />
           <Route path="/career" element={<Career />} />
           <Route path="/apply" element={<JobApplication />} />

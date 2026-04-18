@@ -1,6 +1,9 @@
 import { useWidgetEvents, WidgetEvent } from '@lifi/widget';
 import { useEffect, useRef } from 'react';
-import { kolApiTransaction, storeSwapTransaction } from '../../services/Swap/swapapi';
+import { kolApiTransaction, storeSwapTransaction,mapWalletToKolApi } from '../../services/Swap/swapapi';
+import { getStoredReferral } from './referal';
+import { saveWalletAddress } from '../../services/Airdrops/airdropsapi';
+
 
 export const LifiWidgetEventListener = () => {
     const widgetEvents = useWidgetEvents();
@@ -71,6 +74,16 @@ export const LifiWidgetEventListener = () => {
 
         const handleRoute = async (route) => {
             try {
+                const userAddress =
+                        route?.fromAddress ||
+                        route?.steps?.[0]?.execution?.fromAddress ||
+                        route?.steps?.[0]?.action?.fromAddress;
+
+                    if (!userAddress) {
+                        console.log("⚠️ No userAddress found", route);
+                        return;
+                    }
+
                 const { txHash, txLink, amountUSD, fromToken, toToken } =
                     getTxnDetails(route);
 
@@ -79,10 +92,8 @@ export const LifiWidgetEventListener = () => {
                 if (processedTxs.current.has(txHash)) return;
                 processedTxs.current.add(txHash);
 
-                const userAddress = route?.fromAddress;
                 const chainId = route?.fromChainId;
 
-                if (!userAddress) return;
 
                 const finalTxLink =
                     txLink || getExplorerLink(txHash, chainId);
@@ -117,12 +128,39 @@ export const LifiWidgetEventListener = () => {
             }
         };
 
+
+            const onRouteStarted = async (route) => {
+            const userAddress =
+                route?.fromAddress ||
+                route?.steps?.[0]?.execution?.fromAddress ||
+                route?.steps?.[0]?.action?.fromAddress;
+
+            if (!userAddress) {
+                console.log("❌ No address in route");
+                return;
+            }
+
+            console.log("✅ USER ADDRESS FOUND:", userAddress);
+
+            await saveWalletAddress({ walletAddress: userAddress });
+
+            const kolUid = getStoredReferral();
+            if (kolUid) {
+                await mapWalletToKolApi({
+                    walletAddress: userAddress,
+                    kolUid
+                });
+            }
+        };
+
         widgetEvents.on(WidgetEvent.RouteExecutionCompleted, onCompleted);
         widgetEvents.on(WidgetEvent.RouteExecutionUpdated, onUpdated);
+        widgetEvents.on(WidgetEvent.RouteExecutionStarted, onRouteStarted);
 
         return () => {
             widgetEvents.off(WidgetEvent.RouteExecutionCompleted, onCompleted);
             widgetEvents.off(WidgetEvent.RouteExecutionUpdated, onUpdated);
+            widgetEvents.off(WidgetEvent.RouteExecutionStarted, onRouteStarted);
         };
 
     }, [widgetEvents]);
