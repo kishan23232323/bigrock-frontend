@@ -48,33 +48,33 @@ const Home = () => {
   const [AuditisActive, setAuditIsActive] = useState(false);
   const [AudithasClicked, setAuditHasClicked] = useState(false);
 
-  useAccountEffect({
-   async onConnect({ address }) {
-      if (!address) return;
-      console.log("Connected address:", address);
+  // useAccountEffect({
+  //  async onConnect({ address }) {
+  //     if (!address) return;
+  //     console.log("Connected address:", address);
 
     
-      saveWalletAddress({ walletAddress: address})
-        .then(() => {
-          toast.success("Wallet connected");
-        })
-        .catch((err) => {
-          toast.error(err?.message || "Failed to save wallet");
-        });
-
-    const kolUid = getStoredReferral();
-       if (kolUid) {
-      try {
-        await mapWalletToKolApi({
-          walletAddress: address,
-          kolUid
-        });
-      } catch (err) {
-        console.error("KOL mapping failed", err);
-      }
-    }  
-    },
-  });
+  //     saveWalletAddress({ walletAddress: address})
+  //       .then(() => {
+  //         toast.success("Wallet connected");
+  //       })
+  //       .catch((err) => {
+  //         toast.error(err?.message || "Failed to save wallet");
+  //       });
+  //       console.log("i am ebeb")
+  //   const kolUid = getStoredReferral();
+  //      if (kolUid) {
+  //     try {
+  //       await mapWalletToKolApi({
+  //         walletAddress: address,
+  //         kolUid
+  //       });
+  //     } catch (err) {
+  //       console.error("KOL mapping failed", err);
+  //     }
+  //   }  
+  //   },
+  // });
 
   useEffect(() => {
   const ref = getReferralFromURL();
