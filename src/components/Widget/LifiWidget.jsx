@@ -26,9 +26,9 @@ export default function LiFiWidgetComponent() {
             },
         },
 
-        // Optional default (BNB)
-        fromChain: 56,
-        toChain: 56,
+        // // Optional default (BNB)
+        // fromChain: 56,
+        // toChain: 56,
 
         feeConfig: basicFeeConfig,
 
