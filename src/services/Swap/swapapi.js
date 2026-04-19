@@ -5,6 +5,7 @@ export const storeSwapTransaction = async ({
     txHash,
     chainId,
     txLink,
+    amountUSD
 }) => {
     try {
         const response = await API.post("/api/v1/swap/swap-complete", {
@@ -12,6 +13,7 @@ export const storeSwapTransaction = async ({
             txHash,
             chainId,
             txLink,
+            amountUSD
         });
 
         return response.data;
@@ -94,4 +96,26 @@ export const getMyKolDataApi = async () => {
     } catch (err) {
         throw err.response?.data || err;
     }
+};
+
+export const getLeaderboardApi = async ({ page = 1, limit = 40 } = {}) => {
+  try {
+    const res = await API.get("/api/v1/swap/leaderboard", {
+      params: { page, limit }
+    });
+
+    return res.data.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const getUserRankApi = async (userAddress) => {
+  try {
+    const res = await API.get(`/api/v1/swap/leaderboard/${userAddress}`);
+
+    return res.data.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
 };

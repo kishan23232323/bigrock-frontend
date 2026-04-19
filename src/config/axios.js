@@ -23,26 +23,30 @@ API.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // prevent infinite loop
+    if (originalRequest.url.includes("/refresh-token")) {
+      return Promise.reject(error);
+    }
+
     // If token expired & not retried already
     if (
-  (error.response?.status === 401 || error.response?.status === 403) &&
-  !originalRequest._retry) 
-  {
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
 
         // Get new access token
-        const res = await axios.post(`${baseURL}/api/v1/users/refresh-token`, 
-          {},
-          {withCredentials: true} // Ensure cookies are sent
-        );
+        const res = await API.post("/api/v1/users/refresh-token");
 
         const newAccessToken = res.data.data.accessToken;
 
         // Update Redux store
         store.dispatch(
-          setCredentials({ accessToken: newAccessToken})
+          setCredentials({
+            user: res.data.data.user,
+            accessToken: newAccessToken
+          })
         );
 
         // Retry original request with new token
