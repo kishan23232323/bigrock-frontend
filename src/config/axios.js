@@ -43,7 +43,10 @@ API.interceptors.response.use(
 
         // Update Redux store
         store.dispatch(
-          setCredentials({ accessToken: newAccessToken })
+          setCredentials({
+            user: res.data.data.user,
+            accessToken: newAccessToken
+          })
         );
 
         // Retry original request with new token
