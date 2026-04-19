@@ -38,6 +38,7 @@ const Navbar = () => {
     { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/profile", label: "Profile", icon: <FaUser /> },
     {to: "/hackathon", label: "Hackathon", icon: <FaTrophy />},
+    {to: "/trading-contest", label: "Contest", icon: <FaTrophy />},
     ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
     ...(isAgent ? [{ to: "/agent/orders", label: "Agent", icon: <FaUser /> }] : []),
     ...(isKol ? [{ to: "/kol/me", label: "KOL", icon: <FaUser /> }] : [])

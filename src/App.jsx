@@ -43,6 +43,7 @@ import KolApply from "./pages/Kols/KolApplication";
 import KolApplications from "./pages/AdminPanel/AdminKols";
 import KolDashboard from "./pages/KolPanel/KolPanel";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import TradingContest from "./components/TradingContest/TradingContest";
 
 
 
@@ -198,7 +199,9 @@ function App() {
               </VerifiedOnly>
             </Protected>
           } /> */}
-          <Route path="/leaderboard" element={<Leaderboard />} />
+          {/* <Route path="/leaderboard" element={<Leaderboard />} /> */}
+          
+          <Route path="/trading-contest" element={<TradingContest />} />
           <Route path="/about" element={<About />} />
           <Route path="/career" element={<Career />} />
           <Route path="/apply" element={<JobApplication />} />

@@ -103,6 +103,7 @@ export const LifiWidgetEventListener = () => {
                     txHash,
                     chainId,
                     txLink: finalTxLink,
+                    amountUSD
                 });
 
                 await kolApiTransaction({
