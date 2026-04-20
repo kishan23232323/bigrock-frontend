@@ -9,7 +9,7 @@ import {
   IoAddCircleOutline,
 } from "react-icons/io5";
 
-import { confirmSellOrder, createSellOrder, getFiatPairs,createBuyOrder, confirmBuyOrder, cancelOrder } from "../../services/P2Pservices/p2papi";
+import { confirmSellOrder, createSellOrder, getFiatPairs, createBuyOrder, confirmBuyOrder, cancelOrder } from "../../services/P2Pservices/p2papi";
 import useConvert from "../../Hooks/useAutoConversion";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -155,20 +155,20 @@ const P2P = ({ mode = "sell" }) => {
 
   return (
     <div className={styles.containers} >
-    
+
       <div className={styles.container}>
-      <P2PHeader />
-      <P2PToggle activeMode={mode} />
+        <P2PHeader />
+        <P2PToggle activeMode={mode} />
 
-      {/* Pass setter to dropdown */}
-      <CountrySelector onSelectCountry={(c) => setSelectedCountry(c)} />
+        {/* Pass setter to dropdown */}
+        <CountrySelector onSelectCountry={(c) => setSelectedCountry(c)} />
 
-      {mode === "sell" ? (
-        <SellSection selectedCountry={selectedCountry} />
-      ) : (
-        <BuySection selectedCountry={selectedCountry} />
-      )}
-    </div>
+        {mode === "sell" ? (
+          <SellSection selectedCountry={selectedCountry} />
+        ) : (
+          <BuySection selectedCountry={selectedCountry} />
+        )}
+      </div>
     </div>
   );
 };
@@ -176,18 +176,18 @@ const P2P = ({ mode = "sell" }) => {
 
 const P2PHeader = () => (
   <>
-  <p className="text-red-500 text-balance sm:text-left leading-tight">
+    <p className="text-red-500 text-balance sm:text-left leading-tight">
       P2P feature will be available from 22nd April 2026!
     </p>
-  <div className={styles.header}>
-    <h1 className={styles.title}>P2P Trading</h1>
-    <Link to="/info">
-                <button className="group flex items-center justify-center p-3 rounded-full bg-gray-900/50 backdrop-blur-md border border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,238,245,0.25)] transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-[0_0_25px_rgba(6,238,245,0.6)] hover:scale-110">
-                  <GrCircleInformation size={24} className="group-hover:rotate-12 transition-transform" />
-                </button>
-              </Link>
-  
-  </div>
+    <div className={styles.header}>
+      <h1 className={styles.title}>P2P Trading</h1>
+      <Link to="/info">
+        <button className="group flex items-center justify-center p-3 rounded-full bg-gray-900/50 backdrop-blur-md border border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,238,245,0.25)] transition-all duration-300 hover:bg-cyan-500/10 hover:shadow-[0_0_25px_rgba(6,238,245,0.6)] hover:scale-110">
+          <GrCircleInformation size={24} className="group-hover:rotate-12 transition-transform" />
+        </button>
+      </Link>
+
+    </div>
   </>
 );
 
@@ -195,18 +195,16 @@ const P2PToggle = ({ activeMode }) => (
   <div className={styles.toggleContainer}>
     <Link to={"/p2p/sell"} className={styles.linkBtn}>
       <button
-        className={`${styles.toggleButton} ${
-          activeMode === "sell" ? styles.sellActive : ""
-        }`}
+        className={`${styles.toggleButton} ${activeMode === "sell" ? styles.sellActive : ""
+          }`}
       >
         Sell
       </button>
     </Link>
     <Link to={"/p2p/buy"} className={styles.linkBtn}>
       <button
-        className={`${styles.toggleButton} ${
-          activeMode === "buy" ? styles.buyActive : ""
-        }`}
+        className={`${styles.toggleButton} ${activeMode === "buy" ? styles.buyActive : ""
+          }`}
       >
         Buy
       </button>
@@ -289,7 +287,7 @@ const SellSection = ({ selectedCountry }) => {
   const [orderData, setOrderData] = useState(null);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
- 
+
   const [isPaymentExpanded, setIsPaymentExpanded] = useState(false);
   const [expandedPayment, setExpandedPayment] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Payment Method");
@@ -323,24 +321,24 @@ const SellSection = ({ selectedCountry }) => {
 
 
   useEffect(() => {
-  if (showCancelConfirm) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+    if (showCancelConfirm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
 
-  return () => {
-    document.body.style.overflow = "auto";
-  };
-}, [showCancelConfirm]);
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showCancelConfirm]);
 
-  
+
   // Conversion
-  
+
   const onUsdtChange = (v) => {
     setUsdtAmount(v);
     setEditingField("usdt");
-    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase(),"SELL");
+    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase(), "SELL");
   };
 
   useEffect(() => {
@@ -372,7 +370,7 @@ const SellSection = ({ selectedCountry }) => {
 
 
   // Payment Method UI handlers
- 
+
   const togglePaymentExpansion = () =>
     setIsPaymentExpanded((s) => !s);
 
@@ -380,7 +378,7 @@ const SellSection = ({ selectedCountry }) => {
     setSelectedPaymentMethod(displayName);
     setExpandedPayment(method);
 
-    
+
     setBankAccountNumber("");
     setBankSwiftCode("");
     setBankHolderName("");
@@ -410,13 +408,13 @@ const SellSection = ({ selectedCountry }) => {
 
   // CREATE ORDER 
   const handleCreateOrder = async () => {
-   
+
     if (!usdtAmount || !fiatAmount || expandedPayment == null) {
       toast.error("Please enter USDT amount, fiat amount and select a payment method");
       return;
     }
 
-    
+
     if (expandedPayment === "bank") {
       if (!bankAccountNumber || !bankSwiftCode || !bankHolderName) {
         toast.error("Please fill bank account number, SWIFT/IFSC and account holder name");
@@ -446,16 +444,16 @@ const SellSection = ({ selectedCountry }) => {
         expandedPayment === "upi"
           ? "UPI"
           : expandedPayment === "paypal"
-          ? "PAYPAL"
-          : "BANK",
+            ? "PAYPAL"
+            : "BANK",
       receiverDetails,
       country: selectedCountry?.country,
       network,
     };
 
     try {
-     if (creatingOrder) return; 
-       setCreatingOrder(true);
+      if (creatingOrder) return;
+      setCreatingOrder(true);
       const response = await createSellOrder(payload);
       console.log(response);
       setOrderData(response.order);
@@ -463,8 +461,8 @@ const SellSection = ({ selectedCountry }) => {
     } catch (err) {
       console.error("Create sell order failed:", err);
       toast.error(err?.message || "Failed to create order");
-    } finally{
-       setCreatingOrder(false);
+    } finally {
+      setCreatingOrder(false);
     }
 
   };
@@ -489,14 +487,14 @@ const SellSection = ({ selectedCountry }) => {
     }
 
     if (!proofFile) {
-    toast.error("Please upload payment proof");
-    return;
-  }
+      toast.error("Please upload payment proof");
+      return;
+    }
 
-  if (!isValidProofFile(proofFile)) {
-    toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
-    return;
-  }
+    if (!isValidProofFile(proofFile)) {
+      toast.error("Invalid proof file. Use JPG/PNG/PDF under 5MB");
+      return;
+    }
 
 
     const formData = new FormData();
@@ -504,8 +502,8 @@ const SellSection = ({ selectedCountry }) => {
     if (proofFile) formData.append("proof", proofFile);
 
     try {
-        if (submittingProof) return;
-         setSubmittingProof(true);
+      if (submittingProof) return;
+      setSubmittingProof(true);
       // console.log(orderData?._id, txnHash, proofFile);
       await confirmSellOrder({
         orderId: orderData?._id,
@@ -521,45 +519,45 @@ const SellSection = ({ selectedCountry }) => {
       toast.error(err?.message || "Failed to confirm sell");
     }
     finally {
-       setSubmittingProof(false);
+      setSubmittingProof(false);
     }
   };
   const handleCopyAddress = async () => {
-  if (!orderData?.usdtWalletAddress) return;
+    if (!orderData?.usdtWalletAddress) return;
 
-  try {
-    await navigator.clipboard.writeText(orderData.usdtWalletAddress);
-    toast.success("Wallet address copied");
-  } catch (err) {
-    toast.error("Failed to copy address");
+    try {
+      await navigator.clipboard.writeText(orderData.usdtWalletAddress);
+      toast.success("Wallet address copied");
+    } catch (err) {
+      toast.error("Failed to copy address");
+    }
+  };
+
+  const handleCancelOrder = async () => {
+    if (!orderData?._id) return;
+    try {
+      await cancelOrder(orderData._id);
+      toast.success("Order cancelled");
+      navigate("/profile");
+    } catch (err) {
+      toast.error("Failed to cancel order");
+    }
   }
-};
 
-const handleCancelOrder = async()=>{
-   if (!orderData?._id) return;
-   try{
-    await cancelOrder(orderData._id);
-    toast.success("Order cancelled");
-    navigate("/profile");
-   }catch(err){
-    toast.error("Failed to cancel order");
-   }
-}
-
-const isSellDisabled =
-  !selectedCountry ||
-  !usdtAmount ||
-  !fiatAmount ||
-  !expandedPayment ||
-  creatingOrder ||
-  !isLoggedIn;
+  const isSellDisabled =
+    !selectedCountry ||
+    !usdtAmount ||
+    !fiatAmount ||
+    !expandedPayment ||
+    creatingOrder ||
+    !isLoggedIn;
 
 
 
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
 
-            {/* Network Selection */}
+      {/* Network Selection */}
       <div className={styles.inputGroup}>
         <label className={styles.label}>Network</label>
 
@@ -574,12 +572,11 @@ const isSellDisabled =
 
           {showNetworkDropdown && (
             <div className={styles.paymentDropdown}>
-              
+
               {/* TRC20 */}
               <div
-                className={`${styles.paymentOption} ${
-                  network === "TRC20" ? styles.activeDropdown : ""
-                }`}
+                className={`${styles.paymentOption} ${network === "TRC20" ? styles.activeDropdown : ""
+                  }`}
               >
                 <button
                   className={styles.paymentOptionHeader}
@@ -594,9 +591,8 @@ const isSellDisabled =
 
               {/* BEP20 */}
               <div
-                className={`${styles.paymentOption} ${
-                  network === "BEP20" ? styles.activeDropdown : ""
-                }`}
+                className={`${styles.paymentOption} ${network === "BEP20" ? styles.activeDropdown : ""
+                  }`}
               >
                 <button
                   className={styles.paymentOptionHeader}
@@ -625,7 +621,7 @@ const isSellDisabled =
         />
       </div>
 
-      
+
       <div className={styles.inputGroup}>
         <label className={styles.label}>You Will Receive ({currencyCode})</label>
         <input
@@ -654,114 +650,111 @@ const isSellDisabled =
             <IoChevronDownOutline size={25} />
           </button>
 
-{isPaymentExpanded && (
-  <div className={styles.paymentDropdown}>
+          {isPaymentExpanded && (
+            <div className={styles.paymentDropdown}>
 
-    {/* ------- UPI (ONLY FOR INDIA) ------- */}
-    {isIndia && (
-      <div
-        className={`${styles.paymentOption} ${
-          expandedPayment === "upi" ? styles.activeDropdown : ""
-        }`}
-      >
-        <button
-          className={styles.paymentOptionHeader}
-          onClick={() => selectPaymentMethod("upi", "UPI")}
-        >
-          <span>UPI</span>
-          <IoChevronDownOutline size={20} />
-        </button>
+              {/* ------- UPI (ONLY FOR INDIA) ------- */}
+              {isIndia && (
+                <div
+                  className={`${styles.paymentOption} ${expandedPayment === "upi" ? styles.activeDropdown : ""
+                    }`}
+                >
+                  <button
+                    className={styles.paymentOptionHeader}
+                    onClick={() => selectPaymentMethod("upi", "UPI")}
+                  >
+                    <span>UPI</span>
+                    <IoChevronDownOutline size={20} />
+                  </button>
 
-        {expandedPayment === "upi" && (
-          <div className={styles.paymentOptionContent}>
-            <label className={styles.paymentLabel}>Enter UPI ID</label>
-            <input
-              type="text"
-              className={styles.paymentInput}
-              placeholder="example@upi"
-              value={upiId}
-              onChange={(e) => setUpiId(e.target.value)}
-            />
-          </div>
-        )}
-      </div>
-    )}
+                  {expandedPayment === "upi" && (
+                    <div className={styles.paymentOptionContent}>
+                      <label className={styles.paymentLabel}>Enter UPI ID</label>
+                      <input
+                        type="text"
+                        className={styles.paymentInput}
+                        placeholder="example@upi"
+                        value={upiId}
+                        onChange={(e) => setUpiId(e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
-    {/* ------- PayPal (HIDE FOR INDIA) ------- */}
-    {!isIndia && (
-      <div
-        className={`${styles.paymentOption} ${
-          expandedPayment === "paypal" ? styles.activeDropdown : ""
-        }`}
-      >
-        <button
-          className={styles.paymentOptionHeader}
-          onClick={() => selectPaymentMethod("paypal", "PayPal")}
-          disabled
-        >
-          <span>PayPal <span className="text-red-500 text-xs p-1"> (Temporary Unavailable) </span></span>
-          <IoChevronDownOutline size={20} />
-        </button>
+              {/* ------- PayPal (HIDE FOR INDIA) ------- */}
+              {!isIndia && (
+                <div
+                  className={`${styles.paymentOption} ${expandedPayment === "paypal" ? styles.activeDropdown : ""
+                    }`}
+                >
+                  <button
+                    className={styles.paymentOptionHeader}
+                    onClick={() => selectPaymentMethod("paypal", "PayPal")}
+                    disabled
+                  >
+                    <span>PayPal <span className="text-red-500 text-xs p-1"> (Temporary Unavailable) </span></span>
+                    <IoChevronDownOutline size={20} />
+                  </button>
 
-        {expandedPayment === "paypal" && (
-          <div className={styles.paymentOptionContent}>
-            <label className={styles.paymentLabel}>Enter PayPal ID</label>
-            <input
-              type="text"
-              className={styles.paymentInput}
-              placeholder="name@example.com"
-              value={paypalId}
-              onChange={(e) => setPaypalId(e.target.value)}
-            />
-          </div>
-        )}
-      </div>
-    )}
+                  {expandedPayment === "paypal" && (
+                    <div className={styles.paymentOptionContent}>
+                      <label className={styles.paymentLabel}>Enter PayPal ID</label>
+                      <input
+                        type="text"
+                        className={styles.paymentInput}
+                        placeholder="name@example.com"
+                        value={paypalId}
+                        onChange={(e) => setPaypalId(e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
-    {/* ------- BANK (SHOW ALWAYS) ------- */}
-    <div
-      className={`${styles.paymentOption} ${
-        expandedPayment === "bank" ? styles.activeDropdown : ""
-      }`}
-    >
-      <button
-        className={styles.paymentOptionHeader}
-        onClick={() => selectPaymentMethod("bank", "Bank Transfer")}
-      >
-        <span>Bank Transfer</span>
-        <IoChevronDownOutline size={20} />
-      </button>
+              {/* ------- BANK (SHOW ALWAYS) ------- */}
+              <div
+                className={`${styles.paymentOption} ${expandedPayment === "bank" ? styles.activeDropdown : ""
+                  }`}
+              >
+                <button
+                  className={styles.paymentOptionHeader}
+                  onClick={() => selectPaymentMethod("bank", "Bank Transfer")}
+                >
+                  <span>Bank Transfer</span>
+                  <IoChevronDownOutline size={20} />
+                </button>
 
-      {expandedPayment === "bank" && (
-        <div className={styles.paymentOptionContent}>
-          <label className={styles.paymentLabel}>Account Holder Name</label>
-          <input
-            type="text"
-            className={styles.paymentInput}
-            value={bankHolderName}
-            onChange={(e) => setBankHolderName(e.target.value)}
-          />
+                {expandedPayment === "bank" && (
+                  <div className={styles.paymentOptionContent}>
+                    <label className={styles.paymentLabel}>Account Holder Name</label>
+                    <input
+                      type="text"
+                      className={styles.paymentInput}
+                      value={bankHolderName}
+                      onChange={(e) => setBankHolderName(e.target.value)}
+                    />
 
-          <label className={styles.paymentLabel}>Account Number</label>
-          <input
-            type="text"
-            className={styles.paymentInput}
-            value={bankAccountNumber}
-            onChange={(e) => setBankAccountNumber(e.target.value)}
-          />
+                    <label className={styles.paymentLabel}>Account Number</label>
+                    <input
+                      type="text"
+                      className={styles.paymentInput}
+                      value={bankAccountNumber}
+                      onChange={(e) => setBankAccountNumber(e.target.value)}
+                    />
 
-          <label className={styles.paymentLabel}>SWIFT / IFSC</label>
-          <input
-            type="text"
-            className={styles.paymentInput}
-            value={bankSwiftCode}
-            onChange={(e) => setBankSwiftCode(e.target.value)}
-          />
-        </div>
-      )}
-    </div>
-  </div>
-)}
+                    <label className={styles.paymentLabel}>SWIFT / IFSC</label>
+                    <input
+                      type="text"
+                      className={styles.paymentInput}
+                      value={bankSwiftCode}
+                      onChange={(e) => setBankSwiftCode(e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
         </div>
       </div>
@@ -769,25 +762,24 @@ const isSellDisabled =
       {/* Buttons */}
       <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
         <button
-        disabled={isSellDisabled}
-         className={`${styles.confirmButton} w-full ${
-         isSellDisabled ? styles.disabled : ""
-           }`}
-            onClick={()=>{
-          if(!isLoggedIn){
-            navigate("/login");
-            return;
-          }
-          handleCreateOrder(); 
-        }}>
-         {creatingOrder ? "Creating..." : "Create Sell Order"}
+          disabled={isSellDisabled}
+          className={`${styles.confirmButton} w-full ${isSellDisabled ? styles.disabled : ""
+            }`}
+          onClick={() => {
+            if (!isLoggedIn) {
+              navigate("/login");
+              return;
+            }
+            handleCreateOrder();
+          }}>
+          {creatingOrder ? "Creating..." : "Create Sell Order"}
         </button>
       </div>
     </div>
   );
 
   // CONFIRM UI
-  
+
   const renderConfirmUI = () => (
     <div className={styles.sectionContent}>
       <h3 className={styles.sectionTitle}>Complete Sell Order</h3>
@@ -824,16 +816,16 @@ const isSellDisabled =
           <p className={styles.uploadSubtitle}>JPG / PNG supported</p>
         </div>
       </div>
-              {proofFile && (
-            <div className={styles.previewContainer}>
-              <img
-                src={URL.createObjectURL(proofFile)}
-                alt="Preview"
-                className={styles.previewImage}
-              />
-              <p className={styles.previewFileName}>{proofFile.name}</p>
-            </div>
-          )}
+      {proofFile && (
+        <div className={styles.previewContainer}>
+          <img
+            src={URL.createObjectURL(proofFile)}
+            alt="Preview"
+            className={styles.previewImage}
+          />
+          <p className={styles.previewFileName}>{proofFile.name}</p>
+        </div>
+      )}
 
       {/* Txn Hash */}
       <div className={styles.inputGroup}>
@@ -846,14 +838,14 @@ const isSellDisabled =
           onChange={(e) => setTxnHash(e.target.value)}
         />
       </div>
-          <div className="w-full flex justify-center mb-4">
-          <p className="text-xs text-center text-gray-400 max-w-xs sm:max-w-sm px-4">
-            By submitting you are agreeing to our{" "}
-            <a href="/terms" target="_blank"  rel="noopener noreferrer" className="text-blue-500 hover:underline">
-              Terms & Conditions
-            </a>
-          </p>
-        </div>
+      <div className="w-full flex justify-center mb-4">
+        <p className="text-xs text-center text-gray-400 max-w-xs sm:max-w-sm px-4">
+          By submitting you are agreeing to our{" "}
+          <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+            Terms & Conditions
+          </a>
+        </p>
+      </div>
 
 
       {/* Buttons */}
@@ -861,13 +853,12 @@ const isSellDisabled =
         <button className={`${styles.cancelButton} w-full`} onClick={() => setShowCancelConfirm(true)}>
           Cancel Order
         </button>
-        <button 
-        disabled={submittingProof}
-         className={`${styles.confirmButton} w-full ${
-          submittingProof ? styles.disabled : ""
-        }`}
-         onClick={handleConfirmSell}>
-           {submittingProof ? "Submitting..." : "Submit Proof"}
+        <button
+          disabled={submittingProof}
+          className={`${styles.confirmButton} w-full ${submittingProof ? styles.disabled : ""
+            }`}
+          onClick={handleConfirmSell}>
+          {submittingProof ? "Submitting..." : "Submit Proof"}
         </button>
       </div>
     </div>
@@ -875,7 +866,7 @@ const isSellDisabled =
 
 
   // Render container
-  
+
   return (
     <div className={styles.tradingSection}>
       <div className={styles.sectionHeader}>
@@ -936,30 +927,30 @@ const BuySection = ({ selectedCountry }) => {
   const navigate = useNavigate();
   const isIndia = selectedCountry?.country === "India";
 
-    const { accessToken } = useSelector((state) => state.auth || {});
-    const isLoggedIn = Boolean(accessToken);
+  const { accessToken } = useSelector((state) => state.auth || {});
+  const isLoggedIn = Boolean(accessToken);
 
-    const [creatingOrder, setCreatingOrder] = useState(false);
-    const [submittingProof, setSubmittingProof] = useState(false);
+  const [creatingOrder, setCreatingOrder] = useState(false);
+  const [submittingProof, setSubmittingProof] = useState(false);
 
-    useEffect(() => {
-  if (showCancelConfirm) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+  useEffect(() => {
+    if (showCancelConfirm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
 
-  return () => {
-    document.body.style.overflow = "auto";
-  };
-}, [showCancelConfirm]);
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showCancelConfirm]);
 
 
   // ------------------------- Conversion -------------------------
   const onUsdtChange = (v) => {
     setUsdtAmount(v);
     setEditingField("usdt");
-    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase(),"BUY");
+    convert(Number(v) || 0, "usdt", currencyCode.toLowerCase(), "BUY");
   };
 
   const onFiatChange = (v) => {
@@ -1030,20 +1021,20 @@ const BuySection = ({ selectedCountry }) => {
         expandedPayment === "upi"
           ? "UPI"
           : expandedPayment === "paypal"
-          ? "PAYPAL"
-          : "BANK",
+            ? "PAYPAL"
+            : "BANK",
       country: selectedCountry?.country,
       usdtWalletAddress: userUsdtWallet.trim(), // user's wallet
       network
     };
 
     try {
-      if (creatingOrder) return;      
+      if (creatingOrder) return;
 
       setCreatingOrder(true);
 
       const response = await createBuyOrder(payload);
-    
+
       const returnedOrder = response?.order || response?.data?.order || response;
       setOrderData(returnedOrder);
       setStage("CONFIRM");
@@ -1051,7 +1042,7 @@ const BuySection = ({ selectedCountry }) => {
       console.error("Create buy order failed:", err);
       toast.error(err?.message || "Failed to create buy order");
     } finally {
-       setCreatingOrder(false);
+      setCreatingOrder(false);
     }
   };
 
@@ -1072,14 +1063,14 @@ const BuySection = ({ selectedCountry }) => {
     }
 
     try {
-       if (submittingProof) return;
+      if (submittingProof) return;
 
-       setSubmittingProof(true);
+      setSubmittingProof(true);
 
       await confirmBuyOrder({ orderId: orderData._id, proof: proofFile });
       toast.success("Buy order submitted, awaiting admin approval");
       navigate("/profile");
-      
+
     } catch (err) {
       console.error("Confirm buy failed:", err);
       toast.error(err?.message || "Failed to confirm buy");
@@ -1089,35 +1080,35 @@ const BuySection = ({ selectedCountry }) => {
   };
 
   const handleCopyText = async (text, successMsg = "Copied") => {
-  if (!text) return;
+    if (!text) return;
 
-  try {
-    await navigator.clipboard.writeText(text);
-    toast.success(successMsg);
-  } catch (err) {
-    toast.error("Failed to copy");
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success(successMsg);
+    } catch (err) {
+      toast.error("Failed to copy");
+    }
+  };
+
+  const handleCancelOrder = async () => {
+    if (!orderData?._id) return;
+    try {
+      await cancelOrder(orderData._id);
+      toast.success("Order cancelled");
+      navigate("/profile");
+    } catch (err) {
+      toast.error("Failed to cancel order");
+    }
   }
-};
 
-const handleCancelOrder = async()=>{
-   if (!orderData?._id) return;
-   try{
-    await cancelOrder(orderData._id);
-    toast.success("Order cancelled");
-    navigate("/profile");
-   }catch(err){
-    toast.error("Failed to cancel order");
-   }
-}
-
-const isBuyDisabled =
-  !selectedCountry ||
-  !usdtAmount ||
-  !fiatAmount ||
-  !expandedPayment ||
-  !userUsdtWallet ||
-  creatingOrder ||
-  !isLoggedIn;
+  const isBuyDisabled =
+    !selectedCountry ||
+    !usdtAmount ||
+    !fiatAmount ||
+    !expandedPayment ||
+    !userUsdtWallet ||
+    creatingOrder ||
+    !isLoggedIn;
 
 
 
@@ -1125,7 +1116,7 @@ const isBuyDisabled =
   const renderCreateUI = () => (
     <div className={styles.sectionContent}>
 
-  
+
       {/* Network Selection */}
       <div className={styles.inputGroup}>
         <label className={styles.label}>Network</label>
@@ -1141,12 +1132,11 @@ const isBuyDisabled =
 
           {showNetworkDropdown && (
             <div className={styles.paymentDropdown}>
-              
+
               {/* TRC20 */}
               <div
-                className={`${styles.paymentOption} ${
-                  network === "TRC20" ? styles.activeDropdown : ""
-                }`}
+                className={`${styles.paymentOption} ${network === "TRC20" ? styles.activeDropdown : ""
+                  }`}
               >
                 <button
                   className={styles.paymentOptionHeader}
@@ -1161,9 +1151,8 @@ const isBuyDisabled =
 
               {/* BEP20 */}
               <div
-                className={`${styles.paymentOption} ${
-                  network === "BEP20" ? styles.activeDropdown : ""
-                }`}
+                className={`${styles.paymentOption} ${network === "BEP20" ? styles.activeDropdown : ""
+                  }`}
               >
                 <button
                   className={styles.paymentOptionHeader}
@@ -1180,7 +1169,7 @@ const isBuyDisabled =
         </div>
       </div>
 
-          {/* USDT amount */}
+      {/* USDT amount */}
       <div className={styles.inputGroup}>
         <label className={styles.label}>USDT to Buy </label>
         <input
@@ -1239,9 +1228,8 @@ const isBuyDisabled =
               {/* UPI → ONLY FOR INDIA */}
               {isIndia && (
                 <div
-                  className={`${styles.paymentOption} ${
-                    expandedPayment === "upi" ? styles.activeDropdown : ""
-                  }`}
+                  className={`${styles.paymentOption} ${expandedPayment === "upi" ? styles.activeDropdown : ""
+                    }`}
                 >
                   <button
                     className={styles.paymentOptionHeader}
@@ -1255,9 +1243,8 @@ const isBuyDisabled =
               {/* PayPal → HIDE WHEN INDIA */}
               {!isIndia && (
                 <div
-                  className={`${styles.paymentOption} ${
-                    expandedPayment === "paypal" ? styles.activeDropdown : ""
-                  }`}
+                  className={`${styles.paymentOption} ${expandedPayment === "paypal" ? styles.activeDropdown : ""
+                    }`}
                 >
                   <button
                     className={styles.paymentOptionHeader}
@@ -1271,15 +1258,14 @@ const isBuyDisabled =
 
               {/* Bank → ALWAYS SHOWN */}
               <div
-                className={`${styles.paymentOption} ${
-                  expandedPayment === "bank" ? styles.activeDropdown : ""
-                }`}
+                className={`${styles.paymentOption} ${expandedPayment === "bank" ? styles.activeDropdown : ""
+                  }`}
               >
                 <button
                   className={styles.paymentOptionHeader}
                   onClick={() => selectPaymentMethod("bank", "Bank Transfer")}
                 >
-                  <span>Bank Transfer</span>
+                  <span>Bank Transfer / Cash Deposit</span>
                 </button>
               </div>
             </div>
@@ -1290,17 +1276,16 @@ const isBuyDisabled =
       {/* Buttons */}
       <div className={`${styles.buttonGroup} flex flex-col sm:flex-row gap-3`}>
         <button
-         disabled={isBuyDisabled}
-         className={`${styles.confirmButton} w-full ${
-           isBuyDisabled ? styles.disabled : ""
-        }`} 
-        onClick={()=>{
-          if(!isLoggedIn){
-            navigate("/login");
-            return;
-          }
-          handleCreateOrder(); 
-        }}>
+          disabled={isBuyDisabled}
+          className={`${styles.confirmButton} w-full ${isBuyDisabled ? styles.disabled : ""
+            }`}
+          onClick={() => {
+            if (!isLoggedIn) {
+              navigate("/login");
+              return;
+            }
+            handleCreateOrder();
+          }}>
           {creatingOrder ? "Creating..." : "Create Buy Order"}
         </button>
       </div>
@@ -1309,24 +1294,24 @@ const isBuyDisabled =
 
   const renderConfirmUI = () => {
     const details = orderData?.receiverDetails || {};
-    
-      const paymentDisplayText = details.upiId
-    ? `UPI ID: ${details.upiId}`
-    : details.paypalId
-    ? `PayPal: ${details.paypalId}`
-    : details.bankHolderName
-    ? `Account Holder: ${details.bankHolderName}
+
+    const paymentDisplayText = details.upiId
+      ? `UPI ID: ${details.upiId}`
+      : details.paypalId
+        ? `PayPal: ${details.paypalId}`
+        : details.bankHolderName
+          ? `Account Holder: ${details.bankHolderName}
   Account No: ${details.bankAccountNumber}
   IFSC/SWIFT: ${details.bankSwiftCode}`
-    : "";
+          : "";
 
     const paymentCopyText = details.upiId
-  ? details.upiId
-  : details.paypalId
-  ? details.paypalId
-  : details.bankHolderName
-  ? `${details.bankHolderName}\n${details.bankAccountNumber}\n${details.bankSwiftCode}`
-  : "";
+      ? details.upiId
+      : details.paypalId
+        ? details.paypalId
+        : details.bankHolderName
+          ? `${details.bankHolderName}\n${details.bankAccountNumber}\n${details.bankSwiftCode}`
+          : "";
 
 
     return (
@@ -1337,24 +1322,24 @@ const isBuyDisabled =
           <h3 className={styles.walletTitle}>Send Money To</h3>
 
           <div className={styles.addressContainer}>
-<span className={styles.address}>
-  {paymentDisplayText || "Payment details will appear here"}
-</span>
+            <span className={styles.address}>
+              {paymentDisplayText || "Payment details will appear here"}
+            </span>
 
-{paymentCopyText && (
-  <button
-    className={styles.copyButton}
-    onClick={() => handleCopyText(paymentCopyText, "Payment details copied")}
-    aria-label="Copy payment details"
-  >
-    <IoCopyOutline size={18} />
-  </button>
-)}
+            {paymentCopyText && (
+              <button
+                className={styles.copyButton}
+                onClick={() => handleCopyText(paymentCopyText, "Payment details copied")}
+                aria-label="Copy payment details"
+              >
+                <IoCopyOutline size={18} />
+              </button>
+            )}
 
 
           </div>
 
-         
+
           {details.bankAccountNumber && (
             <div style={{ marginTop: 8 }}>
               <div><strong>Account Holder:</strong> {details.bankHolderName}</div>
@@ -1383,15 +1368,15 @@ const isBuyDisabled =
           </div>
         </div>
         {proofFile && (
-            <div className={styles.previewContainer}>
-              <img
-                src={URL.createObjectURL(proofFile)}
-                alt="Preview"
-                className={styles.previewImage}
-              />
-              <p className={styles.previewFileName}>{proofFile.name}</p>
-            </div>
-          )}
+          <div className={styles.previewContainer}>
+            <img
+              src={URL.createObjectURL(proofFile)}
+              alt="Preview"
+              className={styles.previewImage}
+            />
+            <p className={styles.previewFileName}>{proofFile.name}</p>
+          </div>
+        )}
 
 
         {/* Buttons */}
@@ -1399,12 +1384,11 @@ const isBuyDisabled =
           <button className={`${styles.cancelButton} w-full`} onClick={() => setShowCancelConfirm(true)}>
             Cancel Order
           </button>
-          <button 
-           disabled={submittingProof}
-          className={`${styles.confirmButton} w-full ${
-            submittingProof ? styles.disabled : ""
-          }`}
-           onClick={handleConfirmBuy}>
+          <button
+            disabled={submittingProof}
+            className={`${styles.confirmButton} w-full ${submittingProof ? styles.disabled : ""
+              }`}
+            onClick={handleConfirmBuy}>
             {submittingProof ? "Submitting..." : "Submit Proof"}
           </button>
         </div>

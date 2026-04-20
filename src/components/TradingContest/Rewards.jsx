@@ -27,10 +27,10 @@ export default function Rewards() {
             className={`
               p-8 rounded-2xl backdrop-blur-xl border border-white/10
               bg-gradient-to-br ${t.glow}
-              shadow-[0_0_25px_rgba(255,200,0,0.25)]
+              shadow-[0_0_25px_rgba(0,200,255,0.35)]
             `}
           >
-            <FaTrophy className="mx-auto text-yellow-300 mb-4" size={40}/>
+            <FaTrophy className="mx-auto text-yellow-300 mb-4" size={40} />
             <h3 className="text-2xl font-bold">{t.rank}</h3>
             <p className="text-xl text-gray-200">{t.reward}</p>
           </motion.div>
