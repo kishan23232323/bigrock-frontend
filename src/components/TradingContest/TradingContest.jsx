@@ -34,7 +34,7 @@ export default function TradingContest() {
     <div className="bg-black text-white font-[Inter] w-full overflow-x-hidden">
 
       {/* HERO */}
-      <section className="pt-40 pb-32 relative overflow-hidden">
+      <section className="pt-40 pb-24 relative overflow-hidden">
 
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-900/20 via-black to-black"></div>
@@ -101,16 +101,16 @@ export default function TradingContest() {
 
         </div>
       </section>
-
-      {/* REWARDS */}
-      <SectionHeading text="Rewards" />
-
-      {/* LIVE BADGE SECTION */}
-      <div className="flex justify-left mb-6 ml-35">
+            {/* LIVE BADGE SECTION */}
+      <div className="flex justify-center mb-4 px-6">
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 3 }}
-          className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-2 border-green-500/50  backdrop-blur-sm"
+          animate={{ opacity: 1 }}
+          className="
+            flex items-center gap-2 px-4 py-1.5 
+            rounded-full border-2 border-green-500/50 
+            backdrop-blur-sm
+          "
         >
           {/* Blinking Dot */}
           <motion.span
@@ -118,11 +118,15 @@ export default function TradingContest() {
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
             className="h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"
           />
-          <span className="text-xs md:text-lg font-bold tracking-widest white uppercase">
-            Live
-          </span>
-        </motion.div>
-      </div>
+
+            <span className="text-xs md:text-lg font-bold tracking-widest uppercase">
+              Contest is Live!
+            </span>
+          </motion.div>
+        </div>
+
+      {/* REWARDS */}
+      <SectionHeading text="Rewards" />
 
       <Rewards />
 
