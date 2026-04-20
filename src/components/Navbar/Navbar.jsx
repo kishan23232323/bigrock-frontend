@@ -37,13 +37,13 @@ const Navbar = () => {
     { to: "/p2p", label: "P2P (Coming Soon)", icon: <FaExchangeAlt />, state: getP2PState() },
     { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/profile", label: "Profile", icon: <FaUser /> },
-    {to: "/hackathon", label: "Hackathon", icon: <FaTrophy />},
-    {to: "/trading-contest", label: "Contest", icon: <FaTrophy />},
+    { to: "/hackathon", label: "Hackathon", icon: <FaTrophy /> },
+    { to: "/trading-contest", label: "Trading Contest", icon: <FaTrophy /> },
     ...(isAdmin ? [{ to: "/admin", label: "Admin", icon: <FaUser /> }] : []),
     ...(isAgent ? [{ to: "/agent/orders", label: "Agent", icon: <FaUser /> }] : []),
     ...(isKol ? [{ to: "/kol/me", label: "KOL", icon: <FaUser /> }] : [])
-    
-    
+
+
   ];
 
   return (
@@ -79,7 +79,7 @@ const Navbar = () => {
             {/* Desktop Auth Button */}
             <li className={styles.authButton}>
               {isLoggedIn ? (
-                <LogoutBtn/>
+                <LogoutBtn />
               ) : (
                 <NavLink className={linkClass} to="/login">
                   Join Now
