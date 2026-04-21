@@ -171,7 +171,7 @@ const receiveAmount = stats
   : 0;
 
 
-  const presaleProgress = 10; // 75%
+  const presaleProgress = 14; // 75%
 
   const tokenomicsData = [
     
@@ -428,7 +428,7 @@ const roadmapData = [
               <div className={styles.progressFill} style={{ width: `${presaleProgress}%` }}></div>
             </div>
             <div className={styles.progressLabels}>
-              <span>Raised: $2,000,00</span>
+              <span>Raised: $2,800,00</span>
               <span>Target: $2,000,000</span>
             </div>
           </div>
