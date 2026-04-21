@@ -34,7 +34,7 @@ export default function TradingContest() {
     <div className="bg-black text-white font-[Inter] w-full overflow-x-hidden">
 
       {/* HERO */}
-      <section className="pt-40 pb-24 relative overflow-hidden">
+      <section className="pt-15 pb-24 relative overflow-hidden">
 
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-900/20 via-black to-black"></div>
