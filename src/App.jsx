@@ -42,7 +42,6 @@ import RegistrationForm from "./pages/Hackathon/Registration";
 import KolApply from "./pages/Kols/KolApplication";
 import KolApplications from "./pages/AdminPanel/AdminKols";
 import KolDashboard from "./pages/KolPanel/KolPanel";
-import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import TradingContest from "./components/TradingContest/TradingContest";
 
 
