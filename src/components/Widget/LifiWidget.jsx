@@ -58,9 +58,35 @@ export default function LiFiWidgetComponent() {
     return (
         <div className="mx-auto max-w-md p-4">
             {isMobile && (
-                <div className="mb-3 rounded-md bg-yellow-900/30 p-3 text-center text-sm text-yellow-200">
-                    If you don’t see the confirmation request, reopen your wallet app.
-                </div>
+                                            <div className="
+                            mb-4 p-4 rounded-xl
+                            bg-gradient-to-r from-yellow-900/40 to-yellow-800/20
+                            border border-yellow-500/30
+                            backdrop-blur-md
+                            shadow-[0_0_20px_rgba(234,179,8,0.15)]
+                            ">
+
+                            {/* Row 1 */}
+                            <div className="flex items-start gap-3 mb-2">
+                                <span className="text-xl">⚠️</span>
+                                <p className="text-sm md:text-base text-yellow-200 leading-relaxed">
+                                If you don’t see the confirmation request, reopen your wallet app.
+                                </p>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="h-px bg-yellow-500/20 my-2"></div>
+
+                            {/* Row 2 */}
+                            <div className="flex items-start gap-3">
+                                <span className="text-xl">💡</span>
+                                <p className="text-sm md:text-base text-yellow-300 leading-relaxed">
+                                For the best experience, open this page inside 
+                                <span className="font-semibold text-yellow-200"> Phantom</span> or any Solana-supported browser.
+                                </p>
+                            </div>
+
+                            </div>
             )}
 
             <LiFiWidget config={widgetConfig} />

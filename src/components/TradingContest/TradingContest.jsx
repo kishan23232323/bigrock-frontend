@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import Leaderboard from "./Leaderboard";
 import Rewards from "./Rewards";
 import { Link } from "react-router-dom";
+import RulesSection from "./Rules";
+import CountdownTimer from "./Countdown";
 
 
 
@@ -125,6 +127,16 @@ export default function TradingContest() {
           </motion.div>
         </div>
 
+      <div className="mt-6 mb-10 flex flex-col items-center gap-4">
+
+          <p className="text-sm md:text-lg text-gray-400 tracking-wide">
+            Contest Ends In
+          </p>
+
+          <CountdownTimer />
+
+        </div>  
+
       {/* REWARDS */}
       <SectionHeading text="Rewards" />
 
@@ -134,9 +146,12 @@ export default function TradingContest() {
       <SectionHeading text="Leaderboard" />
       <Leaderboard />
 
-      <section className="max-w-4xl mx-auto px-6 pb-20 space-y-4">
+      {/* RULES */}
+      <SectionHeading text="Contest Rules" />
+      <RulesSection />
 
-        <h2 className="text-4xl font-bold text-center mb-8">FAQ</h2>
+      <SectionHeading text="FAQ" />
+      <section className="max-w-4xl mx-auto px-6 pb-20 space-y-4">
 
         {[
           {
