@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { LiFiWidget } from "@lifi/widget";
+import { AlertTriangle, Info } from "lucide-react";
 
 const basicFeeConfig = {
     name: "Bigrock-Exchange",
@@ -68,7 +69,7 @@ export default function LiFiWidgetComponent() {
 
                             {/* Row 1 */}
                             <div className="flex items-start gap-3 mb-2">
-                                <span className="text-xl">⚠️</span>
+                                 <AlertTriangle className="text-yellow-400 mt-0.5" size={18} />
                                 <p className="text-sm md:text-base text-yellow-200 leading-relaxed">
                                 If you don’t see the confirmation request, reopen your wallet app.
                                 </p>
@@ -79,10 +80,10 @@ export default function LiFiWidgetComponent() {
 
                             {/* Row 2 */}
                             <div className="flex items-start gap-3">
-                                <span className="text-xl">💡</span>
+                                 <Info className="text-yellow-300 mt-0.5" size={18} />
                                 <p className="text-sm md:text-base text-yellow-300 leading-relaxed">
-                                For the best experience, open this page inside 
-                                <span className="font-semibold text-yellow-200"> Phantom</span> or any Solana-supported browser.
+                                For the best Solana experience, open this page inside 
+                                <span className="font-semibold text-yellow-200"> Phantom</span> or any Solana-Wallet browser.
                                 </p>
                             </div>
 
