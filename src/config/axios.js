@@ -11,7 +11,7 @@ const API = axios.create({
 // Attach token to requests
 API.interceptors.request.use((config) => {
   const token = store.getState().auth.accessToken;
-  if (token) {
+  if (token && !config.headers.Authorization) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
@@ -22,6 +22,8 @@ API.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
+     if (!originalRequest) return Promise.reject(error);
 
     // prevent infinite loop
     if (originalRequest.url.includes("/refresh-token")) {
@@ -44,12 +46,13 @@ API.interceptors.response.use(
         // Update Redux store
         store.dispatch(
           setCredentials({
-            user: res.data.data.user,
+            // user: res.data.data.user,
             accessToken: newAccessToken
           })
         );
 
         // Retry original request with new token
+         originalRequest.headers = originalRequest.headers || {};
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return API(originalRequest);
       } catch (err) {
