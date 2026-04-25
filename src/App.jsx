@@ -169,7 +169,7 @@ function App() {
             </Protected>
           } />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/p2p" element={
+          {/* <Route path="/p2p" element={
             <Protected>
               <VerifiedOnly>
                 <P2P />
@@ -190,7 +190,7 @@ function App() {
                 <P2P mode="buy" />
               </VerifiedOnly>
             </Protected>
-          } />
+          } /> */}
           {/* <Route path="/hackathon/register" element={
             <Protected>
               <VerifiedOnly>

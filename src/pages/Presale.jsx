@@ -201,8 +201,6 @@ const roadmapData = [
       details: [
         'DEX Aggregator live (60+ blockchains, 10,000+ tokens)',
         'Non-custodial wallet-based swaps',
-        'P2P crypto buy/sell module',
-        'P2P agent onboarding & liquidity programs',
         'WalletConnect integration',
         'User dashboard & profile system',
         'Backend & transaction tracking',
@@ -219,6 +217,7 @@ const roadmapData = [
         'Fundraise Target: $222,791',
         'Fixed Entry: $111.40 per member',
         'Community onboarding & referral activation',
+        'Fiat On/Off Ramp Integration (Buy&Sell Crypto via UPI,Banks & Cards)',
         'Transparency on token allocation & vesting'
       ]
     },
