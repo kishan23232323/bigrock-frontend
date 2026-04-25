@@ -35,7 +35,7 @@ const Navbar = () => {
   const navItems = [
     { to: "/", label: "Home", icon: <AiFillHome /> },
      { to: "/trading-contest", label: "Trading Contest", icon: <FaTrophy /> },
-    { to: "/p2p", label: "P2P", icon: <FaExchangeAlt />, state: getP2PState() },
+    // { to: "/p2p", label: "P2P", icon: <FaExchangeAlt />, state: getP2PState() },
     { to: "/airdrop", label: "Earn", icon: <FaGift /> },
     { to: "/hackathon", label: "Hackathon", icon: <FaTrophy /> },
      { to: "/profile", label: "Profile", icon: <FaUser /> },
