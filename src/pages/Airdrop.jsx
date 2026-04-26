@@ -418,7 +418,7 @@ const referralPoints = referredCount * 2500;
               <span className="font-bold text-white">Join Telegram</span>
             </a>
 
-            <a href="https://x.com/bigrock_ex" target="_blank" rel="noopener noreferrer"
+            <a href="https://x.com/Bigrock_EXC" target="_blank" rel="noopener noreferrer"
               className="group flex items-center justify-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300"
             >
               <FaXTwitter size={24} className="text-white group-hover:scale-110 transition-transform" />
