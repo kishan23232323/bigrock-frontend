@@ -217,6 +217,7 @@ const roadmapData = [
         'Fundraise Target: $222,791',
         'Fixed Entry: $111.40 per member',
         'Community onboarding & referral activation',
+        'Launch of Decentralized perpetual Futures Trading',
         'Fiat On/Off Ramp Integration (Buy&Sell Crypto via UPI,Banks & Cards)',
         'Transparency on token allocation & vesting'
       ]
