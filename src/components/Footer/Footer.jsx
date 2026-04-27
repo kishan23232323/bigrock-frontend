@@ -42,7 +42,7 @@ const Footer = () => {
           </p>
           <div className={styles.socialRow}>
             <a
-              href="https://x.com/Bigrock_EXC"
+              href="https://x.com/Bigrock_EX"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialCircle}
