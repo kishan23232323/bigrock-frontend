@@ -51,15 +51,19 @@ export default function LiFiWidgetComponent() {
             executionOptions: {
                 disableMessageSigning: true,
             },
-            solana: { core: {} },
+            rpcUrls: {
+                // Solana chain id used by LI.FI
+                1151111081099710: [
+                    import.meta.env.VITE_SOLANA_RPC_URL,
+                ],
+            },
         },
-
     }), []);
 
     return (
         <div className="mx-auto max-w-md p-4">
             {isMobile && (
-                                            <div className="
+                <div className="
                             mb-4 p-4 rounded-xl
                             bg-gradient-to-r from-yellow-900/40 to-yellow-800/20
                             border border-yellow-500/30
@@ -67,27 +71,27 @@ export default function LiFiWidgetComponent() {
                             shadow-[0_0_20px_rgba(234,179,8,0.15)]
                             ">
 
-                            {/* Row 1 */}
-                            <div className="flex items-start gap-3 mb-2">
-                                 <AlertTriangle className="text-yellow-400 mt-0.5" size={18} />
-                                <p className="text-sm md:text-base text-yellow-200 leading-relaxed">
-                                If you don’t see the confirmation request, reopen your wallet app.
-                                </p>
-                            </div>
+                    {/* Row 1 */}
+                    <div className="flex items-start gap-3 mb-2">
+                        <AlertTriangle className="text-yellow-400 mt-0.5" size={18} />
+                        <p className="text-sm md:text-base text-yellow-200 leading-relaxed">
+                            If you don’t see the confirmation request, reopen your wallet app.
+                        </p>
+                    </div>
 
-                            {/* Divider */}
-                            <div className="h-px bg-yellow-500/20 my-2"></div>
+                    {/* Divider */}
+                    <div className="h-px bg-yellow-500/20 my-2"></div>
 
-                            {/* Row 2 */}
-                            <div className="flex items-start gap-3">
-                                 <Info className="text-yellow-300 mt-0.5" size={18} />
-                                <p className="text-sm md:text-base text-yellow-300 leading-relaxed">
-                                For the best Solana experience, open this page inside 
-                                <span className="font-semibold text-yellow-200"> Phantom</span> or any Solana-Wallet browser.
-                                </p>
-                            </div>
+                    {/* Row 2 */}
+                    <div className="flex items-start gap-3">
+                        <Info className="text-yellow-300 mt-0.5" size={18} />
+                        <p className="text-sm md:text-base text-yellow-300 leading-relaxed">
+                            For the best Solana experience, open this page inside
+                            <span className="font-semibold text-yellow-200"> Phantom</span> or any Solana-Wallet browser.
+                        </p>
+                    </div>
 
-                            </div>
+                </div>
             )}
 
             <LiFiWidget config={widgetConfig} />

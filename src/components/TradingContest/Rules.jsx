@@ -7,7 +7,7 @@ export default function RulesSection() {
     {
       icon: <FaClock className="text-yellow-400" />,
       title: "Contest Duration",
-      desc: "The contest starts on April 20 and ends on May 8 at 00:00 (UTC).",
+      desc: "The contest starts on April 23 and ends on May 20 at 00:00 (UTC).",
     },
     {
       icon: <FaDollarSign className="text-green-400" />,
@@ -19,16 +19,7 @@ export default function RulesSection() {
       title: "Ranking Criteria",
       desc: "Users are ranked based on total eligible trading volume during the contest period.",
     },
-    {
-      icon: <FaDollarSign className="text-emerald-400" />,
-      title: "Reward Eligibility",
-      desc: "Every contestant must generate at least $8,000 in trading volume to be eligible for rewards.",
-    },
-    {
-      icon: <FaTrophy className="text-pink-400" />,
-      title: "Contest Goal",
-      desc: "The aim of this trading contest is to generate a total trading volume of $400,000.",
-    },
+   
     {
       icon: <FaShieldAlt className="text-blue-400" />,
       title: "Fair Play Policy",

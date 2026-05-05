@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function CountdownTimer() {
-  // 👉 Set contest end date (May 8, 00:00 UTC)
+  
   const targetDate = new Date("2026-05-20T00:00:00Z").getTime();
 
   const [timeLeft, setTimeLeft] = useState(targetDate - Date.now());

@@ -155,7 +155,7 @@ export default function TradingContest() {
 
         {[
           {
-            q: "How do I participate in the Bigrock Omnichain Trading Competition? Do I need to register?",
+            q: "How do I participate in the Bigrock Trading Competition? Do I need to register?",
             a: "During the event period, you can automatically participate by trading on Bigrock. No separate registration is required. The system tracks your volume automatically.",
           },
           {

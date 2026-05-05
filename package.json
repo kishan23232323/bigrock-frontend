@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@bigmi/react": "^0.6.4",
-    "@lifi/widget": "^3.38.1",
+    "@lifi/widget": "^3.40.12",
     "@mysten/dapp-kit": "^0.19.11",
     "@rainbow-me/rainbowkit": "^2.2.10",
     "@reduxjs/toolkit": "^2.11.0",
