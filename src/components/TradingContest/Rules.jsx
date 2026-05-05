@@ -20,6 +20,16 @@ export default function RulesSection() {
       desc: "Users are ranked based on total eligible trading volume during the contest period.",
     },
     {
+      icon: <FaDollarSign className="text-emerald-400" />,
+      title: "Reward Eligibility",
+      desc: "Every contestant must generate at least $8,000 in trading volume to be eligible for rewards.",
+    },
+    {
+      icon: <FaTrophy className="text-pink-400" />,
+      title: "Contest Goal",
+      desc: "The aim of this trading contest is to generate a total trading volume of $400,000.",
+    },
+    {
       icon: <FaShieldAlt className="text-blue-400" />,
       title: "Fair Play Policy",
       desc: "Wash trading, self-trading, or any suspicious activity will lead to disqualification.",
